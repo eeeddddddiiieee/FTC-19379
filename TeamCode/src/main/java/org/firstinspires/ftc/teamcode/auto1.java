@@ -125,6 +125,7 @@ public class auto1 extends LinearOpMode {
         //convert the threshold to radians
         threshold = Math.toRadians(threshold);
         useEncoders();
+        //deez nuts!
         while (Math.abs(targetAngle - currentValue) > threshold) {
             //the error (aka proportional) is the difference between set point and current point
             error = targetAngle- currentValue;
