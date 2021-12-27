@@ -82,8 +82,8 @@ public class mecanumTeleOp extends LinearOpMode {
         robot.q4.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
-        double shift=1;
-        double reverse = 1;
+        double shift;
+        double reverse;
         while (opModeIsActive()) {
             //set power to left stick x and y axis
             y1 = -gamepad1.left_stick_y;
@@ -96,6 +96,13 @@ public class mecanumTeleOp extends LinearOpMode {
             }
             else {
                 shift = 1;
+            }
+
+            if (gamepad1.left_bumper){
+                reverse = -1;
+            }
+            else {
+                reverse = 1;
             }
 
                 double lb = Range.clip((((y1 * reverse) + yaw - (x1 * reverse)) * shift), -1.0, 1.0);
