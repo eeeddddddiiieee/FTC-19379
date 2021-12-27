@@ -92,7 +92,7 @@ public class mecanumTeleOp extends LinearOpMode {
 
 
             if (gamepad1.right_bumper) {
-                shift = 0.5;
+                shift = 0.35;
             }
             else {
                 shift = 1;
