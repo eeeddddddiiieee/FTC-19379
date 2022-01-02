@@ -55,6 +55,12 @@ public class mecanumTeleopV2 extends LinearOpMode {
     //claw vars.
     double clawOffset = 0;
     final double CLAW_SPEED = 0.02;
+    public enum LiftState{
+        START,
+        EXTEND,
+        DUMP,
+        RETRACT
+    }
 
     @Override
     public void runOpMode() {
@@ -66,10 +72,10 @@ public class mecanumTeleopV2 extends LinearOpMode {
         double x2;
         double y2;
         double yaw;
-
+        double shift;
+        double reverse;
         /*
-        TODO:
-
+        TODO:sohum is sped lmao
         */
         double anglecorrection = -Math.PI / 4;
         double cos45 = Math.cos(anglecorrection);
@@ -78,6 +84,7 @@ public class mecanumTeleopV2 extends LinearOpMode {
         //turn on the hw map from the class (hwMecanum)
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
+        LiftState liftState=LiftState.START;
 
         telemetry.update();
         robot.q1.setDirection(DcMotor.Direction.FORWARD);
@@ -86,14 +93,33 @@ public class mecanumTeleopV2 extends LinearOpMode {
         robot.q4.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
-        double shift;
-        double reverse;
+
         while (opModeIsActive()) {
+             switch(liftState){
+                 case START:
+                     liftState=LiftState.EXTEND;
+                     break;
+
+                 case EXTEND:
+                     liftState=LiftState.DUMP;
+                     break;
+                 case DUMP:
+                     liftState=LiftState.RETRACT;
+                     break;
+                 case RETRACT:
+                     liftState=LiftState.START;
+                     break;
+                 default:
+                     liftState=LiftState.START;
+             }
+            if (gamepad1.y && liftState != LiftState.START) {
+                liftState = LiftState.START;
+            }
+
             //set power to left stick x and y axis
             y1 = -gamepad1.left_stick_y;
             x1 = gamepad1.left_stick_x;
             yaw = gamepad1.right_stick_x;
-
 
             if (gamepad1.right_bumper) {
                 shift = 0.35;
