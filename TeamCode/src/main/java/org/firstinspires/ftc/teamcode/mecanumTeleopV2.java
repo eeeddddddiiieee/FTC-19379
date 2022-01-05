@@ -62,6 +62,7 @@ public class mecanumTeleopV2 extends LinearOpMode {
         RETRACT
     }
 
+
     @Override
     public void runOpMode() {
         //new object robot
@@ -85,6 +86,7 @@ public class mecanumTeleopV2 extends LinearOpMode {
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
         LiftState liftState=LiftState.START;
+        LiftState midGoal=LiftState.START;
 
         telemetry.update();
         robot.q1.setDirection(DcMotor.Direction.FORWARD);
@@ -97,16 +99,28 @@ public class mecanumTeleopV2 extends LinearOpMode {
         while (opModeIsActive()) {
              switch(liftState){
                  case START:
-                     liftState=LiftState.EXTEND;
+                     if (gamepad1.x) {
+                         //arm.setPosition(prime);
+                         liftState = LiftState.EXTEND;
+                     }
                      break;
-
                  case EXTEND:
+                     //if arm.getPosition
+                     //liftMotor.setPosition()
+                     //arm.setPosition(highGoal)
                      liftState=LiftState.DUMP;
                      break;
                  case DUMP:
+                     //if (liftMotor.getPosition==10)
+                     //robot.claw.setPosition(open);
+                     //clawOffset=0;
                      liftState=LiftState.RETRACT;
                      break;
                  case RETRACT:
+                     //if (claw.getPosition==open)
+                     //liftMotor.setPosition
+                     //arm.setPosition(armLow)
+                     //clawOffset=0;
                      liftState=LiftState.START;
                      break;
                  default:
@@ -114,6 +128,41 @@ public class mecanumTeleopV2 extends LinearOpMode {
              }
             if (gamepad1.y && liftState != LiftState.START) {
                 liftState = LiftState.START;
+            }
+
+            switch(midGoal){
+                case START:
+                    if (gamepad1.a) {
+                        //arm.setPosition(prime);
+                        midGoal = LiftState.EXTEND;
+                    }
+                    break;
+                case EXTEND:
+                    //if arm.getPosition>=prime
+                    //rotate.setPosition(left)
+                    //arm.setPosition(midGoal)
+                    midGoal=LiftState.DUMP;
+                    break;
+                case DUMP:
+                    //if (gamepad1.a)
+                    //clawOffset=0;
+                    //robot.claw.setPosition(open);
+                    //arm.setPosition(prime)
+                    liftState=LiftState.RETRACT;
+                    break;
+                case RETRACT:
+                    //if (arm.getPosition>=prime+a bit)
+                    //rotate.setPosition(centre)
+                    //arm.setPosition(armLow)
+                    //clawOffset=0;
+                    liftState=LiftState.START;
+                    break;
+                default:
+                    liftState=LiftState.START;
+            }
+            if (gamepad1.b && midGoal != LiftState.START) {
+                //arm.setPosition(prime)
+                midGoal = LiftState.RETRACT;
             }
 
             //set power to left stick x and y axis
