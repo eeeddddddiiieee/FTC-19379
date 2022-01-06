@@ -143,6 +143,14 @@ public class hwMecanum extends MecanumDrive {
     public static final double ARM_DOWN_POWER=-0.45;
     public static final double servoClosed=.69;
     public static final double servoOpen=.8;
+    public static final boolean USING_WEBCAM = true; // change to true if using webcam
+    public static final String WEBCAM_NAME = "Webcam 1"; // insert webcam name from configuration if using webcam
+
+    //public UGContourRingPipeline pipeline;
+    public OpenCvCamera camera;
+
+
+    public int cameraMonitorViewId;
     //timer
     private ElapsedTime period = new ElapsedTime();
 
@@ -178,10 +186,12 @@ public class hwMecanum extends MecanumDrive {
         q3=hwMap.get(DcMotorEx.class, "left_driveb"); //left drive back init
         q4=hwMap.get(DcMotorEx.class, "right_driveb"); //right drive back init
         intake=hwMap.get(DcMotorEx.class, "intake");
-        arm=hwMap.get(DcMotorEx.class, "arm"); //arm init
-        lift=hwMap.get(DcMotorEx.class, "teamelement"); //lift init
+        arm=hwMap.get(DcMotorEx.class, "lift"); //arm init
+        lift=hwMap.get(DcMotorEx.class, "teamElement"); //lift init
         claw=hwMap.get(Servo.class,"claw"); // claw init
         carousel=hwMap.get(DcMotorEx.class, "carousel");
+        arm1=hwMap.get(Servo.class,"arm1");
+        arm2=hwMap.get(Servo.class,"arm1");
 
 
         motors=Arrays.asList(q2,q3,q4,q1);

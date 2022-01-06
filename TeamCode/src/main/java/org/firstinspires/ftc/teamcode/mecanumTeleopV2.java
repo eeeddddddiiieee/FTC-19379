@@ -248,7 +248,7 @@ public class mecanumTeleopV2 extends LinearOpMode {
             if (gamepad1.x) {
                 robot.carousel.setPower(middleDrive);
             } else {
-                robot.drive1.setPower(middleDrive);
+                robot.lift.setPower(middleDrive);
             }
 
             if (gamepad1.b) {
