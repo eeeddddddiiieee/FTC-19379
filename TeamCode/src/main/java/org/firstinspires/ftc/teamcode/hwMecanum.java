@@ -140,7 +140,11 @@ public class hwMecanum extends MecanumDrive {
     public static double OMEGA_WEIGHT=1;
 
     //servo and arm constants
-    public static final double MID_SERVO=0.5;
+    public static final double OPEN_CLAW=0.5; //change
+    public static final double inside=0.5; //change
+    public static final double high=0.5; //change
+    public static final double mid=0.5; //change
+    public static final double low=0.5; //change
     public static final double ARM_UP_POWER=0.45;
     public static final double ARM_DOWN_POWER=-0.45;
     public static final double servoClosed=.69;
@@ -193,9 +197,11 @@ public class hwMecanum extends MecanumDrive {
         lift=hwMap.get(DcMotorEx.class, "teamElement"); //lift init
 
         carousel=hwMap.get(DcMotorEx.class, "carousel");
+
         arm1=hwMap.get(Servo.class,"arm1");
         arm2=hwMap.get(Servo.class,"arm1");
         claw=hwMap.get(Servo.class,"claw"); // claw init
+
         teamElementServo=hwMap.get(Servo.class,"teservo");
         teamElementArm=hwMap.get(Servo.class,"tearm");
 

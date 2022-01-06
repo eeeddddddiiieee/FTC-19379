@@ -49,9 +49,16 @@ public class mecanumTeleOp extends LinearOpMode {
 
 
     //claw vars.
-    double clawOffset = 0;
-    final double CLAW_SPEED = 0.02;
+    double TEclawOffset = 0;
+    final double TEclaw_SPEED = 0.02;
 
+    double TE1clawOffset = 0;
+    final double TE1claw_SPEED = 0.02;
+
+    double carouselPower;
+
+    double clawOffset = 0;
+    final double claw_SPEED = 0.02;
     @Override
     public void runOpMode() {
         //new object robot
@@ -134,19 +141,48 @@ public class mecanumTeleOp extends LinearOpMode {
             robot.q4.setPower(yaw);
             */
 
+            if (gamepad1.x){
+                robot.arm1.setPosition(hwMecanum.high);
+                robot.arm2.setPosition(hwMecanum.high);
+            }
+            if (gamepad1.y){
+                robot.arm1.setPosition(hwMecanum.low);
+                robot.arm2.setPosition(hwMecanum.low);
+            }
+            if (gamepad1.a)
+            {clawOffset += claw_SPEED;}
+            else if (gamepad1.b)
+            {clawOffset=0;
+            robot.arm1.setPosition(hwMecanum.inside);
+            robot.arm2.setPosition(hwMecanum.inside);
+            }
 
-                if (gamepad2.right_bumper)
-                {clawOffset += CLAW_SPEED;}
-                else if (gamepad2.left_bumper)
-                {clawOffset -= CLAW_SPEED;}
+            clawOffset = Range.clip(clawOffset, 0, 1);
+            robot.claw.setPosition(hwMecanum.OPEN_CLAW + TEclawOffset);
 
-                clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-                robot.claw.setPosition(hwMecanum.MID_SERVO + clawOffset);
+            //Team Element Claw Code
+            if (gamepad2.right_bumper)
+            {TEclawOffset += TEclaw_SPEED;}
+            else if (gamepad2.left_bumper)
+            {TEclawOffset -= TEclaw_SPEED;}
 
+            TEclawOffset = Range.clip(TEclawOffset, -0.5, 0.5);
+            robot.claw.setPosition(hwMecanum.OPEN_CLAW + TEclawOffset);
 
+            //Team element arm code
+            if (gamepad2.a)
+            {TE1clawOffset += TE1claw_SPEED;}
+            else if (gamepad2.x)
+            {TE1clawOffset -= TE1claw_SPEED;}
+
+            TE1clawOffset = Range.clip(TE1clawOffset, -0.5, 0.5);
+            robot.claw.setPosition(hwMecanum.OPEN_CLAW + TEclawOffset);
+
+            //intake code
+            robot.intake.setPower(gamepad2.left_trigger-gamepad2.right_trigger);
                 //arm code
-                double armPower = gamepad2.right_trigger-gamepad2.left_trigger;
-                robot.arm.setPower(armPower * .15);
+                //double armPower = gamepad2.right_trigger-gamepad2.left_trigger;
+                //robot.arm.setPower(armPower * .15);
                 //robot.claw.setPosition(gamepad2.right_trigger);
             /*
             if (gamepad2.y) {
@@ -160,32 +196,22 @@ public class mecanumTeleOp extends LinearOpMode {
 
                 //lift code
                 double liftPower = gamepad2.left_stick_y;
-                robot.lift.setPower(liftPower * .20);
+                robot.lift.setPower(liftPower * .50);
 
                 //code for the drive and carousel.
                 //if i hold down x, then I use the triggers to run the carousel
                 //otherwise if x is not held down, it drives the middle wheels
                 double middleDrive = gamepad1.left_trigger - gamepad1.right_trigger;
-                if (gamepad1.x) {
-                    robot.carousel.setPower(middleDrive);
-                } else {
-                    robot.arm.setPower(middleDrive);
-                }
 
-                if (gamepad1.b) {
-                    robot.carousel.setPower(-.75);
-                    sleep(300);
-                    robot.carousel.setPower(-1);
-                    sleep(700);
-                    robot.carousel.setPower(0);
+                if (middleDrive<0){
+                    carouselPower=(-Math.pow(1.2,Math.abs(middleDrive)*20))/38;
                 }
-                if (gamepad1.y) {
-                    robot.carousel.setPower(.75);
-                    sleep(300);
-                    robot.carousel.setPower(1);
-                    sleep(700);
-                    robot.carousel.setPower(0);
-                }
+                else {carouselPower=(Math.pow(1.2,middleDrive)*20)/38;}
+
+                robot.carousel.setPower(Range.clip(carouselPower,1,-1));
+
+
+
 
 
                 //update telemetry for the phone TODO: USE FOR TROUBLESHOOTING
