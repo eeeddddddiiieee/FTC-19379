@@ -115,7 +115,9 @@ public class hwMecanum extends MecanumDrive {
     public DcMotorEx lift; //lift motor
     public DcMotorEx arm; //arm motor
     public Servo claw; //claw servo
-    public DcMotorEx drive1;
+    public Servo arm1; //claw servo
+    public Servo arm2;
+    public DcMotorEx intake;
     public DcMotorEx carousel;
     HardwareMap hwMap = null; //hardware map
     private List<DcMotorEx> motors; //drive motor list from l49
@@ -175,11 +177,12 @@ public class hwMecanum extends MecanumDrive {
         q1=hwMap.get(DcMotorEx.class, "right_drivef"); //right drive front init
         q3=hwMap.get(DcMotorEx.class, "left_driveb"); //left drive back init
         q4=hwMap.get(DcMotorEx.class, "right_driveb"); //right drive back init
-        drive1=hwMap.get(DcMotorEx.class, "second_driveb");
+        intake=hwMap.get(DcMotorEx.class, "intake");
         arm=hwMap.get(DcMotorEx.class, "arm"); //arm init
-        lift=hwMap.get(DcMotorEx.class, "lift"); //lift init
-        claw=hwMap.get(Servo.class,"claw1"); // claw init
+        lift=hwMap.get(DcMotorEx.class, "teamelement"); //lift init
+        claw=hwMap.get(Servo.class,"claw"); // claw init
         carousel=hwMap.get(DcMotorEx.class, "carousel");
+
 
         motors=Arrays.asList(q2,q3,q4,q1);
         for (DcMotorEx motor : motors) {
