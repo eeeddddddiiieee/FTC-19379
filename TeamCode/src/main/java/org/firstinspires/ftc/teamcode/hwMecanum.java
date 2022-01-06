@@ -217,7 +217,7 @@ public class hwMecanum extends MecanumDrive {
         q3.setPower(0);
         q4.setPower(0);
         arm.setPower(0);
-        drive1.setPower(0);
+        intake.setPower(0);
         lift.setPower(0);
         carousel.setPower(0);
         claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
