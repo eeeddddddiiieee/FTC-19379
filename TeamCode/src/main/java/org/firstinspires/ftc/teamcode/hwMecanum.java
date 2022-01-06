@@ -117,6 +117,8 @@ public class hwMecanum extends MecanumDrive {
     public Servo claw; //claw servo
     public Servo arm1; //claw servo
     public Servo arm2;
+    public Servo teamElementServo;
+    public Servo teamElementArm;
     public DcMotorEx intake;
     public DcMotorEx carousel;
     HardwareMap hwMap = null; //hardware map
@@ -148,6 +150,7 @@ public class hwMecanum extends MecanumDrive {
 
     //public UGContourRingPipeline pipeline;
     public OpenCvCamera camera;
+
 
 
     public int cameraMonitorViewId;
@@ -188,10 +191,14 @@ public class hwMecanum extends MecanumDrive {
         intake=hwMap.get(DcMotorEx.class, "intake");
         arm=hwMap.get(DcMotorEx.class, "lift"); //arm init
         lift=hwMap.get(DcMotorEx.class, "teamElement"); //lift init
-        claw=hwMap.get(Servo.class,"claw"); // claw init
+
         carousel=hwMap.get(DcMotorEx.class, "carousel");
         arm1=hwMap.get(Servo.class,"arm1");
         arm2=hwMap.get(Servo.class,"arm1");
+        claw=hwMap.get(Servo.class,"claw"); // claw init
+        teamElementServo=hwMap.get(Servo.class,"teservo");
+        teamElementArm=hwMap.get(Servo.class,"tearm");
+
 
 
         motors=Arrays.asList(q2,q3,q4,q1);

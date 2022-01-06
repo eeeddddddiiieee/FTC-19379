@@ -31,7 +31,7 @@ public class opencvtest extends OpenCvPipeline {
            new Point(200, 75));
    static double PERCENT_COLOR_THRESHOLD = 0.4;
 
-   public void SkystoneDetector(Telemetry t) { telemetry = t; }
+   public opencvtest (Telemetry t) { telemetry = t; }
 
    @Override
    public Mat processFrame(Mat input) {

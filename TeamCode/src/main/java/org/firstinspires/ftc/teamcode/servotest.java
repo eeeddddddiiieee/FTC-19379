@@ -57,148 +57,28 @@ public class servotest extends LinearOpMode {
         //new object robot
 
         //all vars used in the opmode
-        double x1;
-        double y1;
-        double x2;
-        double y2;
-        double yaw;
 
         /*
         TODO:
 
         */
-        double anglecorrection = -Math.PI / 4;
-        double cos45 = Math.cos(anglecorrection);
-        double sin45 = Math.sin(anglecorrection);
+
 
         //turn on the hw map from the class (hwMecanum)
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
 
         telemetry.update();
-        robot.q1.setDirection(DcMotor.Direction.FORWARD);
-        robot.q2.setDirection(DcMotor.Direction.FORWARD);
-        robot.q3.setDirection(DcMotor.Direction.FORWARD);
-        robot.q4.setDirection(DcMotor.Direction.FORWARD);
+
 
         waitForStart();
-        double shift;
-        double reverse;
         while (opModeIsActive()) {
-            //set power to left stick x and y axis
-            y1 = -gamepad1.left_stick_y;
-            x1 = gamepad1.left_stick_x;
-            yaw = gamepad1.right_stick_x;
-
-
-            if (gamepad1.right_bumper) {
-                shift = 0.35;
-            }
-            else {
-                shift = 1;
-            }
-
-            if (gamepad1.left_bumper){
-                reverse = -1;
-            }
-            else {
-                reverse = 1;
-            }
-
-            double lb = Range.clip((((y1 * reverse) + yaw - (x1 * reverse)) * shift), -1.0, 1.0);
-            double rb = Range.clip((((y1 * reverse) - yaw + (x1 * reverse)) * shift), -1.0, 1.0);
-            double lf = Range.clip((((y1 * reverse) + yaw + (x1 * reverse)) * shift), -1.0, 1.0);
-            double rf = Range.clip((((y1 * reverse) - yaw - (x1 * reverse)) * reverse * shift), -1.0, 1.0);
-            /*
-            TODO:
-
-            */
-            y2 = y1 * cos45 + x1 * sin45;
-            x2 = x1 * cos45 - y1 * sin45;
-
-            //cardinal direction control
-
-            robot.q1.setPower(-rf);
-            robot.q2.setPower(lf);
-            robot.q3.setPower(lb);
-            robot.q4.setPower(-rb);
-                /*
-                robot.q2.setPower(gamepad1.left_stick_y);
-                robot.q1.setPower(gamepad1.right_stick_y);
-                robot.q3.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
-                robot.q4.setPower(gamepad2.right_stick_y);*/
-            /*
-            robot.q1.setPower(yaw);
-            robot.q2.setPower(yaw);
-            robot.q3.setPower(yaw);
-            robot.q4.setPower(yaw);
-            */
-
-
-            if (gamepad2.right_bumper)
-            {clawOffset += CLAW_SPEED;}
-            else if (gamepad2.left_bumper)
-            {clawOffset -= CLAW_SPEED;}
-
-            clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-            robot.claw.setPosition(hwMecanum.MID_SERVO + clawOffset);
-
-
-            //arm code
-            double armPower = gamepad2.right_trigger-gamepad2.left_trigger;
-            robot.arm.setPower(armPower * .15);
-            //robot.claw.setPosition(gamepad2.right_trigger);
-            /*
-            if (gamepad2.y) {
-                robot.arm.setPower(hwMecanum.ARM_UP_POWER);
-            } else if (gamepad2.a)
-                robot.arm.setPower(hwMecanum.ARM_DOWN_POWER);
-            else
-                robot.arm.setPower(0.0);
-            */
-
-
-            //lift code
-            double liftPower = gamepad2.left_stick_y;
-            robot.lift.setPower(liftPower * .20);
-
-            //code for the drive and carousel.
-            //if i hold down x, then I use the triggers to run the carousel
-            //otherwise if x is not held down, it drives the middle wheels
-            double middleDrive = gamepad1.left_trigger - gamepad1.right_trigger;
-            if (gamepad1.x) {
-                robot.carousel.setPower(middleDrive);
-            } else {
-                robot.drive1.setPower(middleDrive);
-            }
-
-            if (gamepad1.b) {
-                robot.carousel.setPower(-.75);
-                sleep(300);
-                robot.carousel.setPower(-1);
-                sleep(700);
-                robot.carousel.setPower(0);
-            }
-            if (gamepad1.y) {
-                robot.carousel.setPower(.75);
-                sleep(300);
-                robot.carousel.setPower(1);
-                sleep(700);
-                robot.carousel.setPower(0);
-            }
-
-
-            //update telemetry for the phone TODO: USE FOR TROUBLESHOOTING
-            //telemetry.addData("claw",  "Offset = %.2f", clawOffset);
-            /*telemetry.addData("lift",  "%.2f", robot. lift);
-            telemetry.addData("arm", "%.2f", robot.arm);
-            telemetry.addData("leftf",  "%.2f", robot. q1);
-            telemetry.addData("rightf", "%.2f", robot.q2);
-            telemetry.addData("leftb",  "%.2f", robot. q3);
-            telemetry.addData("rightb", "%.2f", robot.q4);
-            telemetry.update();
-            */
-
+            robot.arm1.setPosition(gamepad1.left_stick_x);
+            robot.arm2.setPosition(gamepad1.left_stick_x);
+            robot.claw.setPosition(gamepad1.right_trigger);
+            telemetry.addData("arm1 position",robot.arm1.getPosition());
+            telemetry.addData("arm2 position",robot.arm2.getPosition());
+            telemetry.addData("claw position",robot.claw.getPosition());
 
             //sleep so other tasks can run
             sleep(50);
