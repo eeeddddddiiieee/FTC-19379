@@ -220,7 +220,7 @@ public class mecanumTeleopV2 extends LinearOpMode {
             {clawOffset -= CLAW_SPEED;}
 
             clawOffset = Range.clip(clawOffset, -0.5, 0.5);
-            robot.claw.setPosition(hwMecanum.MID_SERVO + clawOffset);
+            //robot.claw.setPosition(hwMecanum.MID_SERVO + clawOffset);
 
 
             //arm code
