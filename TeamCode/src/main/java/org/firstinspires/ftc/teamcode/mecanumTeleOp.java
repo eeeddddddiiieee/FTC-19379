@@ -40,7 +40,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
 
-@TeleOp(name="Mecanum: Teleop", group="hwMecanum")
+@TeleOp(name="Mecanum: Teleop1", group="hwMecanum")
 //TODO: disable teleop by uncommenting the following line
 //@Disabled
 
@@ -51,14 +51,15 @@ public class mecanumTeleOp extends LinearOpMode {
     //claw vars.
     double TEclawOffset = 0;
     final double TEclaw_SPEED = 0.02;
-
+    double liftPower;
     double TE1clawOffset = 0;
     final double TE1claw_SPEED = 0.02;
 
     double carouselPower;
+    double middleDrive;
 
     double clawOffset = 0;
-    final double claw_SPEED = 0.02;
+    final double claw_SPEED = 0.005;
     @Override
     public void runOpMode() {
         //new object robot
@@ -83,8 +84,8 @@ public class mecanumTeleOp extends LinearOpMode {
         robot.init(hardwareMap);
 
         telemetry.update();
-        robot.q1.setDirection(DcMotor.Direction.FORWARD);
-        robot.q2.setDirection(DcMotor.Direction.FORWARD);
+        robot.q1.setDirection(DcMotor.Direction.REVERSE);
+        robot.q2.setDirection(DcMotor.Direction.REVERSE);
         robot.q3.setDirection(DcMotor.Direction.FORWARD);
         robot.q4.setDirection(DcMotor.Direction.FORWARD);
 
@@ -143,22 +144,25 @@ public class mecanumTeleOp extends LinearOpMode {
 
             if (gamepad1.x){
                 robot.arm1.setPosition(hwMecanum.high);
-                robot.arm2.setPosition(hwMecanum.high);
+                robot.arm2.setPosition(1.02-hwMecanum.high);
             }
             if (gamepad1.y){
                 robot.arm1.setPosition(hwMecanum.low);
-                robot.arm2.setPosition(hwMecanum.low);
+                robot.arm2.setPosition(1.02-hwMecanum.low);
             }
+
             if (gamepad1.a)
             {clawOffset += claw_SPEED;}
             else if (gamepad1.b)
             {clawOffset=0;
+            robot.claw.setPosition(hwMecanum.OPEN_CLAW + clawOffset);
+            sleep(400);
             robot.arm1.setPosition(hwMecanum.inside);
-            robot.arm2.setPosition(hwMecanum.inside);
+            robot.arm2.setPosition(1.02-hwMecanum.inside);
             }
 
             clawOffset = Range.clip(clawOffset, 0, 1);
-            robot.claw.setPosition(hwMecanum.OPEN_CLAW + TEclawOffset);
+            robot.claw.setPosition(hwMecanum.OPEN_CLAW + clawOffset);
 
             //Team Element Claw Code
             if (gamepad2.right_bumper)
@@ -166,8 +170,8 @@ public class mecanumTeleOp extends LinearOpMode {
             else if (gamepad2.left_bumper)
             {TEclawOffset -= TEclaw_SPEED;}
 
-            TEclawOffset = Range.clip(TEclawOffset, -0.5, 0.5);
-            robot.claw.setPosition(hwMecanum.OPEN_CLAW + TEclawOffset);
+            TEclawOffset = Range.clip(TEclawOffset, -.8, .2);
+            robot.teamElementServo.setPosition(.8 + TEclawOffset);
 
             //Team element arm code
             if (gamepad2.a)
@@ -175,8 +179,8 @@ public class mecanumTeleOp extends LinearOpMode {
             else if (gamepad2.x)
             {TE1clawOffset -= TE1claw_SPEED;}
 
-            TE1clawOffset = Range.clip(TE1clawOffset, -0.5, 0.5);
-            robot.claw.setPosition(hwMecanum.OPEN_CLAW + TEclawOffset);
+            TE1clawOffset = Range.clip(TE1clawOffset, -.69, .31);
+            robot.teamElementArm.setPosition(.69 + TE1clawOffset);
 
             //intake code
             robot.intake.setPower(gamepad2.left_trigger-gamepad2.right_trigger);
@@ -184,34 +188,32 @@ public class mecanumTeleOp extends LinearOpMode {
                 //double armPower = gamepad2.right_trigger-gamepad2.left_trigger;
                 //robot.arm.setPower(armPower * .15);
                 //robot.claw.setPosition(gamepad2.right_trigger);
-            /*
-            if (gamepad2.y) {
-                robot.arm.setPower(hwMecanum.ARM_UP_POWER);
-            } else if (gamepad2.a)
-                robot.arm.setPower(hwMecanum.ARM_DOWN_POWER);
-            else
-                robot.arm.setPower(0.0);
-            */
+
+
 
 
                 //lift code
-                double liftPower = gamepad2.left_stick_y;
+                liftPower = gamepad2.left_stick_y;
                 robot.lift.setPower(liftPower * .50);
 
                 //code for the drive and carousel.
                 //if i hold down x, then I use the triggers to run the carousel
                 //otherwise if x is not held down, it drives the middle wheels
-                double middleDrive = gamepad1.left_trigger - gamepad1.right_trigger;
+                middleDrive = (Math.pow((gamepad1.right_trigger)*1.26,3))/2;
 
-                if (middleDrive<0){
-                    carouselPower=(-Math.pow(1.2,Math.abs(middleDrive)*20))/38;
-                }
-                else {carouselPower=(Math.pow(1.2,middleDrive)*20)/38;}
-
-                robot.carousel.setPower(Range.clip(carouselPower,1,-1));
-
-
-
+            if (gamepad1.dpad_down) {
+                robot.carousel.setPower((middleDrive));
+            }
+            else if (gamepad1.dpad_up) {
+                robot.carousel.setPower(-(middleDrive));
+            }
+            else {
+                //robot.lift.setPower(middleDrive);
+            }
+                telemetry.addData("left",gamepad1.left_trigger);
+                telemetry.addData("right",gamepad1.right_trigger);
+                telemetry.addData("power",middleDrive);
+                telemetry.update();
 
 
                 //update telemetry for the phone TODO: USE FOR TROUBLESHOOTING

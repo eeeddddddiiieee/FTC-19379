@@ -140,11 +140,12 @@ public class hwMecanum extends MecanumDrive {
     public static double OMEGA_WEIGHT=1;
 
     //servo and arm constants
-    public static final double OPEN_CLAW=0.5; //change
-    public static final double inside=0.5; //change
-    public static final double high=0.5; //change
-    public static final double mid=0.5; //change
-    public static final double low=0.5; //change
+    public static final double OPEN_CLAW=0.112; //change
+    public static final double inside=0.98;//change
+    public static final double high=0.45; //change
+    public static final double mid=0.32; //change
+    public static final double low=0.2; //change
+    public static final double high1=.69;
     public static final double ARM_UP_POWER=0.45;
     public static final double ARM_DOWN_POWER=-0.45;
     public static final double servoClosed=.69;
@@ -193,13 +194,13 @@ public class hwMecanum extends MecanumDrive {
         q3=hwMap.get(DcMotorEx.class, "left_driveb"); //left drive back init
         q4=hwMap.get(DcMotorEx.class, "right_driveb"); //right drive back init
         intake=hwMap.get(DcMotorEx.class, "intake");
-        arm=hwMap.get(DcMotorEx.class, "lift"); //arm init
+        //arm=hwMap.get(DcMotorEx.class, "lift"); //arm init
         lift=hwMap.get(DcMotorEx.class, "teamElement"); //lift init
 
         carousel=hwMap.get(DcMotorEx.class, "carousel");
 
         arm1=hwMap.get(Servo.class,"arm1");
-        arm2=hwMap.get(Servo.class,"arm1");
+        arm2=hwMap.get(Servo.class,"arm2");
         claw=hwMap.get(Servo.class,"claw"); // claw init
 
         teamElementServo=hwMap.get(Servo.class,"teservo");
@@ -223,8 +224,8 @@ public class hwMecanum extends MecanumDrive {
 
 
         //direction corrections for motor orientations TODO: TWEAK IF HAVING DRIVING ISSUES
-        q1.setDirection(DcMotor.Direction.REVERSE);
-        q2.setDirection(DcMotor.Direction.FORWARD);
+        q1.setDirection(DcMotor.Direction.FORWARD);
+        q2.setDirection(DcMotor.Direction.REVERSE);
         q3.setDirection(DcMotor.Direction.FORWARD);
         q4.setDirection(DcMotor.Direction.REVERSE);
 
@@ -239,11 +240,11 @@ public class hwMecanum extends MecanumDrive {
         q2.setPower(0);
         q3.setPower(0);
         q4.setPower(0);
-        arm.setPower(0);
+        //arm.setPower(0);
         intake.setPower(0);
         lift.setPower(0);
         carousel.setPower(0);
-        claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
+        //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
 
         //init encoders (for auto)
         q1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -252,7 +253,7 @@ public class hwMecanum extends MecanumDrive {
         q4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //only drive motors use encoders retard
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //init claw and set position TODO: tweak based on robot starting config

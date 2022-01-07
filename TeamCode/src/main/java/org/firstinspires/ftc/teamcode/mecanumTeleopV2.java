@@ -44,7 +44,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 /*
 TODO: This is the better teleop which uses state machine
  */
-@TeleOp(name="Mecanum: Teleop", group="hwMecanum")
+@TeleOp(name="Mecanum: Teleopv2", group="hwMecanum")
 //TODO: disable teleop by uncommenting the following line
 //@Disabled
 
