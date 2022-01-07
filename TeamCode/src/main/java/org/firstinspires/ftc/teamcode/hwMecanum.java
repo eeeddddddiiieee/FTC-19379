@@ -186,7 +186,7 @@ public class hwMecanum extends MecanumDrive {
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         imu.initialize(parameters);
         //remap imu axes because ours is mounted vertically
-        BNO055IMUUtil.remapAxes(imu, AxesOrder.YXZ, AxesSigns.NPN);
+        BNO055IMUUtil.remapAxes(imu, AxesOrder.YZX, AxesSigns.NNP);
 
         //hardware init
         q2=hwMap.get(DcMotorEx.class, "left_drivef"); //    left drive front init
@@ -244,6 +244,7 @@ public class hwMecanum extends MecanumDrive {
         intake.setPower(0);
         lift.setPower(0);
         carousel.setPower(0);
+        teamElementArm.setPosition(servoClosed);
         //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
 
         //init encoders (for auto)

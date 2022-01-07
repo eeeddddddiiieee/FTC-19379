@@ -21,7 +21,7 @@ public class MeepMeepTesting {
                 // Set constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, Math.toRadians(180), Math.toRadians(180), 12    )
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-36, -63, Math.toRadians(270)))
+                        drive.trajectorySequenceBuilder(new Pose2d(-31, -63, Math.toRadians(270)))
                                 .setReversed(true)
                                 .splineTo(new Vector2d(-12,-44),Math.toRadians(90))
                                 .waitSeconds(1)

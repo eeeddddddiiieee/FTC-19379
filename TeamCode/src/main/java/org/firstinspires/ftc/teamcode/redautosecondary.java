@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 //library imports
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.path.EmptyPathSegmentException;
@@ -24,30 +25,24 @@ park, carousel, idk
 @Autonomous(name="redautosecondary",group = "drive")
 
 public class redautosecondary extends LinearOpMode {
+    int width = 320;
+    int height = 240;
+    TEDetector detector = new TEDetector();
     public void runOpMode() throws InterruptedException, EmptyPathSegmentException {
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
 
-        int cameraMonitorViewId = hardwareMap.appContext
-                .getResources().getIdentifier("cameraMonitorViewId",
-                        "id", hardwareMap.appContext.getPackageName());
-        robot.camera = OpenCvCameraFactory.getInstance()
-                .createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        opencvtest detector = new opencvtest(telemetry);
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        robot.camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        // Connect to the camera
+        robot.camera.openCameraDevice();
+        // Use the SkystoneDetector pipeline
+        // processFrame() will be called to process the frame
         robot.camera.setPipeline(detector);
-        robot.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
-        {
-            @Override
-            public  void onOpened(){
-                robot.camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
-            }
+        // Remember to change the camera rotation
+        robot.camera.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
 
-
-            public void onError(int errorCode) {
-                //deez nuts!
-            }
-
-        });
+        FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
 
         waitForStart();
 
@@ -77,7 +72,7 @@ public class redautosecondary extends LinearOpMode {
                     telemetry.addData("Position:","Center");
                     telemetry.update();
                     break;
-                case NOT_FOUND:
+                case NONE:
                     robot.arm2.setPosition(1.02-hwMecanum.high);
                     robot.arm1.setPosition(hwMecanum.high);
                     telemetry.addData("Position:","Right");
@@ -87,7 +82,7 @@ public class redautosecondary extends LinearOpMode {
             robot.camera.stopStreaming();
 
             //moves forward to the
-            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(36, -61,Math.toRadians(270)),true)
+            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(41, -61,Math.toRadians(270)),true)
 
                     .splineTo(new Vector2d(12,-42),Math.toRadians(90))
                     .build();
