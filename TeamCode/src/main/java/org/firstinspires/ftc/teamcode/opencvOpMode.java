@@ -28,7 +28,7 @@ public class opencvOpMode extends LinearOpMode {
                 robot.camera.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
             }
 
-            @Override
+
             public void onError(int errorCode) {
                 //deez nuts!
             }
@@ -39,14 +39,20 @@ public class opencvOpMode extends LinearOpMode {
         waitForStart();
         switch (detector.getLocation()) {
             case LEFT:
+                robot.arm2.setPosition(1.02-hwMecanum.low);
+                robot.arm1.setPosition(hwMecanum.low);
                 telemetry.addData("Position:","Left");
                 telemetry.update();
                 break;
             case RIGHT:
+                robot.arm2.setPosition(1.02-hwMecanum.mid);
+                robot.arm1.setPosition(hwMecanum.mid);
                 telemetry.addData("Position:","Center");
                 telemetry.update();
                 break;
             case NOT_FOUND:
+                robot.arm2.setPosition(1.02-hwMecanum.high);
+                robot.arm1.setPosition(hwMecanum.high);
                 telemetry.addData("Position:","Right");
                 telemetry.update();
                 break;

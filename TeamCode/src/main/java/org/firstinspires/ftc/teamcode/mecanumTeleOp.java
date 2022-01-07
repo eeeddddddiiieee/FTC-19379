@@ -86,8 +86,8 @@ public class mecanumTeleOp extends LinearOpMode {
         telemetry.update();
         robot.q1.setDirection(DcMotor.Direction.REVERSE);
         robot.q2.setDirection(DcMotor.Direction.REVERSE);
-        robot.q3.setDirection(DcMotor.Direction.FORWARD);
-        robot.q4.setDirection(DcMotor.Direction.FORWARD);
+        robot.q3.setDirection(DcMotor.Direction.REVERSE);
+        robot.q4.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
         double shift;
@@ -208,7 +208,7 @@ public class mecanumTeleOp extends LinearOpMode {
                 robot.carousel.setPower(-(middleDrive));
             }
             else {
-                //robot.lift.setPower(middleDrive);
+                robot.intake.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
             }
                 telemetry.addData("left",gamepad1.left_trigger);
                 telemetry.addData("right",gamepad1.right_trigger);

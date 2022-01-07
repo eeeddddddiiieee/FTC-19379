@@ -142,9 +142,9 @@ public class hwMecanum extends MecanumDrive {
     //servo and arm constants
     public static final double OPEN_CLAW=0.112; //change
     public static final double inside=0.98;//change
-    public static final double high=0.45; //change
-    public static final double mid=0.32; //change
-    public static final double low=0.2; //change
+    public static final double high=0.4; //change
+    public static final double mid=0.25; //change
+    public static final double low=0.15; //change
     public static final double high1=.69;
     public static final double ARM_UP_POWER=0.45;
     public static final double ARM_DOWN_POWER=-0.45;
@@ -186,7 +186,7 @@ public class hwMecanum extends MecanumDrive {
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         imu.initialize(parameters);
         //remap imu axes because ours is mounted vertically
-        BNO055IMUUtil.remapAxes(imu, AxesOrder.XZY, AxesSigns.PNP);
+        BNO055IMUUtil.remapAxes(imu, AxesOrder.YXZ, AxesSigns.NPN);
 
         //hardware init
         q2=hwMap.get(DcMotorEx.class, "left_drivef"); //    left drive front init
@@ -226,8 +226,8 @@ public class hwMecanum extends MecanumDrive {
         //direction corrections for motor orientations TODO: TWEAK IF HAVING DRIVING ISSUES
         q1.setDirection(DcMotor.Direction.FORWARD);
         q2.setDirection(DcMotor.Direction.REVERSE);
-        q3.setDirection(DcMotor.Direction.FORWARD);
-        q4.setDirection(DcMotor.Direction.REVERSE);
+        q3.setDirection(DcMotor.Direction.REVERSE);
+        q4.setDirection(DcMotor.Direction.FORWARD);
 
         q1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         q2.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
