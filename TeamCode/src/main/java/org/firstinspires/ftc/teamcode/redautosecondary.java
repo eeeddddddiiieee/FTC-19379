@@ -44,8 +44,16 @@ public class redautosecondary extends LinearOpMode {
 
         FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
 
-        waitForStart();
+        sleep(2000);
+        sleep(2000);
+        while (!opModeIsActive()) {
+            telemetry.addData("Analysis", detector.getLocation());
+            telemetry.addData("region1", detector.region1value());
+            telemetry.addData("region2", detector.region2value());
+            telemetry.update();
 
+        }
+        waitForStart();
         while (opModeIsActive()) {
             robot.setPoseEstimate(new Pose2d(36,-63,Math.toRadians(270)));
 

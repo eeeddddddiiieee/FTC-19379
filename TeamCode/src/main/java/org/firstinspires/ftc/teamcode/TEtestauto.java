@@ -36,9 +36,10 @@ public class TEtestauto extends LinearOpMode {
         robot.camera.setPipeline(detector);
         // Remember to change the camera rotation
         robot.camera.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
-        waitForStart();
+
 
         FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
+
         sleep(2000);
         sleep(2000);
         while (!opModeIsActive()) {
@@ -48,6 +49,7 @@ public class TEtestauto extends LinearOpMode {
             telemetry.update();
 
         }
+        waitForStart();
 
         while (opModeIsActive()) {
             telemetry.addData("Analysis", detector.getLocation());
