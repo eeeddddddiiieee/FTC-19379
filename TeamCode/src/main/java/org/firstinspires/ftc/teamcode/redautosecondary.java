@@ -46,7 +46,7 @@ public class redautosecondary extends LinearOpMode {
 
         sleep(2000);
         sleep(2000);
-        while (!opModeIsActive()) {
+        while (!opModeIsActive()&&!isStopRequested()) {
             telemetry.addData("Analysis", detector.getLocation());
             telemetry.addData("region1", detector.region1value());
             telemetry.addData("region2", detector.region2value());
@@ -54,7 +54,7 @@ public class redautosecondary extends LinearOpMode {
 
         }
         waitForStart();
-        while (opModeIsActive()) {
+        while (opModeIsActive()&&!isStopRequested()) {
             robot.setPoseEstimate(new Pose2d(36,-63,Math.toRadians(270)));
 
             //closes claw and lifts up arm
@@ -65,7 +65,7 @@ public class redautosecondary extends LinearOpMode {
             //robot.arm.setPower(0);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             robot.arm1.setPosition(hwMecanum.inside);
-            robot.claw.setPosition(.138);
+            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             sleep(300);
             switch (detector.getLocation()) {
                 case LEFT:

@@ -44,7 +44,7 @@ public class blueautomain extends LinearOpMode {
 
         sleep(2000);
         sleep(2000);
-        while (!opModeIsActive()) {
+        while (!opModeIsActive()&&!isStopRequested()) {
             telemetry.addData("Analysis", detector.getLocation());
             telemetry.addData("region1", detector.region1value());
             telemetry.addData("region2", detector.region2value());
@@ -53,7 +53,7 @@ public class blueautomain extends LinearOpMode {
         }
         waitForStart();
 
-        while (opModeIsActive()) {
+        while (opModeIsActive()&&!isStopRequested()) {
             robot.setPoseEstimate(new Pose2d(41,-63,Math.toRadians(270)));
 
             //closes claw and lifts up arm
@@ -64,7 +64,7 @@ public class blueautomain extends LinearOpMode {
             //robot.arm.setPower(0);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             robot.arm1.setPosition(hwMecanum.inside);
-            robot.claw.setPosition(.138);
+            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             sleep(300);
             switch (detector.getLocation()) {
                 case LEFT:
@@ -101,7 +101,7 @@ public class blueautomain extends LinearOpMode {
 
             //robot.claw.setPosition(robot.servoOpen);//for red side
             Trajectory move2=robot.trajectoryBuilder(move1.end(),false)
-                    .splineTo(new Vector2d(60,-60),Math.toRadians(0))
+                    .splineTo(new Vector2d(62,-60),Math.toRadians(0))
                     .build();
             robot.followTrajectory(move2);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
@@ -117,7 +117,7 @@ public class blueautomain extends LinearOpMode {
                     .build();
             robot.followTrajectory(move3);
 
-            return;
+            if (isStopRequested()){return;}
             /*
             robot.setPoseEstimate(new Pose2d(-10,-61,Math.toRadians(90)));
 

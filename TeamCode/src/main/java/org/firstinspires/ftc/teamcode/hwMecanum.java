@@ -140,8 +140,9 @@ public class hwMecanum extends MecanumDrive {
     public static double OMEGA_WEIGHT=1;
 
     //servo and arm constants
-    public static final double OPEN_CLAW=0.112; //change
-    public static final double inside=0.98;//change
+    public static final double OPEN_CLAW=.12; //change
+    public static final double CLOSED_CLAW=.15;
+    public static final double inside=0.99;//change
     public static final double high=0.4; //change
     public static final double mid=0.25; //change
     public static final double low=0.15; //change
@@ -245,6 +246,7 @@ public class hwMecanum extends MecanumDrive {
         lift.setPower(0);
         carousel.setPower(0);
         teamElementArm.setPosition(servoClosed);
+        claw.setPosition(hwMecanum.CLOSED_CLAW);
         //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
 
         //init encoders (for auto)

@@ -160,6 +160,9 @@ public class mecanumTeleOp extends LinearOpMode {
             robot.arm1.setPosition(hwMecanum.inside);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             }
+            if (gamepad1.dpad_left){
+                clawOffset -= claw_SPEED;
+            }
 
             clawOffset = Range.clip(clawOffset, 0, 1);
             robot.claw.setPosition(hwMecanum.OPEN_CLAW + clawOffset);
@@ -182,7 +185,6 @@ public class mecanumTeleOp extends LinearOpMode {
             TE1clawOffset = Range.clip(TE1clawOffset, -.69, .31);
             robot.teamElementArm.setPosition(.69 + TE1clawOffset);
 
-            //intake code
             robot.intake.setPower(gamepad2.left_trigger-gamepad2.right_trigger);
                 //arm code
                 //double armPower = gamepad2.right_trigger-gamepad2.left_trigger;
@@ -207,9 +209,7 @@ public class mecanumTeleOp extends LinearOpMode {
             else if (gamepad1.dpad_up) {
                 robot.carousel.setPower(-(middleDrive));
             }
-            else {
-                robot.intake.setPower(gamepad1.left_trigger-gamepad1.right_trigger);
-            }
+
                 telemetry.addData("left",gamepad1.left_trigger);
                 telemetry.addData("right",gamepad1.right_trigger);
                 telemetry.addData("power",middleDrive);
