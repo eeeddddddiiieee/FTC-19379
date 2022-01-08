@@ -214,7 +214,7 @@ public class TEDetector extends OpenCvPipeline {
          * Now that we found the max, we actually need to go and
          * figure out which sample region that value was from
          */
-        if (avg1<130&&avg2<130){
+        if (avg1<134&&avg2<134){
             position=SkystoneLocation.LEFT;
         }
         else if(max == avg1) // Was it from region 1?

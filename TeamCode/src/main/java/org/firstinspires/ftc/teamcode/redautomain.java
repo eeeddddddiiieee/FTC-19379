@@ -44,8 +44,7 @@ public class redautomain extends LinearOpMode {
 
         FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
 
-        sleep(2000);
-        sleep(2000);
+
         while (!opModeIsActive()&&!isStopRequested()) {
             telemetry.addData("Analysis", detector.getLocation());
             telemetry.addData("region1", detector.region1value());
@@ -64,9 +63,10 @@ public class redautomain extends LinearOpMode {
             //robot.arm.setPower(-.15);
             //sleep(250);
             //robot.arm.setPower(0);
+            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             robot.arm1.setPosition(hwMecanum.inside);
-            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
+
             sleep(300);
             switch (detector.getLocation()) {
                 case LEFT:
@@ -89,9 +89,9 @@ public class redautomain extends LinearOpMode {
                     break;
             }
             robot.camera.stopStreaming();
-
+            sleep(5000);
             //moves forward to the
-            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(36, -61,Math.toRadians(270)),true)
+            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(36, -62,Math.toRadians(270)),true)
 
                     .splineTo(new Vector2d(-12,-42),Math.toRadians(90))
                     .build();
@@ -120,7 +120,7 @@ public class redautomain extends LinearOpMode {
                     .build();
             robot.followTrajectory(move3);
 
-            if (isStopRequested()){return;}
+            return;
             /*
             robot.setPoseEstimate(new Pose2d(-10,-61,Math.toRadians(90)));
 

@@ -153,19 +153,23 @@ public class mecanumTeleOp extends LinearOpMode {
 
             if (gamepad1.a)
             {clawOffset += claw_SPEED;}
+            if (gamepad1.dpad_right){
+                clawOffset -= claw_SPEED;
+            }
             else if (gamepad1.b)
             {clawOffset=0;
-            robot.claw.setPosition(hwMecanum.OPEN_CLAW + clawOffset);
+            robot.claw.setPosition(hwMecanum.OPEN_CLAW);
+            sleep(400);
+            robot.claw.setPosition(hwMecanum.CLOSED_CLAW + clawOffset);
             sleep(400);
             robot.arm1.setPosition(hwMecanum.inside);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
-            }
-            if (gamepad1.dpad_left){
-                clawOffset -= claw_SPEED;
+            sleep(400);
             }
 
+
             clawOffset = Range.clip(clawOffset, 0, 1);
-            robot.claw.setPosition(hwMecanum.OPEN_CLAW + clawOffset);
+            robot.claw.setPosition(hwMecanum.halfopen + clawOffset);
 
             //Team Element Claw Code
             if (gamepad2.right_bumper)
@@ -204,10 +208,10 @@ public class mecanumTeleOp extends LinearOpMode {
                 middleDrive = (Math.pow((gamepad1.right_trigger)*1.26,3))/2;
 
             if (gamepad1.dpad_down) {
-                robot.carousel.setPower((middleDrive));
+                robot.carousel.setPower((middleDrive)*.7);
             }
             else if (gamepad1.dpad_up) {
-                robot.carousel.setPower(-(middleDrive));
+                robot.carousel.setPower(-(middleDrive)*.7);
             }
 
                 telemetry.addData("left",gamepad1.left_trigger);

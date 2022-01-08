@@ -40,8 +40,6 @@ public class TEtestauto extends LinearOpMode {
 
         FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
 
-        sleep(2000);
-        sleep(2000);
         while (!opModeIsActive()) {
             telemetry.addData("Analysis", detector.getLocation());
             telemetry.addData("region1", detector.region1value());
@@ -80,6 +78,9 @@ public class TEtestauto extends LinearOpMode {
             }
 */
                 robot.camera.stopStreaming();
+            if (isStopRequested()) {
+                return;
+            }
             }
         }
 

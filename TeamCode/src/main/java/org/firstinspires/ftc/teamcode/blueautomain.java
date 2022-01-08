@@ -42,8 +42,6 @@ public class blueautomain extends LinearOpMode {
 
         FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
 
-        sleep(2000);
-        sleep(2000);
         while (!opModeIsActive()&&!isStopRequested()) {
             telemetry.addData("Analysis", detector.getLocation());
             telemetry.addData("region1", detector.region1value());
@@ -87,9 +85,9 @@ public class blueautomain extends LinearOpMode {
                     break;
             }
             robot.camera.stopStreaming();
-
+            sleep(2000);
             //moves forward to the
-            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(38, -61,Math.toRadians(270)),true)
+            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(38, -62,Math.toRadians(270)),true)
 
                     .splineTo(new Vector2d(14,-40),Math.toRadians(90))
                     .build();
@@ -101,9 +99,10 @@ public class blueautomain extends LinearOpMode {
 
             //robot.claw.setPosition(robot.servoOpen);//for red side
             Trajectory move2=robot.trajectoryBuilder(move1.end(),false)
-                    .splineTo(new Vector2d(62,-60),Math.toRadians(0))
+                    .splineTo(new Vector2d(67,-55),Math.toRadians(0))
                     .build();
             robot.followTrajectory(move2);
+            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             robot.arm1.setPosition(hwMecanum.inside);
             robot.carousel.setPower(.3);
@@ -117,7 +116,7 @@ public class blueautomain extends LinearOpMode {
                     .build();
             robot.followTrajectory(move3);
 
-            if (isStopRequested()){return;}
+            return;
             /*
             robot.setPoseEstimate(new Pose2d(-10,-61,Math.toRadians(90)));
 
