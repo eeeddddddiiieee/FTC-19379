@@ -200,7 +200,7 @@ public class mecanumTeleOp extends LinearOpMode {
 
                 //lift code
                 liftPower = gamepad2.left_stick_y;
-                robot.lift.setPower(liftPower * .50);
+                robot.lift1.setPower(liftPower * .50);
 
                 //code for the drive and carousel.
                 //if i hold down x, then I use the triggers to run the carousel

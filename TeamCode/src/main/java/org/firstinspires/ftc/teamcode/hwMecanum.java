@@ -64,6 +64,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -112,8 +113,8 @@ public class hwMecanum extends MecanumDrive {
 
     //hardware declaration
     public DcMotorEx q1, q2, q3, q4; //names of drive motors
-    public DcMotorEx lift; //lift motor
-    public DcMotorEx arm; //arm motor
+    public DcMotorEx lift1; //lift motor
+    public DcMotorEx lift2; //arm motor
     public Servo claw; //claw servo
     public Servo arm1; //claw servo
     public Servo arm2;
@@ -126,6 +127,7 @@ public class hwMecanum extends MecanumDrive {
     public BNO055IMU imu; //imu
     private VoltageSensor batteryVoltageSensor; //batt volt sensor
     private Pose2d lastPoseOnTurn; //for servo position
+    public TouchSensor liftLimitSwitch;
 
     //trajectory shit idk
     private TrajectorySequenceRunner trajectorySequenceRunner;
@@ -157,12 +159,9 @@ public class hwMecanum extends MecanumDrive {
 
     //public UGContourRingPipeline pipeline;
     public OpenCvCamera camera;
-
-
-
     public int cameraMonitorViewId;
     //timer
-    private ElapsedTime period = new ElapsedTime();
+    public ElapsedTime period = new ElapsedTime();
 
     //constructor
     public hwMecanum(HardwareMap ahwMap){
@@ -196,8 +195,10 @@ public class hwMecanum extends MecanumDrive {
         q3=hwMap.get(DcMotorEx.class, "left_driveb"); //left drive back init
         q4=hwMap.get(DcMotorEx.class, "right_driveb"); //right drive back init
         intake=hwMap.get(DcMotorEx.class, "intake");
-        //arm=hwMap.get(DcMotorEx.class, "lift"); //arm init
-        lift=hwMap.get(DcMotorEx.class, "teamElement"); //lift init
+        lift2=hwMap.get(DcMotorEx.class, "lift2"); //arm init
+        lift1=hwMap.get(DcMotorEx.class, "lift1"); //lift init
+
+        liftLimitSwitch=hwMap.get(TouchSensor.class,"limit");
 
         carousel=hwMap.get(DcMotorEx.class, "carousel");
 
@@ -235,16 +236,17 @@ public class hwMecanum extends MecanumDrive {
         q2.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         q3.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         q4.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-
+        lift1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        lift2.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         //set all power to 0
         q1.setPower(0);
         q2.setPower(0);
         q3.setPower(0);
         q4.setPower(0);
-        //arm.setPower(0);
+        lift2.setPower(0);
         intake.setPower(0);
-        lift.setPower(0);
+        lift1.setPower(0);
         carousel.setPower(0);
         teamElementArm.setPosition(servoClosed);
         //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
@@ -254,10 +256,11 @@ public class hwMecanum extends MecanumDrive {
         q2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         q3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         q4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        //only drive motors use encoders retard
+        //only drive motors use encoders
         //arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //init claw and set position TODO: tweak based on robot starting config
         //claw = hwMap.get(ServoEx.class, "claw");
@@ -265,6 +268,7 @@ public class hwMecanum extends MecanumDrive {
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
 
     }
+
     public TrajectoryBuilder trajectoryBuilder (Pose2d startPose){
         return new TrajectoryBuilder(startPose, VEL_CONSTRAINT, ACCEL_CONSTRAINT);
     }

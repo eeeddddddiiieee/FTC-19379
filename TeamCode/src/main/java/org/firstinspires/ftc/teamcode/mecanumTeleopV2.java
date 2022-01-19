@@ -225,7 +225,7 @@ public class mecanumTeleopV2 extends LinearOpMode {
 
             //arm code
             double armPower = gamepad2.right_trigger-gamepad2.left_trigger;
-            robot.arm.setPower(armPower * .15);
+            robot.lift1.setPower(armPower * .15);
             //robot.claw.setPosition(gamepad2.right_trigger);
             /*
             if (gamepad2.y) {
@@ -239,7 +239,7 @@ public class mecanumTeleopV2 extends LinearOpMode {
 
             //lift code
             double liftPower = gamepad2.left_stick_y;
-            robot.lift.setPower(liftPower * .20);
+            robot.lift1.setPower(liftPower * .20);
 
             //code for the drive and carousel.
             //if i hold down x, then I use the triggers to run the carousel
@@ -248,7 +248,7 @@ public class mecanumTeleopV2 extends LinearOpMode {
             if (gamepad1.x) {
                 robot.carousel.setPower(middleDrive);
             } else {
-                robot.lift.setPower(middleDrive);
+                robot.lift1.setPower(middleDrive);
             }
 
             if (gamepad1.b) {
