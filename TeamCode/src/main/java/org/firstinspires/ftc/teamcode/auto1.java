@@ -18,7 +18,7 @@ import org.firstinspires.ftc.teamcode.hwMecanum;
 
 
 /*
-This is the Bad AUTO. At all expense, please do not use this for the final robot. Time based
+This is the test AUTO. At all expense, please do not use this for the final robot. Time based
 park, carousel, idk
 TODO: This auto does not use roadrunner or PID. This is a backup auto.
  */

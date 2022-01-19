@@ -1,17 +1,17 @@
-package org.firstinspires.ftc.teamcode;
-import org.openftc.easyopencv.OpenCvCamera;
+package org.firstinspires.ftc.teamcode.te;
+import org.firstinspires.ftc.teamcode.hwMecanum;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.firstinspires.ftc.teamcode.TEDetector;
+import org.firstinspires.ftc.teamcode.te.TEDetector;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 
-@Autonomous(name="TEtestauto", group="Auto")
-public class TEtestauto extends LinearOpMode {
+@Autonomous(name="TEtestautov2", group="Auto")
+public class TEtestautov2 extends LinearOpMode {
 
     int width = 320;
     int height = 240;
@@ -23,9 +23,7 @@ public class TEtestauto extends LinearOpMode {
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
         FtcDashboard dashboard = FtcDashboard.getInstance();
-
         TEDetector detector = new TEDetector();
-
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         robot.camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
@@ -37,18 +35,10 @@ public class TEtestauto extends LinearOpMode {
         // Remember to change the camera rotation
         robot.camera.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
 
-
         FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
 
-        while (!opModeIsActive()) {
-            telemetry.addData("Analysis", detector.getLocation());
-            telemetry.addData("region1", detector.region1value());
-            telemetry.addData("region2", detector.region2value());
-            telemetry.update();
 
-        }
         waitForStart();
-
         while (opModeIsActive()) {
             telemetry.addData("Analysis", detector.getLocation());
             telemetry.addData("region1",detector.region1value());
@@ -77,12 +67,9 @@ public class TEtestauto extends LinearOpMode {
                     break;
             }
 */
-                robot.camera.stopStreaming();
-            if (isStopRequested()) {
-                return;
-            }
-            }
+            robot.camera.stopStreaming();
         }
-
-
     }
+
+
+}
