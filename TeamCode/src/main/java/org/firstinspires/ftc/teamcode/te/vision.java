@@ -11,11 +11,14 @@ import org.opencv.core.Scalar;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.firstinspires.ftc.teamcode.hwMecanum;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 
 @Config
 @Autonomous(name="OpenCV_Test", group="Tutorials")
 
-public class contourCentroidTest extends LinearOpMode {
+public class vision extends LinearOpMode{
 
     private OpenCvCamera webcam;
     private contourCentroidDetector pipeline;
@@ -36,14 +39,13 @@ public class contourCentroidTest extends LinearOpMode {
     public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 150.0, 120.0);
     public static Scalar scalarUpperYCrCb = new Scalar(255.0, 255.0, 255.0);
 
-    @Override
-    public void runOpMode() throws InterruptedException
-    {
-        hwMecanum robot = new hwMecanum(hardwareMap);
-        robot.init(hardwareMap);
+    public OpenCvCamera camera;
+    public int cameraMonitorViewId;
+
+    public void init(HardwareMap h){
         // OpenCV webcam
-        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        robot.camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "camera"), cameraMonitorViewId);
+        int cameraMonitorViewId = h.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createWebcam(h.get(WebcamName.class, "camera"), cameraMonitorViewId);
         //OpenCV Pipeline
 
         pipeline = new contourCentroidDetector(0.2, 0.2, 0.2, 0.2);
@@ -51,13 +53,13 @@ public class contourCentroidTest extends LinearOpMode {
         pipeline.configureScalarLower(scalarLowerYCrCb.val[0],scalarLowerYCrCb.val[1],scalarLowerYCrCb.val[2]);
         pipeline.configureScalarUpper(scalarUpperYCrCb.val[0],scalarUpperYCrCb.val[1],scalarUpperYCrCb.val[2]);
 
-        robot.camera.setPipeline(pipeline);
+        camera.setPipeline(pipeline);
 
         // Webcam Streaming
-        robot.camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+        camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                robot.camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
+                camera.startStreaming(640, 480, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -65,47 +67,53 @@ public class contourCentroidTest extends LinearOpMode {
 
             }
         });
+    }
+
+    public void checkTE(){
+        if(pipeline.error){
+            telemetry.addData("Exception: ", pipeline.debug.getStackTrace());
+        }
+        // Only use this line of the code when you want to find the lower and upper values, using Ftc Dashboard (https://acmerobotics.github.io/ftc-dashboard/gettingstarted)
+        // testing(pipeline);
+
+        // Watch our YouTube Tutorial for the better explanation
+
+        double rectangleArea = pipeline.getRectArea();
+
+        //Print out the area of the rectangle that is found.
+        telemetry.addData("Rectangle Area", rectangleArea);
+
+        //Check to see if the rectangle has a large enough area to be a marker.
+        if(rectangleArea > minRectangleArea){
+            //Then check the location of the rectangle to see which barcode it is in.
+            if(pipeline.getRectMidpointX() > rightBarcodeRangeBoundary * pipeline.getRectWidth()){
+                telemetry.addData("Barcode Position", "Right");
+            }
+            else if(pipeline.getRectMidpointX() < leftBarcodeRangeBoundary * pipeline.getRectWidth()){
+                telemetry.addData("Barcode Position", "Left");
+            }
+            else {
+                telemetry.addData("Barcode Position", "Center");
+            }
+        }
+
+        telemetry.update();
+    }
+
+    @Override
+    public void runOpMode()
+    {
+
+
 
         // Only if you are using ftcdashboard
 //        FtcDashboard dashboard = FtcDashboard.getInstance();
 //        telemetry = dashboard.getTelemetry();
 //        FtcDashboard.getInstance().startCameraStream(webcam, 10);
 
-        waitForStart();
 
-        if(isStopRequested()) return;
 
-        while (opModeIsActive())
-        {
-            if(pipeline.error){
-                telemetry.addData("Exception: ", pipeline.debug.getStackTrace());
-            }
-            // Only use this line of the code when you want to find the lower and upper values, using Ftc Dashboard (https://acmerobotics.github.io/ftc-dashboard/gettingstarted)
-            // testing(pipeline);
 
-            // Watch our YouTube Tutorial for the better explanation
-
-            double rectangleArea = pipeline.getRectArea();
-
-            //Print out the area of the rectangle that is found.
-            telemetry.addData("Rectangle Area", rectangleArea);
-
-            //Check to see if the rectangle has a large enough area to be a marker.
-            if(rectangleArea > minRectangleArea){
-                //Then check the location of the rectangle to see which barcode it is in.
-                if(pipeline.getRectMidpointX() > rightBarcodeRangeBoundary * pipeline.getRectWidth()){
-                    telemetry.addData("Barcode Position", "Right");
-                }
-                else if(pipeline.getRectMidpointX() < leftBarcodeRangeBoundary * pipeline.getRectWidth()){
-                    telemetry.addData("Barcode Position", "Left");
-                }
-                else {
-                    telemetry.addData("Barcode Position", "Center");
-                }
-            }
-
-            telemetry.update();
-        }
     }
     public void testing(contourCentroidDetector pipeline){
         if(lowerRuntime + 0.05 < getRuntime()){

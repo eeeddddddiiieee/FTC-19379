@@ -83,6 +83,7 @@ public class mecanumTeleOp extends LinearOpMode {
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
 
+
         telemetry.update();
         robot.q1.setDirection(DcMotor.Direction.REVERSE);
         robot.q2.setDirection(DcMotor.Direction.REVERSE);
