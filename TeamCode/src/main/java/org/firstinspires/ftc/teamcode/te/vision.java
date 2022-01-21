@@ -41,6 +41,12 @@ public class vision extends LinearOpMode{
 
     public OpenCvCamera camera;
     public int cameraMonitorViewId;
+    public enum barcodePosition{
+        LEFT,
+        RIGHT,
+        CENTER
+    }
+    public barcodePosition position;
 
     public void init(HardwareMap h){
         // OpenCV webcam
@@ -88,12 +94,15 @@ public class vision extends LinearOpMode{
             //Then check the location of the rectangle to see which barcode it is in.
             if(pipeline.getRectMidpointX() > rightBarcodeRangeBoundary * pipeline.getRectWidth()){
                 telemetry.addData("Barcode Position", "Right");
+                position=barcodePosition.RIGHT;
             }
             else if(pipeline.getRectMidpointX() < leftBarcodeRangeBoundary * pipeline.getRectWidth()){
                 telemetry.addData("Barcode Position", "Left");
+                position=barcodePosition.LEFT;
             }
             else {
                 telemetry.addData("Barcode Position", "Center");
+                position=barcodePosition.CENTER;
             }
         }
 
@@ -144,5 +153,9 @@ public class vision extends LinearOpMode{
         if(value < min){ value = min; }
         if(value > max){ value = max; }
         return value;
+    }
+
+    public barcodePosition getPosition() {
+        return position;
     }
 }

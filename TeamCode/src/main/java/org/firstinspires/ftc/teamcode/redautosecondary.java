@@ -22,7 +22,8 @@ park, carousel, idk
 @Config
 @Autonomous(name="redautosecondary",group = "drive")
 
-public class redautosecondary extends LinearOpMode {
+public abstract class redautosecondary extends LinearOpMode {
+    /*
     int width = 320;
     int height = 240;
     TEDetector detector = new TEDetector();
@@ -184,8 +185,9 @@ public class redautosecondary extends LinearOpMode {
 
             Trajectory spline1 = robot.trajectoryBuilder(new Pose2d(0, 0, Math.toRadians(90)))
                     .splineTo(new Vector2d(50, 50), Math.toRadians(90))
-                    .build();*/
-        }
+                    .build();
+
+                            }
 
 
 
@@ -196,4 +198,5 @@ public class redautosecondary extends LinearOpMode {
 
 
     }
+    */
 }

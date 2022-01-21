@@ -80,15 +80,15 @@ public class servotest extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.a){
-                robot.arm1.setPosition(hwMecanum.low);
+                robot.TE.setPosition(hwMecanum.low);
                 robot.arm2.setPosition(1.02-hwMecanum.low);
             }
             if (gamepad1.b){
-                robot.arm1.setPosition(hwMecanum.high);
+                robot.TE.setPosition(hwMecanum.high);
                 robot.arm2.setPosition(1.02-hwMecanum.high);
             }
             if (gamepad1.back){
-                robot.arm1.setPosition(hwMecanum.high1);
+                robot.TE.setPosition(hwMecanum.high1);
                 robot.arm2.setPosition(1.02-hwMecanum.high1);
             }
 

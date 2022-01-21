@@ -116,7 +116,7 @@ public class hwMecanum extends MecanumDrive {
     public DcMotorEx lift1; //lift motor
     public DcMotorEx lift2; //arm motor
     public Servo claw; //claw servo
-    public Servo arm1; //claw servo
+    public Servo TE; //claw servo
     public Servo arm2;
     public Servo teamElementServo;
     public Servo teamElementArm;
@@ -202,7 +202,7 @@ public class hwMecanum extends MecanumDrive {
 
         carousel=hwMap.get(DcMotorEx.class, "carousel");
 
-        arm1=hwMap.get(Servo.class,"arm1");
+        TE=hwMap.get(Servo.class,"TE");
         arm2=hwMap.get(Servo.class,"arm2");
         claw=hwMap.get(Servo.class,"claw"); // claw init
 

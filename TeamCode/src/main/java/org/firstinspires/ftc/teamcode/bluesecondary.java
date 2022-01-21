@@ -19,9 +19,9 @@ This is the RETARD AUTO. At all expense, please do not use this for the final ro
 park, carousel, idk
 //TODO: This auto does not use roadrunner or PID. This is a backup auto.
  */
-@Config
-@Autonomous(name="blueautosecondary(nocarousel)",group = "drive")
-
+//@Config
+//@Autonomous(name="blueautosecondary(nocarousel)",group = "drive")
+/*
 public class bluesecondary extends LinearOpMode {
     int width = 320;
     int height = 240;
@@ -63,7 +63,7 @@ public class bluesecondary extends LinearOpMode {
             //sleep(250);
             //robot.arm.setPower(0);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
-            robot.arm1.setPosition(hwMecanum.inside);
+            robot.TE.setPosition(hwMecanum.inside);
             robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             sleep(300);
             switch (detector.getLocation()) {
@@ -184,7 +184,7 @@ public class bluesecondary extends LinearOpMode {
 
             Trajectory spline1 = robot.trajectoryBuilder(new Pose2d(0, 0, Math.toRadians(90)))
                     .splineTo(new Vector2d(50, 50), Math.toRadians(90))
-                    .build();*/
+                    .build();
         }
 
 
@@ -197,3 +197,4 @@ public class bluesecondary extends LinearOpMode {
 
     }
 }
+*/

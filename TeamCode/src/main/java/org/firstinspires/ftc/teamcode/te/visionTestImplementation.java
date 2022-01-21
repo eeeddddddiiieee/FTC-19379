@@ -5,6 +5,7 @@ import org.firstinspires.ftc.teamcode.hwMecanum;
 import org.firstinspires.ftc.teamcode.lift;
 import org.firstinspires.ftc.teamcode.te.vision;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.te.vision.barcodePosition;
 
 public class visionTestImplementation extends LinearOpMode {
     public hwMecanum robot;
@@ -21,6 +22,11 @@ public class visionTestImplementation extends LinearOpMode {
         while (opModeIsActive())
         {
             vision1.checkTE();
+            switch (vision1.getPosition()){
+                case LEFT:
+                case CENTER:
+                case RIGHT:
+            }
         }
     }
 }

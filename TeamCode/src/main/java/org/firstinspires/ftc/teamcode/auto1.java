@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.hwMecanum;
+import org.firstinspires.ftc.teamcode.te.vision;
 //import deez nuts
 
 
@@ -23,21 +24,31 @@ park, carousel, idk
 TODO: This auto does not use roadrunner or PID. This is a backup auto.
  */
 public class auto1 extends LinearOpMode {
-    hwMecanum robot;
-    lift robotlift;
+    public hwMecanum robot;
+    public lift robotlift;
+    public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;
     public void runOpMode() throws InterruptedException{
-        robot = new hwMecanum(hardwareMap);
-        robot.init(hardwareMap);
-        robotlift=new lift(hardwareMap);
-        robotlift.init(hardwareMap);
+
+        initialize();
 
         waitForStart();
+
+
         while (opModeIsActive()){
             robotlift.setPosition(lift.liftHeight.High);
         }
 
 
+    }
+
+    public void initialize(){
+        robot = new hwMecanum(hardwareMap);
+        robot.init(hardwareMap);
+        robotlift=new lift(hardwareMap);
+        robotlift.init(hardwareMap);
+        vision1=new vision();
+        vision1.init(hardwareMap);
     }
 
 

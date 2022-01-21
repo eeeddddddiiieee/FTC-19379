@@ -14,13 +14,15 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-/*
- */
+
+
 @Config
 @Autonomous(name="blueautoprimary",group = "drive")
 
-public class blueautomain extends LinearOpMode {
+public abstract class blueautomain extends LinearOpMode {
+    /*
     int width = 320;
+
     int height = 240;
     TEDetector detector = new TEDetector();
     public void runOpMode() throws InterruptedException, EmptyPathSegmentException {
@@ -189,7 +191,7 @@ public class blueautomain extends LinearOpMode {
 
             Trajectory spline1 = robot.trajectoryBuilder(new Pose2d(0, 0, Math.toRadians(90)))
                     .splineTo(new Vector2d(50, 50), Math.toRadians(90))
-                    .build();*/
+                    .build();
         }
 
 
@@ -200,5 +202,6 @@ public class blueautomain extends LinearOpMode {
 
 
 
-    }
+    }*/
+
 }

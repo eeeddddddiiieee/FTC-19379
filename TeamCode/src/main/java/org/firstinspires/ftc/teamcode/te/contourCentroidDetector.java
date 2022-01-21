@@ -24,8 +24,8 @@ public class contourCentroidDetector extends OpenCvPipeline {
     public static Scalar scalarUpperYCrCb = new Scalar(255.0, 255.0, 255.0);
 
     // Green                                             Y      Cr     Cb
-    // public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 0.0, 0.0);
-    // public static Scalar scalarUpperYCrCb = new Scalar(255.0, 120.0, 120.0);
+    // public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 120.0, 150.0);
+    // public static Scalar scalarUpperYCrCb = new Scalar(255.0, 220.0, 255.0);
     // use this picture for you own color https://raw.githubusercontent.com/PinkToTheFuture/OpenCV_FreightFrenzy_2021-2022/main/7e8azlgi.bmp
     // Note that the Cr and Cb values range between 0-255. this means that the origin of the coordinate system is (128,128)
 
