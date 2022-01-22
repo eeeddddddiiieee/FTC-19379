@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.lift;
 
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 public class Teleop extends LinearOpMode {
     public lift robotlift;
     public hwMecanum robot;
+    ElapsedTime runTime=new ElapsedTime();
     public enum depositState{
         START,
         PRIME,
@@ -37,6 +39,7 @@ public class Teleop extends LinearOpMode {
         robot.init(hardwareMap);
         robotlift=new lift(hardwareMap);
         robotlift.init(hardwareMap);
+        driveControls dC=new driveControls();
 
         waitForStart();
 
@@ -52,6 +55,7 @@ public class Teleop extends LinearOpMode {
                         case HIGH:
                         case DUMP:
                     }
+                    dC.driveController(robot);
 
                     if (gamepad1.a) {
                         localizer1.setPoseEstimate(new Pose2d(24, 7, Math.toRadians(90)));
@@ -60,10 +64,7 @@ public class Teleop extends LinearOpMode {
 
 
             }
+            //telemetry.addData();
         }
-
-
-
-
     }
 }

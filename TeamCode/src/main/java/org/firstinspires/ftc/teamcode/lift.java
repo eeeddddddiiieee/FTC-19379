@@ -64,7 +64,7 @@ public class lift extends hwMecanum{
         }
 
     }
-    public void reset(){
+    public void resetLift(){
         while (!liftLimitSwitch.isPressed()){
             setHeight(-20);
         }

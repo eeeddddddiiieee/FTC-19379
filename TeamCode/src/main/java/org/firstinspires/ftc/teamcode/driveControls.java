@@ -1,7 +1,49 @@
 package org.firstinspires.ftc.teamcode;
 
-public class driveControls {
-    public void driveController(hwMecanum robot){
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.Range;
+import org.firstinspires.ftc.teamcode.hwMecanum;
 
-    }s
+public class driveControls extends LinearOpMode {
+    double x1;
+    double y1;
+    double yaw;
+    double shift;
+    double reverse;
+    public driveControls(){
+
+    }
+    public void runOpMode(){
+
+    }
+    public void driveController(hwMecanum robot){
+        y1 = -gamepad1.left_stick_y;
+        x1 = gamepad1.left_stick_x;
+        yaw = gamepad1.right_stick_x;
+
+
+        if (gamepad1.right_bumper) {
+            shift = 0.35;
+        }
+        else {
+            shift = 1;
+        }
+
+        if (gamepad1.left_bumper){
+            reverse = -1;
+        }
+        else {
+            reverse = 1;
+        }
+
+        double lb = Range.clip((((y1 * reverse) + yaw - (x1 * reverse)) * shift), -1.0, 1.0);
+        double rb = Range.clip((((y1 * reverse) - yaw + (x1 * reverse)) * shift), -1.0, 1.0);
+        double lf = Range.clip((((y1 * reverse) + yaw + (x1 * reverse)) * shift), -1.0, 1.0);
+        double rf = Range.clip((((y1 * reverse) - yaw - (x1 * reverse)) * reverse * shift), -1.0, 1.0);
+
+        robot.q1.setPower(-rf);
+        robot.q2.setPower(lf);
+        robot.q3.setPower(lb);
+        robot.q4.setPower(-rb);
+    }
 }
