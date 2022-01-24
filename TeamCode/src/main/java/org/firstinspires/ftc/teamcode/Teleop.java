@@ -48,7 +48,7 @@ public class Teleop extends LinearOpMode {
         deposit1=new depositStateMachine();
         deposit1.initDeposit();
         implementController ic1=new implementController();
-
+        ic1.initialize(robot);
 
         driveControls dC=new driveControls();
 

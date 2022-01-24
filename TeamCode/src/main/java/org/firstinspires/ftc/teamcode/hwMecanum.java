@@ -54,10 +54,14 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 import androidx.annotation.NonNull;
+
+import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -163,7 +167,6 @@ public class hwMecanum extends MecanumDrive {
     public Servo intakeServo;
     public Servo bucket;
     public Servo depositServo;
-    public Servo teamElementServo;
     public DcMotorEx teamElementArm;
     public DcMotorEx intake;
     public CRServo carousel;
@@ -173,6 +176,10 @@ public class hwMecanum extends MecanumDrive {
     private VoltageSensor batteryVoltageSensor; //batt volt sensor
     private Pose2d lastPoseOnTurn; //for servo position
     public TouchSensor liftLimitSwitch;
+    public DigitalChannel green1;
+    public DigitalChannel green2;
+    public DigitalChannel red1;
+    public DigitalChannel red2;
     public enum Mode{
         IDLE,
         TURN,
@@ -274,19 +281,28 @@ public class hwMecanum extends MecanumDrive {
         intake=hwMap.get(DcMotorEx.class, "intake");
         lift2=hwMap.get(DcMotorEx.class, "lift2"); //arm init
         lift1=hwMap.get(DcMotorEx.class, "lift1"); //lift init
+        teamElementArm=hwMap.get(DcMotorEx.class,"tearm");
 
+        //sensor initialization
         liftLimitSwitch=hwMap.get(TouchSensor.class,"limit");
+        green1=hwMap.get(DigitalChannel.class,"green1");
+        green2=hwMap.get(DigitalChannel.class,"green2");
+        red1=hwMap.get(DigitalChannel.class,"red1");
+        red2=hwMap.get(DigitalChannel.class,"red1");
 
         carousel=hwMap.get(CRServo.class, "carousel");
 
+        //team element servos
         TE=hwMap.get(Servo.class,"TE");
-        intakeServo=hwMap.get(Servo.class,"intakeServo");
         claw=hwMap.get(Servo.class,"claw"); // claw init
+
+        intakeServo=hwMap.get(Servo.class,"intakeServo");
+
+
         bucket=hwMap.get(Servo.class,"bucket");
         depositServo=hwMap.get(Servo.class,"depositServo");
 
-        teamElementServo=hwMap.get(Servo.class,"teservo");
-        teamElementArm=hwMap.get(DcMotorEx.class,"tearm");
+        setLocalizer(new StandardTrackingWheelLocalizer(hwMap));
 
 
 
