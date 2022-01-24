@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 //parent dir
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.archive;
 
 //library imports
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -38,8 +38,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-
-
+import org.firstinspires.ftc.teamcode.hwMecanum;
 
 
 //teleop class
@@ -108,7 +107,7 @@ public class servotest extends LinearOpMode {
             {TEclawOffset -= TEclaw_SPEED;}
 
             TEclawOffset = Range.clip(TEclawOffset, -0.5, 0.5);
-            robot.teamElementServo.setPosition(.5 + TEclawOffset);
+            robot.TE.setPosition(.5 + TEclawOffset);
 
             //Team element arm code
             if (gamepad2.a)
@@ -120,7 +119,7 @@ public class servotest extends LinearOpMode {
             //robot.teamElementArm.setPosition(.5 + TE1clawOffset);
 
             //telemetry.addData("arm1 position",robot.teamElementArm.getPosition());
-            telemetry.addData("arm2 position",robot.teamElementServo.getPosition());
+            telemetry.addData("arm2 position",robot.TE.getPosition());
             telemetry.addData("claw position",robot.claw.getPosition());
             telemetry.update();
 

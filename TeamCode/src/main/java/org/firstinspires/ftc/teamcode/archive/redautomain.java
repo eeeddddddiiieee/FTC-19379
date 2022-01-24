@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.archive;
 //library imports
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -20,9 +20,9 @@ park, carousel, idk
 //TODO: This auto does not use roadrunner or PID. This is a backup auto.
  */
 @Config
-@Autonomous(name="redautosecondary",group = "drive")
+@Autonomous(name="redautoprimary",group = "drive")
 
-public abstract class redautosecondary extends LinearOpMode {
+public abstract class redautomain extends LinearOpMode {
     /*
     int width = 320;
     int height = 240;
@@ -43,8 +43,7 @@ public abstract class redautosecondary extends LinearOpMode {
 
         FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
 
-        sleep(2000);
-        sleep(2000);
+
         while (!opModeIsActive()&&!isStopRequested()) {
             telemetry.addData("Analysis", detector.getLocation());
             telemetry.addData("region1", detector.region1value());
@@ -53,8 +52,9 @@ public abstract class redautosecondary extends LinearOpMode {
 
         }
         waitForStart();
+
         while (opModeIsActive()&&!isStopRequested()) {
-            robot.setPoseEstimate(new Pose2d(36,-63,Math.toRadians(270)));
+            robot.setPoseEstimate(new Pose2d(-31,-63,Math.toRadians(270)));
 
             //closes claw and lifts up arm
             //robot.claw.setPosition(robot.servoClosed);
@@ -62,9 +62,10 @@ public abstract class redautosecondary extends LinearOpMode {
             //robot.arm.setPower(-.15);
             //sleep(250);
             //robot.arm.setPower(0);
+            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             robot.arm1.setPosition(hwMecanum.inside);
-            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
+
             sleep(300);
             switch (detector.getLocation()) {
                 case LEFT:
@@ -87,11 +88,11 @@ public abstract class redautosecondary extends LinearOpMode {
                     break;
             }
             robot.camera.stopStreaming();
-
+            sleep(5000);
             //moves forward to the
-            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(41, -61,Math.toRadians(270)),true)
+            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(36, -62,Math.toRadians(270)),true)
 
-                    .splineTo(new Vector2d(12,-42),Math.toRadians(90))
+                    .splineTo(new Vector2d(-12,-42),Math.toRadians(90))
                     .build();
             robot.followTrajectory(move1);
             robot.claw.setPosition(hwMecanum.OPEN_CLAW);
@@ -101,14 +102,22 @@ public abstract class redautosecondary extends LinearOpMode {
 
             //robot.claw.setPosition(robot.servoOpen);//for red side
             Trajectory move2=robot.trajectoryBuilder(move1.end(),false)
-                    .splineTo(new Vector2d(74,-60),Math.toRadians(0))
+                    .splineTo(new Vector2d(-54,-58),Math.toRadians(270))
                     .build();
             robot.followTrajectory(move2);
             robot.claw.setPosition(.138);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             robot.arm1.setPosition(hwMecanum.inside);
-
-
+            robot.carousel.setPower(-.3);
+            sleep(6000);
+            //robot.carousel.setPower(0);
+            //robot.arm.setPower(.35);
+            //sleep(350);
+            //robot.arm.setPower(0);
+            Trajectory move3 = robot.trajectoryBuilder(move2.end(),true)
+                    .splineToConstantHeading(new Vector2d(-60,-38),Math.toRadians(0))
+                    .build();
+            robot.followTrajectory(move3);
 
             return;
             /*
@@ -186,8 +195,7 @@ public abstract class redautosecondary extends LinearOpMode {
             Trajectory spline1 = robot.trajectoryBuilder(new Pose2d(0, 0, Math.toRadians(90)))
                     .splineTo(new Vector2d(50, 50), Math.toRadians(90))
                     .build();
-
-                            }
+        }
 
 
 

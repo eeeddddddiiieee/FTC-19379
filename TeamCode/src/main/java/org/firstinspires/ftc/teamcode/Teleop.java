@@ -39,8 +39,6 @@ public class Teleop extends LinearOpMode {
                     // This marker runs two seconds into the trajectory
 
                     // Run your action in here!
-
-
                 })
                 .build();
         robot = new hwMecanum(hardwareMap);

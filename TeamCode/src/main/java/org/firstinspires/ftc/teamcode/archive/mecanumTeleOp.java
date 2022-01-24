@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 //parent dir
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.archive;
 
 //library imports
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -38,6 +38,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.hwMecanum;
 
 
 @TeleOp(name="Mecanum: Teleop1", group="hwMecanum")
@@ -179,7 +180,7 @@ public class mecanumTeleOp extends LinearOpMode {
             {TEclawOffset -= TEclaw_SPEED;}
 
             TEclawOffset = Range.clip(TEclawOffset, -.8, .2);
-            robot.teamElementServo.setPosition(.8 + TEclawOffset);
+            robot.TE.setPosition(.8 + TEclawOffset);
 
             //Team element arm code
             if (gamepad2.a)

@@ -32,15 +32,19 @@ public class implementController extends LinearOpMode {
             clawOffset-=clawSpeed;
         }
         robot.claw.setPosition(Range.clip(clawPosition+clawOffset,0,1));
+        double armPositionRadians=((robot.teamElementArm.getCurrentPosition()/1992.6)*2*Math.PI)-(Math.PI/2);
+
         if (gamepad2.y){
-            double armPositionRadians=(robot.teamElementArm.getCurrentPosition()/1992.6*2*3.1415)-(Math.PI/2);
             double servoPositionRadians=(robot.TE.getPosition()*2*Math.PI)+Math.PI/6; //fix, should be relative to the arm, top position should be 1
+
             //servo+arm=270 degrees
             double servoTargetPositionRadians=Math.PI*1.5-armPositionRadians;
             double servoTargetPosition=(servoTargetPositionRadians-Math.PI/6)/(2*Math.PI);
 
+
             TEposition=Range.clip((servoTargetPosition),0,1);
         }
+
         if (gamepad2.start){
             TEposition=TEUp;
         }

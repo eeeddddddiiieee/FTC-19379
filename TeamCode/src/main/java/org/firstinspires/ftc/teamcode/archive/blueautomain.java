@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.archive;
 //library imports
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
@@ -14,22 +14,21 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
 
-/*
-This is the RETARD AUTO. At all expense, please do not use this for the final robot. Time based
-park, carousel, idk
-//TODO: This auto does not use roadrunner or PID. This is a backup auto.
- */
-@Config
-@Autonomous(name="redautoprimary",group = "drive")
 
-public abstract class redautomain extends LinearOpMode {
+
+@Config
+@Autonomous(name="blueautoprimary",group = "drive")
+
+public abstract class blueautomain extends LinearOpMode {
     /*
     int width = 320;
+
     int height = 240;
     TEDetector detector = new TEDetector();
     public void runOpMode() throws InterruptedException, EmptyPathSegmentException {
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
+
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         robot.camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
@@ -43,7 +42,6 @@ public abstract class redautomain extends LinearOpMode {
 
         FtcDashboard.getInstance().startCameraStream(robot.camera, 20);
 
-
         while (!opModeIsActive()&&!isStopRequested()) {
             telemetry.addData("Analysis", detector.getLocation());
             telemetry.addData("region1", detector.region1value());
@@ -54,7 +52,7 @@ public abstract class redautomain extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()&&!isStopRequested()) {
-            robot.setPoseEstimate(new Pose2d(-31,-63,Math.toRadians(270)));
+            robot.setPoseEstimate(new Pose2d(41,-63,Math.toRadians(270)));
 
             //closes claw and lifts up arm
             //robot.claw.setPosition(robot.servoClosed);
@@ -62,10 +60,9 @@ public abstract class redautomain extends LinearOpMode {
             //robot.arm.setPower(-.15);
             //sleep(250);
             //robot.arm.setPower(0);
-            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             robot.arm1.setPosition(hwMecanum.inside);
-
+            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             sleep(300);
             switch (detector.getLocation()) {
                 case LEFT:
@@ -88,11 +85,11 @@ public abstract class redautomain extends LinearOpMode {
                     break;
             }
             robot.camera.stopStreaming();
-            sleep(5000);
+            sleep(2000);
             //moves forward to the
-            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(36, -62,Math.toRadians(270)),true)
+            Trajectory move1 = robot.trajectoryBuilder(new Pose2d(38, -62,Math.toRadians(270)),true)
 
-                    .splineTo(new Vector2d(-12,-42),Math.toRadians(90))
+                    .splineTo(new Vector2d(14,-40),Math.toRadians(90))
                     .build();
             robot.followTrajectory(move1);
             robot.claw.setPosition(hwMecanum.OPEN_CLAW);
@@ -102,20 +99,20 @@ public abstract class redautomain extends LinearOpMode {
 
             //robot.claw.setPosition(robot.servoOpen);//for red side
             Trajectory move2=robot.trajectoryBuilder(move1.end(),false)
-                    .splineTo(new Vector2d(-54,-58),Math.toRadians(270))
+                    .splineTo(new Vector2d(67,-55),Math.toRadians(0))
                     .build();
             robot.followTrajectory(move2);
-            robot.claw.setPosition(.138);
+            robot.claw.setPosition(hwMecanum.CLOSED_CLAW);
             robot.arm2.setPosition(1.02-hwMecanum.inside);
             robot.arm1.setPosition(hwMecanum.inside);
-            robot.carousel.setPower(-.3);
+            robot.carousel.setPower(.3);
             sleep(6000);
             //robot.carousel.setPower(0);
             //robot.arm.setPower(.35);
             //sleep(350);
             //robot.arm.setPower(0);
             Trajectory move3 = robot.trajectoryBuilder(move2.end(),true)
-                    .splineToConstantHeading(new Vector2d(-60,-38),Math.toRadians(0))
+                    .splineToConstantHeading(new Vector2d(67,-32),Math.toRadians(0))
                     .build();
             robot.followTrajectory(move3);
 
@@ -205,6 +202,6 @@ public abstract class redautomain extends LinearOpMode {
 
 
 
-    }
-    */
+    }*/
+
 }
