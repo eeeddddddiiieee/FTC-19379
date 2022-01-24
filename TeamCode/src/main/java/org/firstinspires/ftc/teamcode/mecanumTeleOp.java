@@ -145,11 +145,11 @@ public class mecanumTeleOp extends LinearOpMode {
 
             if (gamepad1.x){
                 robot.TE.setPosition(hwMecanum.high);
-                robot.arm2.setPosition(1.02-hwMecanum.high);
+                //robot.arm2.setPosition(1.02-hwMecanum.high);
             }
             if (gamepad1.y){
                 robot.TE.setPosition(hwMecanum.low);
-                robot.arm2.setPosition(1.02-hwMecanum.low);
+                //robot.arm2.setPosition(1.02-hwMecanum.low);
             }
 
             if (gamepad1.a)
@@ -164,7 +164,7 @@ public class mecanumTeleOp extends LinearOpMode {
             robot.claw.setPosition(hwMecanum.CLOSED_CLAW + clawOffset);
             sleep(400);
             robot.TE.setPosition(hwMecanum.inside);
-            robot.arm2.setPosition(1.02-hwMecanum.inside);
+            //robot.arm2.setPosition(1.02-hwMecanum.inside);
             sleep(400);
             }
 

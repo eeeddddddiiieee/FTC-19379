@@ -28,6 +28,8 @@ public class auto1 extends LinearOpMode {
     public lift robotlift;
     public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;
+
+
     public void runOpMode() throws InterruptedException{
 
         initialize();

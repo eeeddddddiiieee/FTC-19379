@@ -15,27 +15,23 @@ import org.firstinspires.ftc.teamcode.lift;
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 
 public class Teleop extends LinearOpMode {
-    public lift robotlift;
+
     public hwMecanum robot;
+    public depositStateMachine deposit1;
     ElapsedTime runTime=new ElapsedTime();
-    public enum depositState{
-        START,
-        PRIME,
-        MID,
-        HIGH,
-        DUMP
-    }
+
     public enum ControlState{
         DRIVER,
         AUTO
     }
     ControlState currentMode= ControlState.DRIVER;
+    //public boolean intakeMode=true;
 
 
     public void runOpMode(){
         StandardTrackingWheelLocalizer localizer1 = new StandardTrackingWheelLocalizer(hardwareMap);
         localizer1.setPoseEstimate(new Pose2d(0,0,0));
-        depositState dstate1=depositState.START;
+
         Trajectory move1 = robot.trajectoryBuilder(new Pose2d(24, -65,Math.toRadians(270)),true)
 
                 .splineTo(new Vector2d(0,-36),Math.toRadians(315))
@@ -49,8 +45,10 @@ public class Teleop extends LinearOpMode {
                 .build();
         robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
-        robotlift=new lift(hardwareMap);
-        robotlift.init(hardwareMap);
+        deposit1=new depositStateMachine();
+        deposit1.initDeposit();
+
+
         driveControls dC=new driveControls();
 
         waitForStart();
@@ -59,51 +57,28 @@ public class Teleop extends LinearOpMode {
             localizer1.update();
             Pose2d currentPose = localizer1.getPoseEstimate();
             Pose2d poseVelocity = localizer1.getPoseVelocity();
-
-            switch (dstate1) {
-                case START:
-                    robot.bucket.setPosition(hwMecanum.bucketDown);
-                    robot.depositServo.setPosition(hwMecanum.depositMidOpen);
-                    if (gamepad1.a){
-                        dstate1=depositState.PRIME;
-                    }
-                case PRIME:
-                    robot.depositServo.setPosition(hwMecanum.depositClosed);
-                    robot.bucket.setPosition(hwMecanum.bucketRaised);
-                    robot.intakeServo.setPosition(hwMecanum.intakeUp);
-                    robot.intake.setPower(-1);
-                    if (gamepad1.x){
-                        dstate1=depositState.HIGH;
-                    }
-                    if (gamepad1.y){
-                        dstate1=depositState.MID;
-                    }
-                case MID:
-                    robotlift.setPosition(lift.liftHeight.Med);
-                case HIGH:
-                case DUMP:
-            }
+            deposit1.deposit(robot);
 
             switch (currentMode){
                 case DRIVER:
 
                     dC.driveController(robot);
 
-                    if (gamepad1.right_stick_button) {
+                    if (gamepad1.left_stick_button) {
                         localizer1.setPoseEstimate(new Pose2d(24, -65, Math.toRadians(90)));
                         robot.followTrajectory(move1);
                         currentMode=ControlState.AUTO;
                     }
+
+                    if (deposit1.intakeMode) {
+                        robot.intake.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
+                    }
                 case AUTO:
                     if (gamepad1.x) {
-                        //robot.cancelFollowing();
+                        robot.cancelFollowing();
                         currentMode = ControlState.DRIVER;
                     }
-                    if (gamepad1.a){
-                        robotlift.setPosition(lift.liftHeight.Med);
-                        dstate1=depositState.HIGH;
-                        //bucket.setPosition(
-                    }
+
                     if (!robot.isBusy()){
                         currentMode=ControlState.DRIVER;
                     }
