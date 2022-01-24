@@ -117,9 +117,9 @@ public class servotest extends LinearOpMode {
             {TE1clawOffset -= TE1claw_SPEED;}
 
             TE1clawOffset = Range.clip(TE1clawOffset, -0.5, 0.5);
-            robot.teamElementArm.setPosition(.5 + TE1clawOffset);
+            //robot.teamElementArm.setPosition(.5 + TE1clawOffset);
 
-            telemetry.addData("arm1 position",robot.teamElementArm.getPosition());
+            //telemetry.addData("arm1 position",robot.teamElementArm.getPosition());
             telemetry.addData("arm2 position",robot.teamElementServo.getPosition());
             telemetry.addData("claw position",robot.claw.getPosition());
             telemetry.update();

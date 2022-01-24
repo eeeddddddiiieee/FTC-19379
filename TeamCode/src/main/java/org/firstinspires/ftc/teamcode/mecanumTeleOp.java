@@ -188,7 +188,7 @@ public class mecanumTeleOp extends LinearOpMode {
             {TE1clawOffset -= TE1claw_SPEED;}
 
             TE1clawOffset = Range.clip(TE1clawOffset, -.69, .31);
-            robot.teamElementArm.setPosition(.69 + TE1clawOffset);
+            //robot.teamElementArm.setPosition(.69 + TE1clawOffset);
 
             robot.intake.setPower(gamepad2.left_trigger-gamepad2.right_trigger);
                 //arm code

@@ -47,6 +47,7 @@ public class Teleop extends LinearOpMode {
         robot.init(hardwareMap);
         deposit1=new depositStateMachine();
         deposit1.initDeposit();
+        implementController ic1=new implementController();
 
 
         driveControls dC=new driveControls();
@@ -54,6 +55,12 @@ public class Teleop extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            if (getRuntime()>95000){
+                gamepad1.rumble(500);
+                gamepad2.rumble(500);
+
+            }
+
             localizer1.update();
             Pose2d currentPose = localizer1.getPoseEstimate();
             Pose2d poseVelocity = localizer1.getPoseVelocity();
@@ -61,7 +68,7 @@ public class Teleop extends LinearOpMode {
 
             switch (currentMode){
                 case DRIVER:
-
+                    ic1.runImplementController(robot);
                     dC.driveController(robot);
 
                     if (gamepad1.left_stick_button) {
@@ -86,7 +93,12 @@ public class Teleop extends LinearOpMode {
 
 
             }
-            //telemetry.addData();
+            telemetry.addData("POSITION:",currentPose.getX()+","+currentPose.getY());
+            telemetry.addData("HEADING:",currentPose.getHeading());
+            telemetry.addData("DEPOSIT:",deposit1.getDepositState());
+            telemetry.addData("RUNTIME:",getRuntime());
+            telemetry.addData("CARGO","YES");
+            telemetry.update();
         }
     }
 }

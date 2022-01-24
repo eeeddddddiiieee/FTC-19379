@@ -164,9 +164,9 @@ public class hwMecanum extends MecanumDrive {
     public Servo bucket;
     public Servo depositServo;
     public Servo teamElementServo;
-    public Servo teamElementArm;
+    public DcMotorEx teamElementArm;
     public DcMotorEx intake;
-    public DcMotorEx carousel;
+    public CRServo carousel;
     HardwareMap hwMap = null; //hardware map
     private List<DcMotorEx> motors; //drive motor list from l49
     public BNO055IMU imu; //imu
@@ -277,7 +277,7 @@ public class hwMecanum extends MecanumDrive {
 
         liftLimitSwitch=hwMap.get(TouchSensor.class,"limit");
 
-        carousel=hwMap.get(DcMotorEx.class, "carousel");
+        carousel=hwMap.get(CRServo.class, "carousel");
 
         TE=hwMap.get(Servo.class,"TE");
         intakeServo=hwMap.get(Servo.class,"intakeServo");
@@ -286,7 +286,7 @@ public class hwMecanum extends MecanumDrive {
         depositServo=hwMap.get(Servo.class,"depositServo");
 
         teamElementServo=hwMap.get(Servo.class,"teservo");
-        teamElementArm=hwMap.get(Servo.class,"tearm");
+        teamElementArm=hwMap.get(DcMotorEx.class,"tearm");
 
 
 
@@ -327,7 +327,7 @@ public class hwMecanum extends MecanumDrive {
         intake.setPower(0);
         lift1.setPower(0);
         carousel.setPower(0);
-        teamElementArm.setPosition(servoClosed);
+        teamElementArm.setPower(0);
         //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
 
         //init encoders (for auto)

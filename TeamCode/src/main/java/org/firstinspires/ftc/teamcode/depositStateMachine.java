@@ -28,6 +28,7 @@ public class depositStateMachine extends LinearOpMode {
         switch (dstate1) {
             case START:
                 robot.bucket.setPosition(hwMecanum.bucketDown);
+                robot.intakeServo.setPosition(hwMecanum.intakeDown);
                 robot.depositServo.setPosition(hwMecanum.depositMidOpen);
                 if (gamepad1.a){
                     dstate1= depositState.PRIME;
@@ -84,5 +85,8 @@ public class depositStateMachine extends LinearOpMode {
             dstate1 = depositState.START;
         }
 
+    }
+    public depositState getDepositState(){
+        return dstate1;
     }
 }
