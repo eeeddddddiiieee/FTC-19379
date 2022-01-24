@@ -117,7 +117,9 @@ public class hwMecanum extends MecanumDrive {
     public DcMotorEx lift2; //arm motor
     public Servo claw; //claw servo
     public Servo TE; //claw servo
-    public Servo arm2;
+    public Servo intakeServo;
+    public Servo bucket;
+    public Servo depositServo;
     public Servo teamElementServo;
     public Servo teamElementArm;
     public DcMotorEx intake;
@@ -145,6 +147,16 @@ public class hwMecanum extends MecanumDrive {
     public static final double OPEN_CLAW=.10; //change
     public static final double halfopen=.112;
     public static final double CLOSED_CLAW=.15;
+    //change all of these lol
+    public static final double bucketDown=.11; //change
+    public static final double bucketRaised=.11;
+    public static final double bucketOut=.12;
+    public static final double depositClosed=.11;
+    public static final double depositOpen=.12;
+    public static final double depositMidOpen=.13;
+    public static final double intakeDown=.1;
+    public static final double intakeUp=.12;
+    //change above
     public static final double inside=0.99;//change
     public static final double high=0.4; //change
     public static final double mid=0.25; //change
@@ -203,8 +215,10 @@ public class hwMecanum extends MecanumDrive {
         carousel=hwMap.get(DcMotorEx.class, "carousel");
 
         TE=hwMap.get(Servo.class,"TE");
-        arm2=hwMap.get(Servo.class,"arm2");
+        intakeServo=hwMap.get(Servo.class,"intakeServo");
         claw=hwMap.get(Servo.class,"claw"); // claw init
+        bucket=hwMap.get(Servo.class,"bucket");
+        depositServo=hwMap.get(Servo.class,"depositServo");
 
         teamElementServo=hwMap.get(Servo.class,"teservo");
         teamElementArm=hwMap.get(Servo.class,"tearm");
@@ -349,6 +363,9 @@ public class hwMecanum extends MecanumDrive {
         for (DcMotorEx motor : motors) {
             motor.setZeroPowerBehavior(zeroPowerBehavior);
         }
+    }
+    public void cancelTrajectory(){
+
     }
 
     public void setPIDFCoefficients (DcMotor.RunMode runMode, PIDFCoefficients coefficients){
