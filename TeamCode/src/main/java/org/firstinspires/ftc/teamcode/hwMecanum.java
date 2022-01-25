@@ -365,31 +365,31 @@ public class hwMecanum extends MecanumDrive {
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
-        return new TrajectoryBuilder(startPose, velConstraint, accelConstraint);
+        return new TrajectoryBuilder(startPose, VEL_CONSTRAINT, ACCEL_CONSTRAINT);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, boolean reversed) {
-        return new TrajectoryBuilder(startPose, reversed, velConstraint, accelConstraint);
+        return new TrajectoryBuilder(startPose, reversed, VEL_CONSTRAINT, ACCEL_CONSTRAINT);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose, double startHeading) {
-        return new TrajectoryBuilder(startPose, startHeading, velConstraint, accelConstraint);
+        return new TrajectoryBuilder(startPose, startHeading, VEL_CONSTRAINT, ACCEL_CONSTRAINT);
+    }
+
+    public TrajectorySequenceBuilder trajectorySequenceBuilder(Pose2d startPose) {
+        return new TrajectorySequenceBuilder(
+                startPose,
+                VEL_CONSTRAINT, ACCEL_CONSTRAINT,
+                MAX_ANG_VEL, MAX_ANG_ACCEL
+        );
     }
 
     public void turnAsync(double angle) {
-        double heading = getPoseEstimate().getHeading();
-
-        lastPoseOnTurn = getPoseEstimate();
-
-        turnProfile = MotionProfileGenerator.generateSimpleMotionProfile(
-                new MotionState(heading, 0, 0, 0),
-                new MotionState(heading + angle, 0, 0, 0),
-                MAX_ANG_VEL,
-                MAX_ANG_ACCEL
+        trajectorySequenceRunner.followTrajectorySequenceAsync(
+                trajectorySequenceBuilder(getPoseEstimate())
+                        .turn(angle)
+                        .build()
         );
-
-        turnStart = clock.seconds();
-        mode = Mode.TURN;
     }
 
     public void turn(double angle) {
@@ -398,8 +398,11 @@ public class hwMecanum extends MecanumDrive {
     }
 
     public void followTrajectoryAsync(Trajectory trajectory) {
-        follower.followTrajectory(trajectory);
-        mode = Mode.FOLLOW_TRAJECTORY;
+        trajectorySequenceRunner.followTrajectorySequenceAsync(
+                trajectorySequenceBuilder(trajectory.start())
+                        .addTrajectory(trajectory)
+                        .build()
+        );
     }
 
     public void followTrajectory(Trajectory trajectory) {
@@ -407,117 +410,32 @@ public class hwMecanum extends MecanumDrive {
         waitForIdle();
     }
 
-    public void cancelFollowing() {
-        mode = Mode.IDLE;
+    public void followTrajectorySequenceAsync(TrajectorySequence trajectorySequence) {
+        trajectorySequenceRunner.followTrajectorySequenceAsync(trajectorySequence);
+    }
+
+    public void followTrajectorySequence(TrajectorySequence trajectorySequence) {
+        followTrajectorySequenceAsync(trajectorySequence);
+        waitForIdle();
     }
 
     public Pose2d getLastError() {
-        switch (mode) {
-            case FOLLOW_TRAJECTORY:
-                return follower.getLastError();
-            case TURN:
-                return new Pose2d(0, 0, turnController.getLastError());
-            case IDLE:
-                return new Pose2d();
-        }
-        throw new AssertionError();
+        return trajectorySequenceRunner.getLastPoseError();
     }
 
     public void update() {
         updatePoseEstimate();
-
-        Pose2d currentPose = getPoseEstimate();
-        Pose2d lastError = getLastError();
-
-        poseHistory.add(currentPose);
-
-        if (POSE_HISTORY_LIMIT > -1 && poseHistory.size() > POSE_HISTORY_LIMIT) {
-            poseHistory.removeFirst();
-        }
-
-        TelemetryPacket packet = new TelemetryPacket();
-        Canvas fieldOverlay = packet.fieldOverlay();
-
-        packet.put("mode", mode);
-
-        packet.put("x", currentPose.getX());
-        packet.put("y", currentPose.getY());
-        packet.put("heading (deg)", Math.toDegrees(currentPose.getHeading()));
-
-        packet.put("xError", lastError.getX());
-        packet.put("yError", lastError.getY());
-        packet.put("headingError (deg)", Math.toDegrees(lastError.getHeading()));
-
-        switch (mode) {
-            case IDLE:
-                // do nothing
-                break;
-            case TURN: {
-                double t = clock.seconds() - turnStart;
-
-                MotionState targetState = turnProfile.get(t);
-
-                turnController.setTargetPosition(targetState.getX());
-
-                double correction = turnController.update(currentPose.getHeading());
-
-                double targetOmega = targetState.getV();
-                double targetAlpha = targetState.getA();
-                setDriveSignal(new DriveSignal(new Pose2d(
-                        0, 0, targetOmega + correction
-                ), new Pose2d(
-                        0, 0, targetAlpha
-                )));
-
-                Pose2d newPose = lastPoseOnTurn.copy(lastPoseOnTurn.getX(), lastPoseOnTurn.getY(), targetState.getX());
-
-                fieldOverlay.setStroke("#4CAF50");
-                DashboardUtil.drawRobot(fieldOverlay, newPose);
-
-                if (t >= turnProfile.duration()) {
-                    mode = Mode.IDLE;
-                    setDriveSignal(new DriveSignal());
-                }
-
-                break;
-            }
-            case FOLLOW_TRAJECTORY: {
-                setDriveSignal(follower.update(currentPose, getPoseVelocity()));
-
-                Trajectory trajectory = follower.getTrajectory();
-
-                fieldOverlay.setStrokeWidth(1);
-                fieldOverlay.setStroke("#4CAF50");
-                DashboardUtil.drawSampledPath(fieldOverlay, trajectory.getPath());
-                double t = follower.elapsedTime();
-                DashboardUtil.drawRobot(fieldOverlay, trajectory.get(t));
-
-                fieldOverlay.setStroke("#3F51B5");
-                DashboardUtil.drawPoseHistory(fieldOverlay, poseHistory);
-
-                if (!follower.isFollowing()) {
-                    mode = Mode.IDLE;
-                    setDriveSignal(new DriveSignal());
-                }
-
-                break;
-            }
-        }
-
-        fieldOverlay.setStroke("#3F51B5");
-        DashboardUtil.drawRobot(fieldOverlay, currentPose);
-
-        dashboard.sendTelemetryPacket(packet);
+        DriveSignal signal = trajectorySequenceRunner.update(getPoseEstimate(), getPoseVelocity());
+        if (signal != null) setDriveSignal(signal);
     }
 
     public void waitForIdle() {
-        while (!Thread.currentThread().isInterrupted() && isBusy()) {
+        while (!Thread.currentThread().isInterrupted() && isBusy())
             update();
-        }
     }
 
     public boolean isBusy() {
-        return mode != Mode.IDLE;
+        return trajectorySequenceRunner.isBusy();
     }
 
     public void setMode(DcMotor.RunMode runMode) {
@@ -537,6 +455,7 @@ public class hwMecanum extends MecanumDrive {
                 coefficients.p, coefficients.i, coefficients.d,
                 coefficients.f * 12 / batteryVoltageSensor.getVoltage()
         );
+
         for (DcMotorEx motor : motors) {
             motor.setPIDFCoefficients(runMode, compensatedCoefficients);
         }
@@ -596,25 +515,12 @@ public class hwMecanum extends MecanumDrive {
 
     @Override
     public Double getExternalHeadingVelocity() {
-        // TODO: This must be changed to match your configuration
-        //                           | Z axis
-        //                           |
-        //     (Motor Port Side)     |   / X axis
-        //                       ____|__/____
-        //          Y axis     / *   | /    /|   (IO Side)
-        //          _________ /______|/    //      I2C
-        //                   /___________ //     Digital
-        //                  |____________|/      Analog
+        // To work around an SDK bug, use -zRotationRate in place of xRotationRate
+        // and -xRotationRate in place of zRotationRate (yRotationRate behaves as
+        // expected). This bug does NOT affect orientation.
         //
-        //                 (Servo Port Side)
-        //
-        // The positive x axis points toward the USB port(s)
-        //
-        // Adjust the axis rotation rate as necessary
-        // Rotate about the z axis is the default assuming your REV Hub/Control Hub is laying
-        // flat on a surface
-
-        return (double) imu.getAngularVelocity().zRotationRate;
+        // See https://github.com/FIRST-Tech-Challenge/FtcRobotController/issues/251 for details.
+        return (double) -imu.getAngularVelocity().xRotationRate;
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
