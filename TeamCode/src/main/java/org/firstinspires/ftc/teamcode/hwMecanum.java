@@ -351,6 +351,8 @@ public class hwMecanum extends MecanumDrive {
         q2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         q3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         q4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 

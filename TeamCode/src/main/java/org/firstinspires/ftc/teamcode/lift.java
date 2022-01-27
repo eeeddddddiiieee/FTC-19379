@@ -66,7 +66,7 @@ public class lift extends hwMecanum{
     }
     public void resetLift(){
         while (!liftLimitSwitch.isPressed()){
-            setHeight(-20);
+            setHeight(-50);
         }
             lift2.setPower(0);
             lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

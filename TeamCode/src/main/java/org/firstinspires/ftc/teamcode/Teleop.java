@@ -53,10 +53,15 @@ public class Teleop extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            if (getRuntime()>95000){
-                gamepad1.rumble(500);
-                gamepad2.rumble(500);
+            if (getRuntime()==80000){
+                gamepad1.rumble(.5,.5,1500);
+                gamepad2.rumble(.5,.5,1500);
 
+            }
+
+            if (getRuntime()==90000){
+                gamepad1.rumble(1,1,200);
+                gamepad2.rumble(1,1,200);
             }
 
             localizer1.update();
@@ -78,12 +83,13 @@ public class Teleop extends LinearOpMode {
                     if (deposit1.intakeMode) {
                         robot.intake.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
                     }
+
                 case AUTO:
                     if (gamepad1.x) {
                         //robot.cancelFollowing();
                         localizer1.setPoseEstimate(new Pose2d(0, -36, Math.toRadians(315)));
                         robot.followTrajectory(null);
-                        currentMode = ControlState.DRIVER;x
+                        currentMode = ControlState.DRIVER;
                     }
 
                     if (!robot.isBusy()){
