@@ -5,7 +5,7 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.noahbres.meepmeep.core.colorscheme.scheme.ColorSchemeRedDark;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-
+import java.util.*;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 
