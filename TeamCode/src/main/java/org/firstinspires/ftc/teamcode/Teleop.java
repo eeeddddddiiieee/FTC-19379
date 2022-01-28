@@ -88,6 +88,7 @@ public class Teleop extends LinearOpMode {
                     if (gamepad1.x) {
                         //robot.cancelFollowing();
                         localizer1.setPoseEstimate(new Pose2d(0, -36, Math.toRadians(315)));
+
                         robot.followTrajectory(null);
                         currentMode = ControlState.DRIVER;
                     }
