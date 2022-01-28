@@ -90,6 +90,11 @@ public class Teleop extends LinearOpMode {
                         localizer1.setPoseEstimate(new Pose2d(0, -36, Math.toRadians(315)));
 
                         robot.followTrajectory(null);
+                        robot.q1.setPower(0);
+                        robot.q2.setPower(0);
+                        robot.q3.setPower(0);
+                        robot.q4.setPower(0);
+                        
                         currentMode = ControlState.DRIVER;
                     }
 
