@@ -52,9 +52,12 @@ import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityCons
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.LED;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoControllerEx;
@@ -180,6 +183,7 @@ public class hwMecanum extends MecanumDrive {
     public DigitalChannel green2;
     public DigitalChannel red1;
     public DigitalChannel red2;
+    public RevColorSensorV3 bucketSensor;
     public enum Mode{
         IDLE,
         TURN,
@@ -285,6 +289,7 @@ public class hwMecanum extends MecanumDrive {
 
         //sensor initialization
         liftLimitSwitch=hwMap.get(TouchSensor.class,"limit");
+        bucketSensor=hwMap.get(RevColorSensorV3.class,"color1");
         green1=hwMap.get(DigitalChannel.class,"green1");
         green2=hwMap.get(DigitalChannel.class,"green2");
         red1=hwMap.get(DigitalChannel.class,"red1");

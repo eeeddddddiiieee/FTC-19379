@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -10,6 +13,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lift;
 
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
@@ -19,6 +24,7 @@ public class Teleop extends LinearOpMode {
     public hwMecanum robot;
     public depositStateMachine deposit1;
     ElapsedTime runTime=new ElapsedTime();
+    public boolean isCargo;
 
     public enum ControlState{
         DRIVER,
@@ -49,6 +55,7 @@ public class Teleop extends LinearOpMode {
         ic1.initialize(robot);
 
         driveControls dC=new driveControls();
+        isCargo=false;
 
         waitForStart();
 
@@ -62,6 +69,13 @@ public class Teleop extends LinearOpMode {
             if (getRuntime()==90000){
                 gamepad1.rumble(1,1,200);
                 gamepad2.rumble(1,1,200);
+            }
+
+            if (robot.bucketSensor.getDistance(DistanceUnit.MM)<50){
+                isCargo=TRUE;
+            }
+            else {
+                isCargo=FALSE;
             }
 
             localizer1.update();
@@ -94,7 +108,7 @@ public class Teleop extends LinearOpMode {
                         robot.q2.setPower(0);
                         robot.q3.setPower(0);
                         robot.q4.setPower(0);
-                        
+
                         currentMode = ControlState.DRIVER;
                     }
 
@@ -105,11 +119,12 @@ public class Teleop extends LinearOpMode {
 
 
             }
+            
             telemetry.addData("POSITION:",currentPose.getX()+","+currentPose.getY());
             telemetry.addData("HEADING:",currentPose.getHeading());
             telemetry.addData("DEPOSIT:",deposit1.getDepositState());
             telemetry.addData("RUNTIME:",getRuntime());
-            telemetry.addData("CARGO","YES");
+            telemetry.addData("CARGO:", robot.bucketSensor.getDistance(DistanceUnit.MM));
             telemetry.update();
         }
     }
