@@ -18,6 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.lift;
 
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
+@TeleOp(name="Teleop", group="hwMecanum")
 
 public class Teleop extends LinearOpMode {
 

@@ -41,7 +41,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.hwMecanum;
 
 
-@TeleOp(name="Mecanum: Teleop1", group="hwMecanum")
+//@TeleOp(name="Mecanum: Teleop1", group="hwMecanum")
 //TODO: disable teleop by uncommenting the following line
 //@Disabled
 

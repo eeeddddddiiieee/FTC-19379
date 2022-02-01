@@ -17,7 +17,7 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 
 @Config
-@Autonomous(name="blueautoprimary",group = "drive")
+//@Autonomous(name="blueautoprimary",group = "drive")
 
 public abstract class blueautomain extends LinearOpMode {
     /*
