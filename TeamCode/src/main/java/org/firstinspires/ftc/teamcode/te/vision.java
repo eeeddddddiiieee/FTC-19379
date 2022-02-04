@@ -13,7 +13,9 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.firstinspires.ftc.teamcode.hwMecanum;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.acmerobotics.dashboard.FtcDashboard;
 
+import com.acmerobotics.dashboard.config.Config;
 
 @Config
 @Autonomous(name="OpenCV_Test", group="Tutorials")
@@ -29,7 +31,7 @@ public class vision extends LinearOpMode{
     private double cbThreshLow = 255;
 
     private int minRectangleArea = 2000;
-    private double leftBarcodeRangeBoundary = 0.3; //i.e 30% of the way across the frame from the left
+    private double middleBarcodeRangeBoundary = 0.5; //i.e 30% of the way across the frame from the left
     private double rightBarcodeRangeBoundary = 0.6; //i.e 60% of the way across the frame from the left
 
     private double lowerRuntime = 0;
@@ -92,18 +94,19 @@ public class vision extends LinearOpMode{
         //Check to see if the rectangle has a large enough area to be a marker.
         if(rectangleArea > minRectangleArea){
             //Then check the location of the rectangle to see which barcode it is in.
-            if(pipeline.getRectMidpointX() > rightBarcodeRangeBoundary * pipeline.getRectWidth()){
+            if(pipeline.getRectMidpointX() > middleBarcodeRangeBoundary * pipeline.getRectWidth()){
                 telemetry.addData("Barcode Position", "Right");
                 position=barcodePosition.RIGHT;
             }
-            else if(pipeline.getRectMidpointX() < leftBarcodeRangeBoundary * pipeline.getRectWidth()){
-                telemetry.addData("Barcode Position", "Left");
-                position=barcodePosition.LEFT;
-            }
-            else {
+            else if(pipeline.getRectMidpointX() < middleBarcodeRangeBoundary * pipeline.getRectWidth()){
                 telemetry.addData("Barcode Position", "Center");
                 position=barcodePosition.CENTER;
             }
+
+        }
+        else {
+            telemetry.addData("Barcode Position", "Left");
+            position=barcodePosition.LEFT;
         }
 
         telemetry.update();
@@ -158,4 +161,13 @@ public class vision extends LinearOpMode{
     public barcodePosition getPosition() {
         return position;
     }
+
+    public double getArea(){
+        return pipeline.getRectArea();
+    }
+
+    public double getCenter(){
+        return pipeline.getRectMidpointX();
+    }
+
 }

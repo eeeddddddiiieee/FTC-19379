@@ -21,6 +21,7 @@ public class servoTest extends LinearOpMode {
             servo1.setPosition(gamepad1.left_trigger-gamepad1.right_trigger);
             }
             //we do not care
+            telemetry.addData("position",servo1.getPosition());
         }
 
     }

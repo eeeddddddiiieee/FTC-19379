@@ -24,9 +24,18 @@ public class visionTestImplementation extends LinearOpMode {
             vision1.checkTE();
             switch (vision1.getPosition()){
                 case LEFT:
+                    telemetry.addData("Position","LEFT");
                 case CENTER:
+                    telemetry.addData("Position","LEFT");
+
                 case RIGHT:
+                    telemetry.addData("Position","LEFT");
+
             }
+            telemetry.addData("Area", vision1.getArea());
+            telemetry.addData("Position",vision1.getCenter());
+
+            telemetry.update();
         }
     }
 }
