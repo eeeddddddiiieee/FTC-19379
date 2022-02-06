@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -22,6 +23,10 @@ public class lift extends hwMecanum{
     public static double kd=.01;
     public ElapsedTime period = new ElapsedTime();
     public double error1;
+    public ElevatorFeedforward ff1=new ElevatorFeedforward(.1,.1,.1,.1);
+    public void setPosition1(liftHeight height){
+        lift1.setPower(ff1.calculate(1,1));
+    }
 
 
     public lift(HardwareMap hardwareMap){
