@@ -13,7 +13,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
 @Config
-@Autonomous(name="OpenCV_Test", group="Tutorials")
+@Autonomous(name="contourcentroidtest", group="hwMecanunm")
 
 public class contourCentroidTest extends LinearOpMode {
 

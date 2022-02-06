@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.te;
+/*package org.firstinspires.ftc.teamcode.te;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry
 import org.opencv.core.*
@@ -240,4 +240,4 @@ class ffDetectorPipeline(
         /**returns the black and orange mask with contours drawn to see logic in action**/
         return ret
     }
-}
+}*/

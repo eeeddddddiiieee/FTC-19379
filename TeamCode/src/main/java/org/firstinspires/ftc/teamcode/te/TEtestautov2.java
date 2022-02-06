@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode.te;
+/*
 import org.firstinspires.ftc.teamcode.hwMecanum;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -66,10 +67,12 @@ public class TEtestautov2 extends LinearOpMode {
                     telemetry.update();
                     break;
             }
-*/
+
             robot.camera.stopStreaming();
-        }
-    }
+                    }
+                    }
 
 
-}
+                    }
+
+ */

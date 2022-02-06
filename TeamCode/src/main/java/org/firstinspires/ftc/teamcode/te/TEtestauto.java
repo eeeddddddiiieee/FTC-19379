@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.te;
+
+/*
 import org.firstinspires.ftc.teamcode.hwMecanum;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -55,7 +57,7 @@ public class TEtestauto extends LinearOpMode {
             telemetry.addData("region2",detector.region2value());
 
             telemetry.update();
-/*
+
             switch (detector.getLocation()) {
                 case LEFT:
                     //robot.arm2.setPosition(1.02 - hwMecanum.low);
@@ -76,13 +78,15 @@ public class TEtestauto extends LinearOpMode {
                     telemetry.update();
                     break;
             }
-*/
+
                 robot.camera.stopStreaming();
-            if (isStopRequested()) {
-                return;
-            }
-            }
-        }
+                        if (isStopRequested()) {
+                        return;
+                        }
+                        }
+                        }
 
 
-    }
+                        }
+
+ */

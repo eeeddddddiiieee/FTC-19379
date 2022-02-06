@@ -18,7 +18,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
 @Config
-@Autonomous(name="OpenCV_Test", group="Tutorials")
+@Autonomous(name="visionTesting", group="Tutorials")
 
 public class vision extends LinearOpMode{
 

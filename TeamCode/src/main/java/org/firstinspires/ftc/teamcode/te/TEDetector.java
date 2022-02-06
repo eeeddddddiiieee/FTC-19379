@@ -1,6 +1,9 @@
 
 package org.firstinspires.ftc.teamcode.te;
+
+/*
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
@@ -27,9 +30,8 @@ import java.util.List;
 @Autonomous(name="TE Detecotor", group="Auto")
 
 public class TEDetector extends OpenCvPipeline {
-    /*
-     * An enum to define the skystone position
-     */
+
+
     public enum SkystoneLocation
     {
         LEFT,
@@ -37,15 +39,11 @@ public class TEDetector extends OpenCvPipeline {
         NONE
     }
 
-    /*
-     * Some color constants
-     */
+
     static final Scalar BLUE = new Scalar(0, 0, 255);
     static final Scalar GREEN = new Scalar(0, 255, 0);
 
-    /*
-     * The core values which define the location and size of the sample regions
-     */
+
     static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(10,30);
     static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(240,50);
     static final int REGION_WIDTH = 80;
@@ -68,6 +66,7 @@ public class TEDetector extends OpenCvPipeline {
      *   ------------------------------------
      *
      */
+/*
     Point region1_pointA = new Point(
             REGION1_TOPLEFT_ANCHOR_POINT.x,
             REGION1_TOPLEFT_ANCHOR_POINT.y);
@@ -82,21 +81,15 @@ public class TEDetector extends OpenCvPipeline {
             REGION2_TOPLEFT_ANCHOR_POINT.y + REGION_HEIGHT);
 
 
-    /*
-     * Working variables
-     */
     Mat region1_Cb, region2_Cb;
     Mat YCrCb = new Mat();
     Mat Cb = new Mat();
     int avg1, avg2;
-
+*/
     // Volatile since accessed by OpMode thread w/o synchronization
+/*
     private volatile SkystoneLocation position = SkystoneLocation.LEFT;
 
-    /*
-     * This function takes the RGB frame, converts to YCrCb,
-     * and extracts the Cb channel to the 'Cb' variable
-     */
     void inputToCb(Mat input)
     {
         Imgproc.cvtColor(input, YCrCb, Imgproc.COLOR_RGB2YCrCb);
@@ -106,22 +99,14 @@ public class TEDetector extends OpenCvPipeline {
     @Override
     public void init(Mat firstFrame)
     {
-        /*
-         * We need to call this in order to make sure the 'Cb'
-         * object is initialized, so that the submats we make
-         * will still be linked to it on subsequent frames. (If
-         * the object were to only be initialized in processFrame,
-         * then the submats would become delinked because the backing
-         * buffer would be re-allocated the first time a real frame
-         * was crunched)
-         */
-        inputToCb(firstFrame);
+                inputToCb(firstFrame);
 
         /*
          * Submats are a persistent reference to a region of the parent
          * buffer. Any changes to the child affect the parent, and the
          * reverse also holds true.
          */
+/*
         region1_Cb = Cb.submat(new Rect(region1_pointA, region1_pointB));
         region2_Cb = Cb.submat(new Rect(region2_pointA, region2_pointB));
     }
@@ -167,6 +152,7 @@ public class TEDetector extends OpenCvPipeline {
         /*
          * Get the Cb channel of the input frame after conversion to YCrCb
          */
+/*
         inputToCb(input);
 
         /*
@@ -176,12 +162,14 @@ public class TEDetector extends OpenCvPipeline {
          * pixel value of the 3-channel image, and referenced the value
          * at index 2 here.
          */
+/*
         avg1 = (int) Core.mean(region1_Cb).val[0];
         avg2 = (int) Core.mean(region2_Cb).val[0];
         /*
          * Draw a rectangle showing sample region 1 on the screen.
          * Simply a visual aid. Serves no functional purpose.
          */
+/*
         Imgproc.rectangle(
                 input, // Buffer to draw on
                 region1_pointA, // First point which defines the rectangle
@@ -193,6 +181,7 @@ public class TEDetector extends OpenCvPipeline {
          * Draw a rectangle showing sample region 2 on the screen.
          * Simply a visual aid. Serves no functional purpose.
          */
+/*
         Imgproc.rectangle(
                 input, // Buffer to draw on
                 region2_pointA, // First point which defines the rectangle
@@ -209,11 +198,13 @@ public class TEDetector extends OpenCvPipeline {
         /*
          * Find the max of the 3 averages
          */
+/*
         int max = Math.max(avg1, avg2);
         /*
          * Now that we found the max, we actually need to go and
          * figure out which sample region that value was from
          */
+/*
         if (avg1<134&&avg2<134){
             position=SkystoneLocation.LEFT;
         }
@@ -225,6 +216,7 @@ public class TEDetector extends OpenCvPipeline {
              * Draw a solid rectangle on top of the chosen region.
              * Simply a visual aid. Serves no functional purpose.
              */
+ /*
             Imgproc.rectangle(
                     input, // Buffer to draw on
                     region1_pointA, // First point which defines the rectangle
@@ -240,6 +232,7 @@ public class TEDetector extends OpenCvPipeline {
              * Draw a solid rectangle on top of the chosen region.
              * Simply a visual aid. Serves no functional purpose.
              */
+ /*
             Imgproc.rectangle(
                     input, // Buffer to draw on
                     region2_pointA, // First point which defines the rectangle
@@ -255,19 +248,19 @@ public class TEDetector extends OpenCvPipeline {
              * Draw a solid rectangle on top of the chosen region.
              * Simply a visual aid. Serves no functional purpose.
              */
-        }
+   /*      }
 
         /*
          * Render the 'input' buffer to the viewport. But note this is not
          * simply rendering the raw camera feed, because we called functions
          * to add some annotations to this buffer earlier up.
-         */
+         */ /*
         return input;
     }
 
     /*
      * Call this from the OpMode thread to obtain the latest analysis
-     */
+     */ /*
     public SkystoneLocation getLocation()
     {
         return position;
@@ -279,3 +272,4 @@ public class TEDetector extends OpenCvPipeline {
         return avg2;
     }
 }
+*/

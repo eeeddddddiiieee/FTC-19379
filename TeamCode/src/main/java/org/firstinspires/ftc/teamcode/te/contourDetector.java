@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode.te;
 
+package org.firstinspires.ftc.teamcode.te;
+/*
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -23,7 +24,7 @@ public class contourDetector extends LinearOpMode {
     private static final boolean USING_WEBCAM = false; // change to true if using webcam
     private static final String WEBCAM_NAME = ""; // insert webcam name from configuration if using webcam
 
-    private ffDetectorPipeline pipeline;
+    //private ffDetectorPipeline pipeline;
     private OpenCvCamera camera;
 
     private final int cameraMonitorViewId = this
@@ -73,3 +74,4 @@ public class contourDetector extends LinearOpMode {
         }
     }
 }
+*/

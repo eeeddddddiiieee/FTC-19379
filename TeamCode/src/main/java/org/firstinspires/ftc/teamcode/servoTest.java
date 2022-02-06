@@ -5,11 +5,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class servoTest extends LinearOpMode {
-    public HardwareMap hwMap=hardwareMap;
     public Servo servo1;
 
     public void initialize(){
-        servo1=hwMap.get(Servo.class,"test1"); //init hw map for following devices
+        servo1=hardwareMap.get(Servo.class,"test1"); //init hw map for following devices
 
     }
     public void runOpMode(){
