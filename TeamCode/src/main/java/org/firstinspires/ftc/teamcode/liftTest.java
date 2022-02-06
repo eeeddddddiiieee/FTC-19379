@@ -39,6 +39,10 @@ public class liftTest extends LinearOpMode {
             telemetry.addData("Lift1:",lift1.getCurrentPosition());
             telemetry.addData("Lift2:",lift2.getCurrentPosition());
             telemetry.update();
+            if (isStopRequested()){
+                return;
+            }
+
 
         }
 
