@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import java.lang.Math;
@@ -16,12 +17,17 @@ public class lift extends hwMecanum{
         High,
     }
 
-    public static double ki;
-    public static double kp;
-    public static double kd;
+    public static double ki=0;
+    public static double kp=.01;
+    public static double kd=.01;
+    public ElapsedTime period = new ElapsedTime();
+    public double error1;
+
 
     public lift(HardwareMap hardwareMap){
         super(hardwareMap);
+        period.reset();
+
     }
 
 
@@ -29,8 +35,8 @@ public class lift extends hwMecanum{
         double ticks=0;
         switch(height){
             case Low: ticks=0;
-            case Med: ticks=384.5*8/(1.9685*3.14);
-            case High: ticks=384.5*15/(1.9685*3.14);
+            case Med: ticks=800;
+            case High: ticks=350;
         }
         setHeight(ticks);
 
@@ -55,18 +61,18 @@ public class lift extends hwMecanum{
             // sum of all error over time
             integralSum = integralSum + (error * period.seconds());
             double output = Range.clip((kp * error) + (ki * integralSum) + (kd * derivative),-1,1);
-            lift1.setPower(output);
+            lift1.setPower(-output);
             lift2.setPower(-output);
             lastError = error;
             // reset the timer for next time
             period.reset();
-
+            error1=lastError;
         }
 
     }
     public void resetLift(){
         while (!liftLimitSwitch.isPressed()){
-            setHeight(-50);
+            setHeight(-25);
         }
             lift2.setPower(0);
             lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -74,5 +80,8 @@ public class lift extends hwMecanum{
     }
     public double getHeight(){
         return lift1.getCurrentPosition();
+    }
+    public double getError(){
+        return error1;
     }
 }

@@ -245,7 +245,7 @@ public class hwMecanum extends MecanumDrive {
     public OpenCvCamera camera;
     public int cameraMonitorViewId;
     //timer
-    public ElapsedTime period = new ElapsedTime();
+    //public ElapsedTime period = new ElapsedTime();
 
     //constructor
     public hwMecanum(HardwareMap ahwMap){
@@ -262,7 +262,6 @@ public class hwMecanum extends MecanumDrive {
                 new Pose2d(.5,.5,Math.toRadians(5.0)),.5);
         LynxModuleUtil.ensureMinimumFirmwareVersion(hwMap);
         batteryVoltageSensor=hwMap.voltageSensor.iterator().next();
-        period.reset();
         for (LynxModule module : hwMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
@@ -293,19 +292,19 @@ public class hwMecanum extends MecanumDrive {
         green1=hwMap.get(DigitalChannel.class,"green1");
         green2=hwMap.get(DigitalChannel.class,"green2");
         red1=hwMap.get(DigitalChannel.class,"red1");
-        red2=hwMap.get(DigitalChannel.class,"red1");
+        red2=hwMap.get(DigitalChannel.class,"red2");
 
         carousel=hwMap.get(CRServo.class, "carousel");
 
         //team element servos
-        TE=hwMap.get(Servo.class,"TE");
-        claw=hwMap.get(Servo.class,"claw"); // claw init
+        //TE=hwMap.get(Servo.class,"TE");
+        //claw=hwMap.get(Servo.class,"claw"); // claw init
 
         intakeServo=hwMap.get(Servo.class,"intakeServo");
 
 
-        bucket=hwMap.get(Servo.class,"bucket");
-        depositServo=hwMap.get(Servo.class,"depositServo");
+        //bucket=hwMap.get(Servo.class,"bucket");
+        //depositServo=hwMap.get(Servo.class,"depositServo");
 
         setLocalizer(new StandardTrackingWheelLocalizer(hwMap));
 
@@ -331,6 +330,8 @@ public class hwMecanum extends MecanumDrive {
         q2.setDirection(DcMotor.Direction.REVERSE);
         q3.setDirection(DcMotor.Direction.REVERSE);
         q4.setDirection(DcMotor.Direction.FORWARD);
+        lift2.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift1.setDirection(DcMotorSimple.Direction.FORWARD);
 
         q1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         q2.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);

@@ -29,7 +29,6 @@ public class liftTest extends LinearOpMode {
         lift1.setDirection(DcMotorSimple.Direction.FORWARD);
     }
     public void runOpMode(){
-        init();
         initialize(hardwareMap);
         waitForStart();
 
