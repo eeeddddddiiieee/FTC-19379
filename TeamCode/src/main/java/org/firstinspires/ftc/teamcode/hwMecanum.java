@@ -274,7 +274,7 @@ public class hwMecanum extends MecanumDrive {
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
         imu.initialize(parameters);
         //remap imu axes because ours is mounted vertically
-        BNO055IMUUtil.remapAxes(imu, AxesOrder.YZX, AxesSigns.NNP);
+        BNO055IMUUtil.remapAxes(imu, AxesOrder.XZY, AxesSigns.PPN);
 
         //hardware init
         q2=hwMap.get(DcMotorEx.class, "left_drivef"); //    left drive front init
