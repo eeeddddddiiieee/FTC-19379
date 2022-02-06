@@ -353,10 +353,10 @@ public class hwMecanum extends MecanumDrive {
         //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
 
         //init encoders (for auto)
-        q1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        q2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        q3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        q4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        q1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        q2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        q3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        q4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
