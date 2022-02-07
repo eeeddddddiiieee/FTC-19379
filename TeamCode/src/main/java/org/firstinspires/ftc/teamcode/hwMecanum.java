@@ -65,6 +65,7 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 import androidx.annotation.NonNull;
 
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
+import org.firstinspires.ftc.teamcode.drive.TwoWheelTrackingLocalizer;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -205,8 +206,10 @@ public class hwMecanum extends MecanumDrive {
     private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
     private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MAX_ACCEL);
     public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(8, 0, 0);
+    //odometry 8,0,0
+    //for both
     public static PIDCoefficients HEADING_PID = new PIDCoefficients(8, 0, 0);
-    public static double LATERAL_MULTIPLIER=1;
+    public static double LATERAL_MULTIPLIER=1.246;
     public static double VX_WEIGHT=1;
     public static double VY_WEIGHT=1;
     public static double OMEGA_WEIGHT=1;
@@ -306,7 +309,7 @@ public class hwMecanum extends MecanumDrive {
         //bucket=hwMap.get(Servo.class,"bucket");
         //depositServo=hwMap.get(Servo.class,"depositServo");
 
-        setLocalizer(new StandardTrackingWheelLocalizer(hwMap));
+        setLocalizer(new TwoWheelTrackingLocalizer(hwMap,this));
 
 
 
@@ -353,10 +356,7 @@ public class hwMecanum extends MecanumDrive {
         //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
 
         //init encoders (for auto)
-        q1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        q2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        q3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        q4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        runWithoutEncoders();
         lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -370,6 +370,19 @@ public class hwMecanum extends MecanumDrive {
         //claw.setPosition(MID_SERVO);
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
 
+    }
+    public void runWithoutEncoders(){
+        q1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        q2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        q3.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        q4.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+    public void runEncoders()
+    {
+        q1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        q2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        q3.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        q4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
@@ -521,8 +534,8 @@ public class hwMecanum extends MecanumDrive {
         return imu.getAngularOrientation().firstAngle;
     }
 
-    @Override
-    public Double getExternalHeadingVelocity() {
+    //@Override
+    public Double getExternalHeadingVelocity1() {
         // To work around an SDK bug, use -zRotationRate in place of xRotationRate
         // and -xRotationRate in place of zRotationRate (yRotationRate behaves as
         // expected). This bug does NOT affect orientation.
@@ -530,7 +543,6 @@ public class hwMecanum extends MecanumDrive {
         // See https://github.com/FIRST-Tech-Challenge/FtcRobotController/issues/251 for details.
         return (double) -imu.getAngularVelocity().xRotationRate;
     }
-
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {
         return new MinVelocityConstraint(Arrays.asList(
                 new AngularVelocityConstraint(maxAngularVel),
@@ -548,6 +560,7 @@ public class hwMecanum extends MecanumDrive {
         q1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         q4.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
+
 
 
 
