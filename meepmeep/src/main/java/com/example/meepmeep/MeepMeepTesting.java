@@ -39,7 +39,62 @@ public class MeepMeepTesting {
                                 .back(24)
                                 .setReversed(TRUE)
                                 .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                                .waitSeconds(1)
+                                .setReversed(FALSE)
+                                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
+                                .forward(10)
+                                .lineTo(new Vector2d(44,-65),
+                                        SampleMecanumDrive.getVelocityConstraint(25, 60, 12),
+                                        SampleMecanumDrive.getAccelerationConstraint(20)
+                                )
+                                .back(24)
+                                .setReversed(TRUE)
+                                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
 
+
+
+
+
+                                .build()
+                );
+        RoadRunnerBotEntity splineTest = new DefaultBotBuilder(meepMeep)
+                // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
+                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 12)
+                .setDimensions(12,14)
+                .followTrajectorySequence(drive ->
+                        drive.trajectorySequenceBuilder(new Pose2d(6, -65, Math.toRadians(270)))
+                                .setReversed(true)
+                                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                                .setReversed(false)
+                                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
+                                .forward(10)
+                                .lineTo(new Vector2d(44,-65),
+                                        SampleMecanumDrive.getVelocityConstraint(25, 60, 12),
+                                        SampleMecanumDrive.getAccelerationConstraint(20)
+                                )
+                                .back(24)
+                                .setReversed(TRUE)
+                                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                                .setReversed(false)
+                                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
+                                .forward(10)
+                                .lineTo(new Vector2d(44,-65),
+                                        SampleMecanumDrive.getVelocityConstraint(25, 60, 12),
+                                        SampleMecanumDrive.getAccelerationConstraint(20)
+                                )
+                                .back(24)
+                                .setReversed(TRUE)
+                                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                                .setReversed(false)
+                                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
+                                .forward(10)
+                                .lineTo(new Vector2d(44,-65),
+                                        SampleMecanumDrive.getVelocityConstraint(25, 60, 12),
+                                        SampleMecanumDrive.getAccelerationConstraint(20)
+                                )
+                                .back(24)
+                                .setReversed(TRUE)
+                                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
 
 
 
@@ -120,10 +175,9 @@ public class MeepMeepTesting {
 
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
-                .addEntity(blue2)
-                .addEntity(redMain)
-                .addEntity(blueMain)
-                .addEntity(red2)
+
+                .addEntity(splineTest)
+
 
                 .start();
 
