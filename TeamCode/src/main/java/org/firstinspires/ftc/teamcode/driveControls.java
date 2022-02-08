@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.Range;
 import org.firstinspires.ftc.teamcode.hwMecanum;
@@ -45,5 +46,13 @@ public class driveControls extends LinearOpMode {
         robot.q2.setPower(lf);
         robot.q3.setPower(lb);
         robot.q4.setPower(-rb);
+        /*
+        robot.setWeightedDrivePower(
+                new Pose2d(
+                        -gamepad1.left_stick_y*shift,
+                        -gamepad1.left_stick_x*shift,
+                        -gamepad1.right_stick_x*shift
+                )
+        );*/
     }
 }
