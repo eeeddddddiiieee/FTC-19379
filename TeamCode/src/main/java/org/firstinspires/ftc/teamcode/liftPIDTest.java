@@ -31,10 +31,6 @@ public class liftPIDTest extends LinearOpMode {
             telemetry.update();
             if (gamepad1.a){
                 robotLift.setHeight(800);
-                telemetry.addData("Lift1:",robot.lift1.getCurrentPosition());
-                telemetry.addData("error",robotLift.getError());
-                telemetry.update();
-
             }
             if (gamepad1.b){
                 robotLift.setHeight(350);
@@ -43,8 +39,12 @@ public class liftPIDTest extends LinearOpMode {
                 robotLift.resetLift();
             }
 
+            robotLift.updateLift();
 
 
+            telemetry.addData("Lift1:",robot.lift1.getCurrentPosition());
+            telemetry.addData("error",robotLift.getError());
+            telemetry.update();
 
         }
 

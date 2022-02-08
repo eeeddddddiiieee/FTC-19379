@@ -17,12 +17,17 @@ public class lift extends hwMecanum{
         Med,
         High,
     }
+    public double targetPosition;
 
     public static double ki=0;
-    public static double kp=.01;
-    public static double kd=.01;
+    public static double kp=.0001;
+    public static double kd=.0001;
     public ElapsedTime period = new ElapsedTime();
     public double error1;
+    public double integralSum;
+
+
+    public double lastError;
     public ElevatorFeedforward ff1=new ElevatorFeedforward(.1,.1,.1,.1);
     public void setPosition1(liftHeight height){
         lift1.setPower(ff1.calculate(1,1));
@@ -31,10 +36,14 @@ public class lift extends hwMecanum{
 
     public lift(HardwareMap hardwareMap){
         super(hardwareMap);
+        period = new ElapsedTime();
         period.reset();
+        targetPosition=0;
+        error1=0;
+        integralSum=0;
+        lastError=0;
 
     }
-
 
     public void setPosition(liftHeight height){
         double ticks=0;
@@ -48,14 +57,19 @@ public class lift extends hwMecanum{
     }
 
     public void setHeight(double tick){
-        double reference = tick;
+        targetPosition=tick;
 
-        double integralSum = 0;
+    }
+    public boolean isAtTarget(){
+        return Math.abs(targetPosition + /*+ because lift is inverted*/ lift1.getCurrentPosition()) < 20;
+    }
 
-        double lastError = 0;
-        double position=lift1.getCurrentPosition();
-        period.reset();
-        while (position!=reference){
+    public void updateLift(){
+        double reference=targetPosition;
+
+
+        double position;
+        while (!isAtTarget()){
             double error;
             // obtain the encoder position
             position = lift1.getCurrentPosition();
@@ -74,15 +88,22 @@ public class lift extends hwMecanum{
             error1=lastError;
         }
 
-    }
-    public void resetLift(){
-        while (!liftLimitSwitch.isPressed()){
-            setHeight(-25);
-        }
+        if (targetPosition==0&&liftLimitSwitch.isPressed()){
+            resetLift();
+            lift1.setPower(0);
             lift2.setPower(0);
-            lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            error1=0;
+
+        }
     }
+
+
+    public void resetLift(){
+        lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+    }
+
     public double getHeight(){
         return lift1.getCurrentPosition();
     }

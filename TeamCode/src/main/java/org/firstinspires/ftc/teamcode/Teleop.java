@@ -83,6 +83,7 @@ public class Teleop extends LinearOpMode {
             Pose2d currentPose = localizer1.getPoseEstimate();
             Pose2d poseVelocity = localizer1.getPoseVelocity();
             deposit1.deposit(robot);
+            deposit1.updatePID(robot);
 
             switch (currentMode){
                 case DRIVER:

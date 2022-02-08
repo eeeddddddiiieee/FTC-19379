@@ -2,11 +2,17 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Teleop;
+import com.acmerobotics.roadrunner.control.PIDFController;
+import com.acmerobotics.roadrunner.control.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.Range;
 
 public class depositStateMachine extends LinearOpMode {
     public depositState dstate1;
     public lift robotlift;
     public boolean intakeMode;
+    public static PIDCoefficients PID = new PIDCoefficients(0.008, 0, 0.0005);
+    public PIDFController liftController1;
     public enum depositState{
         START,
         PRIME,
@@ -21,9 +27,18 @@ public class depositStateMachine extends LinearOpMode {
         robotlift.init(hardwareMap);
         intakeMode=true;
     }
+
     public void runOpMode(){
 
     }
+    public void updatePID(hwMecanum r1){
+        liftController1.update(r1.lift1.getCurrentPosition());
+    }
+    public void setLiftPosition(double pos){
+        liftController1.setTargetPosition(Range.clip(pos, 0, 800));
+    }
+
+
     public void deposit(hwMecanum robot){
         switch (dstate1) {
             case START:
@@ -53,6 +68,7 @@ public class depositStateMachine extends LinearOpMode {
             case MID:
                 intakeMode=true;
                 robotlift.setPosition(lift.liftHeight.Med);
+                setLiftPosition(800);
                 if (robotlift.getHeight()>384.5*8/(1.9685*3.14)) {
                     dstate1 = depositState.DUMP;
                 }

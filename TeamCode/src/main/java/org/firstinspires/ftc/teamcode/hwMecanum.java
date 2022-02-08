@@ -560,7 +560,9 @@ public class hwMecanum extends MecanumDrive {
         q1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         q4.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
     }
-
+    public void breakFollowing() {
+        trajectorySequenceRunner.breakFollowing();
+    }
 
 
 
