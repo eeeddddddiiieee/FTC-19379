@@ -20,8 +20,8 @@ public class contourCentroidDetector extends OpenCvPipeline {
     Scalar HOT_PINK = new Scalar(196, 23, 112);
 
     // Pink, the default color                         Y      Cr     Cb    (Do not change Y)
-    public static Scalar scalarLowerYCrCb = new Scalar(0.0, 150.0, 120.0);
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 255.0, 255.0);
+    public static Scalar scalarLowerYCrCb = new Scalar(0.0, 128.0, 0.0);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 200.0, 95.0);
 
     // Green                                             Y      Cr     Cb
     // public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 120.0, 150.0);

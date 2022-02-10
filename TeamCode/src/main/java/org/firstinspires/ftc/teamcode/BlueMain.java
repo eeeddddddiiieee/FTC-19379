@@ -47,7 +47,7 @@ public class BlueMain extends LinearOpMode {
         deposit1=new depositStateMachine();
         deposit1.initDeposit();
         vision1=new vision();
-        vision1.init(hardwareMap);
+        vision1.initVision(hardwareMap);
     }
 
 
