@@ -67,6 +67,7 @@ public class MeepMeepTesting {
                                 .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
                                 .setReversed(false)
                                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
+
                                 .forward(10)
                                 .lineTo(new Vector2d(44,-65),
                                         SampleMecanumDrive.getVelocityConstraint(25, 60, 12),
