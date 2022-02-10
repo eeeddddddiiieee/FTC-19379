@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.te;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.hwMecanum;
 import org.firstinspires.ftc.teamcode.lift;
@@ -19,6 +20,10 @@ public class visionTestImplementation extends LinearOpMode {
 
         vision1=new vision();
         vision1.init(hardwareMap);
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        telemetry = dashboard.getTelemetry();
+        FtcDashboard.getInstance().startCameraStream(robot.camera, 10);
+        waitForStart();
         while (opModeIsActive())
         {
             vision1.checkTE();

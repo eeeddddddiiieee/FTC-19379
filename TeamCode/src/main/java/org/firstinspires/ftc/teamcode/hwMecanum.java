@@ -335,7 +335,6 @@ public class hwMecanum extends MecanumDrive {
         q4.setDirection(DcMotor.Direction.FORWARD);
         lift2.setDirection(DcMotorSimple.Direction.REVERSE);
         lift1.setDirection(DcMotorSimple.Direction.FORWARD);
-
         q1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         q2.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         q3.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);

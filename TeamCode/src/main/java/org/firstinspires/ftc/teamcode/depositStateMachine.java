@@ -32,7 +32,7 @@ public class depositStateMachine extends LinearOpMode {
 
     }
     public void updatePID(hwMecanum r1){
-        liftController1.update(r1.lift1.getCurrentPosition());
+        robotlift.updateLift(r1.lift1.getCurrentPosition());
     }
     public void setLiftPosition(double pos){
         liftController1.setTargetPosition(Range.clip(pos, 0, 800));
@@ -91,7 +91,7 @@ public class depositStateMachine extends LinearOpMode {
                 break;
             case RETRACT:
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
-                robotlift.setHeight(0);
+                robotlift.setHeight(0, lift.resetMode.YES);
                 if (robotlift.getHeight()<50)
                 {
                     robot.bucket.setPosition(hwMecanum.bucketDown);
