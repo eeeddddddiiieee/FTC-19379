@@ -1,29 +1,33 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
+
+
 @TeleOp(name="servoTest", group="intaketest")
 
-public class servoTest extends LinearOpMode {
+public class servoTest extends OpMode {
     public Servo servo1;
+    public double offset;
 
-    public void initialize(){
-        servo1=hardwareMap.get(Servo.class,"test1"); //init hw map for following devices
-
+    public void init(){
+        servo1=hardwareMap.get(Servo.class,"deposit"); //init hw map for following devices
+        offset=0;
+        servo1.setPosition(.5);
     }
-    public void runOpMode(){
-        init();
-        initialize();
-        waitForStart();
-        while (opModeIsActive()){
-            if (gamepad1.a){
-            servo1.setPosition(gamepad1.left_trigger-gamepad1.right_trigger);
-            }
-            //we do not care
+
+    public void loop(){
+
+
+
+            servo1.setPosition(Range.clip((gamepad1.left_trigger),.2,.995));
             telemetry.addData("position",servo1.getPosition());
-        }
+            telemetry.update();
+
 
     }
 }

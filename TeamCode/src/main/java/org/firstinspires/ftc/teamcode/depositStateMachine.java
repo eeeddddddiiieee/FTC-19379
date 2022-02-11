@@ -70,7 +70,7 @@ public class depositStateMachine extends LinearOpMode {
                 intakeMode=true;
                 robotlift.setPosition(lift.liftHeight.Med);
                 //setLiftPosition(350);
-                if (robotlift.getHeight()>384.5*8/(1.9685*3.14)) {
+                if (robotlift.getHeight()>250) {
                     dstate1 = depositState.DUMP;
                 }
                 break;

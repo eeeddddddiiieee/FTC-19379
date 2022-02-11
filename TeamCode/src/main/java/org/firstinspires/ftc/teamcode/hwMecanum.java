@@ -221,14 +221,14 @@ public class hwMecanum extends MecanumDrive {
     public static final double halfopen=.112;
     public static final double CLOSED_CLAW=.15;
     //change all of these lol
-    public static final double bucketDown=.11; //change
-    public static final double bucketRaised=.11;
-    public static final double bucketOut=.12;
-    public static final double depositClosed=.11;
-    public static final double depositOpen=.12;
-    public static final double depositMidOpen=.13;
-    public static final double intakeDown=.1;
-    public static final double intakeUp=.12;
+    public static final double bucketDown=.8; //change
+    public static final double bucketRaised=.5;
+    public static final double bucketOut=.005;
+    public static final double depositClosed=.995;
+    public static final double depositOpen=.3;
+    public static final double depositMidOpen=.7;
+    public static final double intakeDown=.29;
+    public static final double intakeUp=.8;
     //change above
     public static final double inside=0.99;//change
     public static final double high=0.4; //change
@@ -263,11 +263,13 @@ public class hwMecanum extends MecanumDrive {
         //telemetry.update();
         follower=new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(.5,.5,Math.toRadians(5.0)),.5);
+
         LynxModuleUtil.ensureMinimumFirmwareVersion(hwMap);
         batteryVoltageSensor=hwMap.voltageSensor.iterator().next();
         for (LynxModule module : hwMap.getAll(LynxModule.class)) {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
+
         mode=Mode.IDLE;
         intakeMode=true;
         //imu init
@@ -306,8 +308,8 @@ public class hwMecanum extends MecanumDrive {
         intakeServo=hwMap.get(Servo.class,"intakeServo");
 
 
-        //bucket=hwMap.get(Servo.class,"bucket");
-        //depositServo=hwMap.get(Servo.class,"depositServo");
+        bucket=hwMap.get(Servo.class,"bucket");
+        depositServo=hwMap.get(Servo.class,"deposit");
 
         setLocalizer(new TwoWheelTrackingLocalizer(hwMap,this));
 

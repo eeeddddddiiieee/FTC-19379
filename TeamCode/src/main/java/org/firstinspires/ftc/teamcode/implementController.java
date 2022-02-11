@@ -22,7 +22,7 @@ public class implementController extends LinearOpMode {
     }
     public void runImplementController(hwMecanum robot){
         //team element claw
-        robot.teamElementArm.setPower(gamepad2.left_stick_y);
+        robot.teamElementArm.setPower(gamepad2.left_stick_y*.4);
         robot.carousel.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
 
         if (gamepad2.left_bumper){
@@ -31,9 +31,10 @@ public class implementController extends LinearOpMode {
         if (gamepad2.right_bumper){
             clawOffset-=clawSpeed;
         }
-        robot.claw.setPosition(Range.clip(clawPosition+clawOffset,0,1));
+        //robot.claw.setPosition(Range.clip(clawPosition+clawOffset,0,1));
         double armPositionRadians=((robot.teamElementArm.getCurrentPosition()/1992.6)*2*Math.PI)-(Math.PI/2);
 
+        /*
         if (gamepad2.y){
             double servoPositionRadians=(robot.TE.getPosition()*2*Math.PI)+Math.PI/6; //fix, should be relative to the arm, top position should be 1
 
@@ -43,11 +44,13 @@ public class implementController extends LinearOpMode {
 
 
             TEposition=Range.clip((servoTargetPosition),0,1);
-        }
-
+        }*/
+        /*
         if (gamepad2.start){
             TEposition=TEUp;
         }
         robot.TE.setPosition(Range.clip(TEposition, TEMin, TEMax));
+        */
+
     }
 }

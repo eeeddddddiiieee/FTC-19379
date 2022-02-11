@@ -22,8 +22,6 @@ import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 
 public class Teleop extends LinearOpMode {
 
-    public hwMecanum robot;
-    public depositStateMachine deposit1;
     ElapsedTime runTime=new ElapsedTime();
     public boolean isCargo;
 
@@ -36,6 +34,15 @@ public class Teleop extends LinearOpMode {
 
 
     public void runOpMode(){
+        hwMecanum robot = new hwMecanum(hardwareMap);
+        robot.init(hardwareMap);
+        depositStateMachine deposit1=new depositStateMachine();
+        deposit1.initDeposit();
+        implementController ic1=new implementController();
+        ic1.initialize(robot);
+
+        driveControls dC=new driveControls();
+        isCargo=false;
         StandardTrackingWheelLocalizer localizer1 = new StandardTrackingWheelLocalizer(hardwareMap);
         localizer1.setPoseEstimate(new Pose2d(0,0,0));
 
@@ -48,15 +55,8 @@ public class Teleop extends LinearOpMode {
                     // Run your action in here!
                 })
                 .build();
-        robot = new hwMecanum(hardwareMap);
-        robot.init(hardwareMap);
-        deposit1=new depositStateMachine();
-        deposit1.initDeposit();
-        implementController ic1=new implementController();
-        ic1.initialize(robot);
 
-        driveControls dC=new driveControls();
-        isCargo=false;
+
 
         waitForStart();
 
@@ -85,11 +85,11 @@ public class Teleop extends LinearOpMode {
             deposit1.deposit(robot);
             deposit1.updatePID(robot);
 
+
             switch (currentMode){
                 case DRIVER:
                     ic1.runImplementController(robot);
                     dC.driveController(robot);
-
                     if (gamepad1.left_stick_button) {
                         localizer1.setPoseEstimate(new Pose2d(24, -65, Math.toRadians(90)));
                         robot.followTrajectory(move1);
