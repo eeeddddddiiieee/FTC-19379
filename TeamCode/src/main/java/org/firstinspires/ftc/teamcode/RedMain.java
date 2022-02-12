@@ -25,7 +25,7 @@ public class RedMain extends LinearOpMode {
         SHIPPING,
         IDLE
     }
-    
+
     public Pose2d startPose=new Pose2d(-6,65,Math.toRadians(270));
 
     public void runOpMode() throws InterruptedException{
