@@ -48,7 +48,6 @@ public class Teleop extends LinearOpMode {
         ic1.initialize(robot);
 
         driveControls dC=new driveControls();
-        robot.setLocalizer(TwoWheelTrackingLocalizer,this);
 
         robot.isCargo=false;
         //localizer1.setPoseEstimate(new Pose2d(0,0,0));
