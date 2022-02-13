@@ -1,16 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
+import static java.lang.Thread.sleep;
+
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.Teleop;
 import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.control.PIDCoefficients;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
-public class depositStateMachine extends LinearOpMode {
+public class depositStateMachine {
     public depositState dstate1;
     public lift robotlift;
     public boolean intakeMode;
+    public double intakePower;
     public static PIDCoefficients PID = new PIDCoefficients(0.008, 0, 0.0005);
     public PIDFController liftController1;
     public enum depositState{
@@ -21,7 +27,7 @@ public class depositStateMachine extends LinearOpMode {
         DUMP,
         RETRACT
     }
-    public void initDeposit(){
+    public void initDeposit(HardwareMap hardwareMap){
         dstate1= depositState.START;
         robotlift=new lift(hardwareMap);
         robotlift.init(hardwareMap);
@@ -39,13 +45,14 @@ public class depositStateMachine extends LinearOpMode {
     }
 
 
-    public void deposit(hwMecanum robot){
+    public void deposit(hwMecanum robot, Gamepad gamepad1)throws InterruptedException{
         switch (dstate1) {
             case START:
+                intakeMode=true;
                 robot.bucket.setPosition(hwMecanum.bucketDown);
                 robot.intakeServo.setPosition(hwMecanum.intakeDown);
                 robot.depositServo.setPosition(hwMecanum.depositMidOpen);
-                if (gamepad1.a){
+                if (robot.isCargo==true){
                     dstate1= depositState.PRIME;
                 }
                 break;
@@ -53,7 +60,7 @@ public class depositStateMachine extends LinearOpMode {
                 robot.depositServo.setPosition(hwMecanum.depositClosed);
                 robot.intakeServo.setPosition(hwMecanum.intakeUp);
                 intakeMode=false;
-                robot.intake.setPower(-.5);
+                intakePower=.75;
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
 
                 if (gamepad1.a){
@@ -62,13 +69,13 @@ public class depositStateMachine extends LinearOpMode {
                 if (gamepad1.y){
                     dstate1= depositState.MID;
                 }
-                if (gamepad1.x){
+                if (gamepad1.b){
                     dstate1= depositState.DUMP;
                 }
                 break;
             case MID:
                 intakeMode=true;
-                robotlift.setPosition(lift.liftHeight.Med);
+                robotlift.setHeight(320,lift.resetMode.NO);
                 //setLiftPosition(350);
                 if (robotlift.getHeight()>250) {
                     dstate1 = depositState.DUMP;
@@ -76,21 +83,25 @@ public class depositStateMachine extends LinearOpMode {
                 break;
             case HIGH:
                 intakeMode=true;
-                robotlift.setPosition(lift.liftHeight.High);
+                robotlift.setHeight(1000,lift.resetMode.NO);
                 if (robotlift.getHeight()>750) {
                     dstate1 = depositState.DUMP;
                 }
                 break;
             case DUMP:
+                intakePower=0;
                 robot.bucket.setPosition(hwMecanum.bucketOut);
                 if (gamepad1.x){
                     robot.depositServo.setPosition(hwMecanum.depositMidOpen);
                     sleep(400);
+                    robot.bucket.setPosition(hwMecanum.bucketRaised);
+                    if (robot.bucket.getPosition()>.4){
                     dstate1= depositState.RETRACT;
+                    }
                 }
                 break;
             case RETRACT:
-                robot.bucket.setPosition(hwMecanum.bucketRaised);
+                intakeMode=true;
                 robotlift.setHeight(0, lift.resetMode.YES);
                 if (robotlift.getHeight()<50)
                 {
@@ -103,8 +114,8 @@ public class depositStateMachine extends LinearOpMode {
             default: dstate1= depositState.START;
         }
         
-        if (gamepad1.right_stick_button && dstate1 != depositState.START) {
-            dstate1 = depositState.START;
+        if (gamepad1.right_stick_button && dstate1 != depositState.RETRACT) {
+            dstate1 = depositState.RETRACT;
         }
 
     }

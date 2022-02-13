@@ -223,7 +223,7 @@ public class hwMecanum extends MecanumDrive {
     //change all of these lol
     public static final double bucketDown=.8; //change
     public static final double bucketRaised=.5;
-    public static final double bucketOut=.005;
+    public static final double bucketOut=.15;
     public static final double depositClosed=.995;
     public static final double depositOpen=.3;
     public static final double depositMidOpen=.7;
@@ -242,6 +242,8 @@ public class hwMecanum extends MecanumDrive {
     public static final boolean USING_WEBCAM = true; // change to true if using webcam
     public static final String WEBCAM_NAME = "Webcam 1"; // insert webcam name from configuration if using webcam
     private FtcDashboard dashboard;
+    public boolean isCargo;
+
 
 
     //public UGContourRingPipeline pipeline;

@@ -51,7 +51,7 @@ public class auto1 extends LinearOpMode {
         robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
         deposit1=new depositStateMachine();
-        deposit1.initDeposit();
+        deposit1.initDeposit(hardwareMap);
         vision1=new vision();
         vision1.initVision(hardwareMap);
     }

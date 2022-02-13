@@ -38,7 +38,7 @@ public class RedMain extends LinearOpMode {
         TrajectorySequence move1 = robot.trajectorySequenceBuilder(new Pose2d(38, -62,Math.toRadians(270)))
 
                 .setReversed(true)
-                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                .splineTo(new Vector2d(-12,-48),Math.toRadians(90))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
                 .build();
@@ -54,7 +54,7 @@ public class RedMain extends LinearOpMode {
 
         TrajectorySequence shippingHub=robot.trajectorySequenceBuilder((fwBw.end()))
                 .setReversed(TRUE)
-                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                .splineTo(new Vector2d(-12,-46),Math.toRadians(90))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
                 .build();
@@ -66,7 +66,7 @@ public class RedMain extends LinearOpMode {
 
         while (opModeIsActive()){
 
-            deposit1.deposit(robot);
+            deposit1.deposit(robot,gamepad1);
             deposit1.updatePID(robot);
 
 
@@ -80,7 +80,7 @@ public class RedMain extends LinearOpMode {
         robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
         deposit1=new depositStateMachine();
-        deposit1.initDeposit();
+        deposit1.initDeposit(hardwareMap);
         vision1=new vision();
         vision1.initVision(hardwareMap);
     }

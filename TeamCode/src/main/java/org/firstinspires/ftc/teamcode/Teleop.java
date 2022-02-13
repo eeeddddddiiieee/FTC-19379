@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.drive.TwoWheelTrackingLocalizer;
 import org.firstinspires.ftc.teamcode.lift;
 
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
@@ -23,7 +24,6 @@ import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
 public class Teleop extends LinearOpMode {
 
     ElapsedTime runTime=new ElapsedTime();
-    public boolean isCargo;
 
     public enum ControlState{
         DRIVER,
@@ -33,18 +33,25 @@ public class Teleop extends LinearOpMode {
     //public boolean intakeMode=true;
 
 
-    public void runOpMode(){
+    public void runOpMode() throws InterruptedException{
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
+        double shift;
+        double reverse;
+        double x1;
+        double y1;
+        double yaw;
+
         depositStateMachine deposit1=new depositStateMachine();
-        deposit1.initDeposit();
+        deposit1.initDeposit(hardwareMap);
         implementController ic1=new implementController();
         ic1.initialize(robot);
 
         driveControls dC=new driveControls();
-        isCargo=false;
-        StandardTrackingWheelLocalizer localizer1 = new StandardTrackingWheelLocalizer(hardwareMap);
-        localizer1.setPoseEstimate(new Pose2d(0,0,0));
+        robot.setLocalizer(TwoWheelTrackingLocalizer,this);
+
+        robot.isCargo=false;
+        //localizer1.setPoseEstimate(new Pose2d(0,0,0));
 
         Trajectory move1 = robot.trajectoryBuilder(new Pose2d(24, -65,Math.toRadians(270)),true)
 
@@ -73,19 +80,27 @@ public class Teleop extends LinearOpMode {
             }
 
             if (robot.bucketSensor.getDistance(DistanceUnit.MM)<50){
-                isCargo=TRUE;
+                robot.isCargo=TRUE;
             }
             else {
-                isCargo=FALSE;
+                robot.isCargo=FALSE;
             }
-
-            localizer1.update();
-            Pose2d currentPose = localizer1.getPoseEstimate();
-            Pose2d poseVelocity = localizer1.getPoseVelocity();
-            deposit1.deposit(robot);
+            if (deposit1.intakeMode) {
+                robot.intake.setPower((gamepad1.left_trigger - gamepad1.right_trigger)*.75);
+            }
+            else {
+                robot.intake.setPower(deposit1.intakePower);
+            }
+            //localizer1.update();
+            //Pose2d currentPose = localizer1.getPoseEstimate();
+            //Pose2d poseVelocity = localizer1.getPoseVelocity();
+            deposit1.deposit(robot,gamepad1);
             deposit1.updatePID(robot);
+            ic1.runImplementController(robot,gamepad1,gamepad2);
+            dC.driveController(robot,gamepad1);
 
 
+            /*
             switch (currentMode){
                 case DRIVER:
                     ic1.runImplementController(robot);
@@ -121,12 +136,17 @@ public class Teleop extends LinearOpMode {
 
 
             }
+            */
+
             
-            telemetry.addData("POSITION:",currentPose.getX()+","+currentPose.getY());
-            telemetry.addData("HEADING:",currentPose.getHeading());
-            telemetry.addData("DEPOSIT:",deposit1.getDepositState());
+            //telemetry.addData("POSITION:",currentPose.getX()+","+currentPose.getY());
+            //telemetry.addData("HEADING:",currentPose.getHeading());
+            //telemetry.addData("DEPOSIT:",deposit1.getDepositState());
             telemetry.addData("RUNTIME:",getRuntime());
             telemetry.addData("CARGO:", robot.bucketSensor.getDistance(DistanceUnit.MM));
+            telemetry.addData("lift",deposit1.robotlift.getHeight());
+            telemetry.addData("lift",deposit1.robotlift.targetPosition);
+
             telemetry.update();
         }
     }

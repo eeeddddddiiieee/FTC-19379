@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.util.Range;
 
-public class implementController extends LinearOpMode {
+public class implementController {
     public double clawPosition;
     public double clawOffset;
     public double clawSpeed=.1;
@@ -16,14 +17,14 @@ public class implementController extends LinearOpMode {
     }
     public void initialize(hwMecanum robot){
         clawPosition=0;
-        robot.claw.setPosition(clawPosition+clawOffset);
+        //robot.claw.setPosition(clawPosition+clawOffset);
         clawOffset=0;
         TEposition=TEUp;
     }
-    public void runImplementController(hwMecanum robot){
+    public void runImplementController(hwMecanum robot, Gamepad gamepad1,Gamepad gamepad2){
         //team element claw
         robot.teamElementArm.setPower(gamepad2.left_stick_y*.4);
-        robot.carousel.setPower(gamepad1.right_trigger-gamepad1.left_trigger);
+        robot.carousel.setPower(gamepad2.right_trigger-gamepad2.left_trigger);
 
         if (gamepad2.left_bumper){
             clawOffset+=clawSpeed;

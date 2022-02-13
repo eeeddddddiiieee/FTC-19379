@@ -11,7 +11,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-
+@Disable
 @Autonomous(name="TEtestauto", group="Auto")
 public class TEtestauto extends LinearOpMode {
 
@@ -31,6 +31,7 @@ public class TEtestauto extends LinearOpMode {
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         robot.camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+
         // Connect to the camera
         robot.camera.openCameraDevice();
         // Use the SkystoneDetector pipeline
