@@ -84,7 +84,7 @@ public class Teleop extends LinearOpMode {
             else {
                 robot.isCargo=FALSE;
             }
-            if (deposit1.intakeMode) {
+            if ( robot.intakeMode&&!gamepad1.left_stick_button&&!gamepad1.dpad_down&&!gamepad1.dpad_up) {
                 robot.intake.setPower((gamepad1.left_trigger - gamepad1.right_trigger)*.75);
             }
             else {

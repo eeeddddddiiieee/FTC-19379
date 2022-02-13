@@ -48,7 +48,7 @@ public class depositStateMachine {
     public void deposit(hwMecanum robot, Gamepad gamepad1)throws InterruptedException{
         switch (dstate1) {
             case START:
-                intakeMode=true;
+                robot.intakeMode=true;
                 robot.bucket.setPosition(hwMecanum.bucketDown);
                 robot.intakeServo.setPosition(hwMecanum.intakeDown);
                 robot.depositServo.setPosition(hwMecanum.depositMidOpen);
@@ -59,6 +59,8 @@ public class depositStateMachine {
             case PRIME:
                 robot.depositServo.setPosition(hwMecanum.depositClosed);
                 robot.intakeServo.setPosition(hwMecanum.intakeUp);
+                robot.red1.setState(true);
+                robot.red2.setState(true);
                 intakeMode=false;
                 intakePower=.75;
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
@@ -74,15 +76,23 @@ public class depositStateMachine {
                 }
                 break;
             case MID:
-                intakeMode=true;
+                robot.intakeMode=true;
                 robotlift.setHeight(320,lift.resetMode.NO);
+                robot.red1.setState(false);
+                robot.red2.setState(false);
+                robot.green1.setState(true);
+                robot.green2.setState(true);
                 //setLiftPosition(350);
                 if (robotlift.getHeight()>250) {
                     dstate1 = depositState.DUMP;
                 }
                 break;
             case HIGH:
-                intakeMode=true;
+                robot.intakeMode=true;
+                robot.red1.setState(false);
+                robot.red2.setState(false);
+                robot.green1.setState(true);
+                robot.green2.setState(true);
                 robotlift.setHeight(1000,lift.resetMode.NO);
                 if (robotlift.getHeight()>750) {
                     dstate1 = depositState.DUMP;
@@ -101,7 +111,9 @@ public class depositStateMachine {
                 }
                 break;
             case RETRACT:
-                intakeMode=true;
+                robot.intakeMode=true;
+                robot.green1.setState(false);
+                robot.green2.setState(false);
                 robotlift.setHeight(0, lift.resetMode.YES);
                 if (robotlift.getHeight()<50)
                 {
