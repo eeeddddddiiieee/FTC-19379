@@ -12,7 +12,6 @@ public class implementController {
     public static final double TEUp=.5;
     public static final double TEMax=.9;
     public static final double TEMin=.1;
-    public boolean toggle;
     public void runOpMode(){
 
     }
@@ -21,18 +20,18 @@ public class implementController {
         //robot.claw.setPosition(clawPosition+clawOffset);
         clawOffset=0;
         TEposition=TEUp;
-        toggle=false;
+        robot.toggle=false;
     }
     public void runImplementController(hwMecanum robot, Gamepad gamepad1,Gamepad gamepad2){
         //team element claw
 
         if (gamepad1.left_stick_button){
-            toggle=true;
+            robot.toggle=true;
         }
         if (gamepad1.dpad_left){
-            toggle=false;
+            robot.toggle=false;
         }
-        if (toggle){
+        if (robot.toggle){
             robot.teamElementArm.setPower((gamepad1.left_trigger-gamepad1.right_trigger)*.5);
 
         }

@@ -22,17 +22,17 @@ public class SplineTest extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         hwMecanum drive = new hwMecanum(hardwareMap);
         drive.init(hardwareMap);
-        drive.setPoseEstimate(new Pose2d(6,-63,Math.toRadians(270)));
+        drive.setPoseEstimate(new Pose2d(6,-65,Math.toRadians(270)));
 
 
         waitForStart();
 
         if (isStopRequested()) return;
-        drive.setPoseEstimate(new Pose2d(6,-63,Math.toRadians(270)));
+        drive.setPoseEstimate(new Pose2d(6,-65,Math.toRadians(270)));
 
         TrajectorySequence traj = drive.trajectorySequenceBuilder(new Pose2d(6, -65, Math.toRadians(270)))
                 .setReversed(true)
-                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                .splineTo(new Vector2d(-12,-48),Math.toRadians(90))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
                 .forward(10)
@@ -42,7 +42,7 @@ public class SplineTest extends LinearOpMode {
                 )
                 .back(24)
                 .setReversed(TRUE)
-                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                .splineTo(new Vector2d(-12,-48),Math.toRadians(90))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
                 .forward(10)
@@ -52,7 +52,7 @@ public class SplineTest extends LinearOpMode {
                 )
                 .back(24)
                 .setReversed(TRUE)
-                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                .splineTo(new Vector2d(-12,-48),Math.toRadians(90))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
                 .forward(10)

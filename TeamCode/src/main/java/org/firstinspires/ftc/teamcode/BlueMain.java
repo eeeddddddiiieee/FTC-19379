@@ -6,13 +6,15 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-
-@Autonomous(name="blueMain",group = "drive")
+//@Disabled
+//@Autonomous(name="blueMain",group = "drive")
+/*
 public class BlueMain extends LinearOpMode {
     public hwMecanum robot;
     public vision vision1;
@@ -215,5 +217,5 @@ public class BlueMain extends LinearOpMode {
 
 
 
-}
+}*/
 

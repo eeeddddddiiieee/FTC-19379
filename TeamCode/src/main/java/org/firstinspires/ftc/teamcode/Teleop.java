@@ -44,8 +44,8 @@ public class Teleop extends LinearOpMode {
 
         depositStateMachine deposit1=new depositStateMachine();
         deposit1.initDeposit(hardwareMap);
-        implementController ic1=new implementController();
-        ic1.initialize(robot);
+        //implementController ic1=new implementController();
+        //ic1.initialize(robot);
 
         driveControls dC=new driveControls();
 
@@ -67,38 +67,22 @@ public class Teleop extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            if (getRuntime()==80000){
-                gamepad1.rumble(.5,.5,1500);
-                gamepad2.rumble(.5,.5,1500);
 
-            }
 
-            if (getRuntime()==90000){
-                gamepad1.rumble(1,1,200);
-                gamepad2.rumble(1,1,200);
-            }
-
-            if (robot.bucketSensor.getDistance(DistanceUnit.MM)<50){
-                robot.isCargo=TRUE;
-            }
-            else {
-                robot.isCargo=FALSE;
-            }
-            if ( robot.intakeMode&&!gamepad1.left_stick_button&&!gamepad1.dpad_down&&!gamepad1.dpad_up) {
-                robot.intake.setPower((gamepad1.left_trigger - gamepad1.right_trigger)*.75);
-            }
-            else {
-                robot.intake.setPower(deposit1.intakePower);
-            }
             //localizer1.update();
             //Pose2d currentPose = localizer1.getPoseEstimate();
             //Pose2d poseVelocity = localizer1.getPoseVelocity();
             deposit1.deposit(robot,gamepad1);
             deposit1.updatePID(robot);
-            ic1.runImplementController(robot,gamepad1,gamepad2);
+            //ic1.runImplementController(robot,gamepad1,gamepad2);
             dC.driveController(robot,gamepad1);
 
-
+            if (robot.intakeMode==false) {
+                robot.intake.setPower(deposit1.intakePower);
+            }
+            else if ( robot.intakeMode&&!gamepad1.dpad_down&&!gamepad1.dpad_up&&!robot.toggle) {
+                robot.intake.setPower((gamepad1.left_trigger - gamepad1.right_trigger)*.75);
+            }
             /*
             switch (currentMode){
                 case DRIVER:
@@ -141,6 +125,24 @@ public class Teleop extends LinearOpMode {
             //telemetry.addData("POSITION:",currentPose.getX()+","+currentPose.getY());
             //telemetry.addData("HEADING:",currentPose.getHeading());
             //telemetry.addData("DEPOSIT:",deposit1.getDepositState());
+            if (getRuntime()==80000){
+                gamepad1.rumble(.5,.5,1500);
+                gamepad2.rumble(.5,.5,1500);
+
+            }
+
+            if (getRuntime()==90000){
+                gamepad1.rumble(1,1,200);
+                gamepad2.rumble(1,1,200);
+            }
+
+            if (robot.bucketSensor.getDistance(DistanceUnit.MM)<50){
+                robot.isCargo=TRUE;
+            }
+            else {
+                robot.isCargo=FALSE;
+            }
+
             telemetry.addData("RUNTIME:",getRuntime());
             telemetry.addData("CARGO:", robot.bucketSensor.getDistance(DistanceUnit.MM));
             telemetry.addData("lift",deposit1.robotlift.getHeight());

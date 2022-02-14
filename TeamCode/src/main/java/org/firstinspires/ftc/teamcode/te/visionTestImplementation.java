@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.te;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.hwMecanum;
@@ -8,23 +9,19 @@ import org.firstinspires.ftc.teamcode.lift;
 import org.firstinspires.ftc.teamcode.te.vision;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.te.vision.barcodePosition;
-
+@Config
 @Autonomous (name="visiontestimplementation")
 public class visionTestImplementation extends LinearOpMode {
-    public hwMecanum robot;
-    public vision vision1;
-
-
 
     public void runOpMode(){
         hwMecanum robot = new hwMecanum(hardwareMap);
         robot.init(hardwareMap);
 
-        vision1=new vision();
+        vision vision1=new vision();
         vision1.initVision(hardwareMap);
         FtcDashboard dashboard = FtcDashboard.getInstance();
         telemetry = dashboard.getTelemetry();
-        FtcDashboard.getInstance().startCameraStream(robot.camera, 10);
+        FtcDashboard.getInstance().startCameraStream(vision1.webcam, 10);
 
         waitForStart();
         while (opModeIsActive())
