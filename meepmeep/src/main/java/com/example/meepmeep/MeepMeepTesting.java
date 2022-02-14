@@ -181,7 +181,7 @@ public class MeepMeepTesting {
                 .setDarkMode(true)
                 .setBackgroundAlpha(0.95f)
 
-                .addEntity(red2)
+
                 .addEntity(redMain)
 
 
