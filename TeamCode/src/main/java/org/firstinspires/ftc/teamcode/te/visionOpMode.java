@@ -18,19 +18,19 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
 @Config
-@Autonomous(name="visionTesting", group="Tutorials")
+@Autonomous(name="visionopmode", group="Tutorials")
 
-public class vision extends LinearOpMode{
+public class visionOpMode extends LinearOpMode{
 
     public OpenCvCamera webcam;
     private contourCentroidDetector pipeline;
 
     private double crThreshHigh = 200;
     private double crThreshLow = 120;
-    private double cbThreshHigh = 100;
+    private double cbThreshHigh = 90;
     private double cbThreshLow = 0;
 
-    private int minRectangleArea = 800;
+    private int minRectangleArea = 2000;
     private double middleBarcodeRangeBoundary = 0.5; //i.e 30% of the way across the frame from the left
     private double rightBarcodeRangeBoundary = 0.6; //i.e 60% of the way across the frame from the left
 
@@ -39,7 +39,7 @@ public class vision extends LinearOpMode{
 
     // Pink Range                                      Y      Cr     Cb
     public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 130.0, 0);
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 200, 100.0);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 180, 90.0);
 
     public int cameraMonitorViewId;
     public enum barcodePosition{
@@ -73,53 +73,50 @@ public class vision extends LinearOpMode{
 
             }
         });
-        //FtcDashboard dashboard = FtcDashboard.getInstance();
-        //telemetry = dashboard.getTelemetry();
-        //FtcDashboard.getInstance().startCameraStream(webcam, 10);
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        telemetry = dashboard.getTelemetry();
+        FtcDashboard.getInstance().startCameraStream(webcam, 10);
     }
 
-    @Override
-    public void runOpMode(){
 
-    }
 
     public void checkTE(){
         if(pipeline.error){
-            //telemetry.addData("Exception: ", pipeline.debug.getStackTrace());
+            telemetry.addData("Exception: ", pipeline.debug.getStackTrace());
         }
         // Only use this line of the code when you want to find the lower and upper values, using Ftc Dashboard (https://acmerobotics.github.io/ftc-dashboard/gettingstarted)
-        // testing(pipeline);
+        testing(pipeline);
 
         // Watch our YouTube Tutorial for the better explanation
 
         double rectangleArea = pipeline.getRectArea();
 
         //Print out the area of the rectangle that is found.
-        //telemetry.addData("Rectangle Area", rectangleArea);
+        telemetry.addData("Rectangle Area", rectangleArea);
 
         //Check to see if the rectangle has a large enough area to be a marker.
         if(rectangleArea > minRectangleArea){
             //Then check the location of the rectangle to see which barcode it is in.
             if(pipeline.getRectMidpointX() >200){
-                //telemetry.addData("Barcode Position", "Right");
+                telemetry.addData("Barcode Position", "Right");
                 position=barcodePosition.RIGHT;
             }
             else if(pipeline.getRectMidpointX() < 200){
-                //telemetry.addData("Barcode Position", "Center");
+                telemetry.addData("Barcode Position", "Center");
                 position=barcodePosition.CENTER;
             }
 
         }
         else {
-            //telemetry.addData("Barcode Position", "Left");
+            telemetry.addData("Barcode Position", "Left");
             position=barcodePosition.LEFT;
         }
 
-        //telemetry.update();
+        telemetry.update();
     }
 
-    //@Override
-    /*public void runOpMode()
+    @Override
+    public void runOpMode()
     {
 
         initVision(hardwareMap);
@@ -129,9 +126,9 @@ public class vision extends LinearOpMode{
             testing(pipeline);
         }
 
-    }*/
+    }
 
-    /*public void testing(contourCentroidDetector pipeline){
+    public void testing(contourCentroidDetector pipeline){
         if(lowerRuntime + 0.05 < getRuntime()){
             crThreshLow += -gamepad1.left_stick_y;
             cbThreshLow += gamepad1.left_stick_x;
@@ -155,7 +152,7 @@ public class vision extends LinearOpMode{
         telemetry.addData("lowerCb ", cbThreshLow);
         telemetry.addData("UpperCr ", crThreshHigh);
         telemetry.addData("UpperCb ", cbThreshHigh);
-    }*/
+    }
 
     public double inValues(double value, double min, double max){
         if(value < min){ value = min; }

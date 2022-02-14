@@ -19,8 +19,6 @@ This is the RETARD AUTO. At all expense, please do not use this for the final ro
 park, carousel, idk
 //TODO: This auto does not use roadrunner or PID. This is a backup auto.
  */
-@Config
-@Autonomous(name="redautoprimary",group = "drive")
 
 public abstract class redautomain extends LinearOpMode {
     /*

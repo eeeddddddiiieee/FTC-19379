@@ -44,7 +44,9 @@ public class depositStateMachine {
         liftController1.setTargetPosition(Range.clip(pos, 0, 800));
     }
 
-
+    public void setState(depositState d1){
+        dstate1=d1;
+    }
     public void deposit(hwMecanum robot, Gamepad gamepad1)throws InterruptedException{
         switch (dstate1) {
             case START:
@@ -52,17 +54,18 @@ public class depositStateMachine {
                 robot.bucket.setPosition(hwMecanum.bucketDown);
                 robot.intakeServo.setPosition(hwMecanum.intakeDown);
                 robot.depositServo.setPosition(hwMecanum.depositMidOpen);
-                if (robot.isCargo==true){
+                if (robot.isCargo==true||gamepad1.start){
                     dstate1= depositState.PRIME;
                 }
                 break;
             case PRIME:
+                robot.intakeMode=false;
+
                 robot.depositServo.setPosition(hwMecanum.depositClosed);
                 robot.intakeServo.setPosition(hwMecanum.intakeUp);
                 robot.red1.setState(true);
                 robot.red2.setState(true);
-                intakeMode=false;
-                intakePower=.75;
+                intakePower=.5;
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
 
                 if (gamepad1.a){
@@ -102,8 +105,8 @@ public class depositStateMachine {
                 intakePower=0;
                 robot.bucket.setPosition(hwMecanum.bucketOut);
                 if (gamepad1.x){
-                    robot.depositServo.setPosition(hwMecanum.depositMidOpen);
-                    wait(400);
+                    robot.depositServo.setPosition(hwMecanum.depositOpen+.2);
+                    sleep(400);
                     robot.bucket.setPosition(hwMecanum.bucketRaised);
                     if (robot.bucket.getPosition()>.4){
                     dstate1= depositState.RETRACT;
@@ -112,6 +115,7 @@ public class depositStateMachine {
                 break;
             case RETRACT:
                 robot.intakeMode=true;
+                robot.bucket.setPosition(hwMecanum.bucketRaised);
                 robot.green1.setState(false);
                 robot.green2.setState(false);
                 robotlift.setHeight(0, lift.resetMode.YES);
@@ -132,7 +136,7 @@ public class depositStateMachine {
 
     }
 
-    public void deposit(hwMecanum robot, boolean signal)throws InterruptedException{
+    public void deposit(hwMecanum robot, int signal)throws InterruptedException{
         switch (dstate1) {
             case START:
                 intakeMode=true;
@@ -147,12 +151,21 @@ public class depositStateMachine {
                 robot.depositServo.setPosition(hwMecanum.depositClosed);
                 robot.intakeServo.setPosition(hwMecanum.intakeUp);
                 intakeMode=false;
-                intakePower=.75;
+                intakePower=.5;
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
+                if (signal==2){
+                    dstate1= depositState.HIGH;
+                }
+                if (signal==3){
+                    dstate1= depositState.MID;
+                }
+                if (signal==4){
+                    dstate1= depositState.DUMP;
+                }
                 break;
             case MID:
                 intakeMode=true;
-                robotlift.setHeight(320,lift.resetMode.NO);
+                robotlift.setHeight(300,lift.resetMode.NO);
                 //setLiftPosition(350);
                 if (robotlift.getHeight()>250) {
                     dstate1 = depositState.DUMP;
@@ -167,10 +180,10 @@ public class depositStateMachine {
                 break;
             case DUMP:
                 intakePower=0;
-                robot.bucket.setPosition(hwMecanum.bucketOut);
-                if (signal){
+                robot.bucket.setPosition(hwMecanum.bucketOut+.07);
+                if (signal==5){
                     robot.depositServo.setPosition(hwMecanum.depositMidOpen);
-                    wait(400);
+                    sleep(400);
                     robot.bucket.setPosition(hwMecanum.bucketRaised);
                     if (robot.bucket.getPosition()>.4){
                         dstate1= depositState.RETRACT;

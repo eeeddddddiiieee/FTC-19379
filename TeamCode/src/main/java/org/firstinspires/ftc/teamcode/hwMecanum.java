@@ -202,6 +202,7 @@ public class hwMecanum extends MecanumDrive {
 
     private PIDFController turnController;
     private MotionProfile turnProfile;
+
     private double turnStart;
     private static final TrajectoryVelocityConstraint VEL_CONSTRAINT = getVelocityConstraint(MAX_VEL, MAX_ANG_VEL, TRACK_WIDTH);
     private static final TrajectoryAccelerationConstraint ACCEL_CONSTRAINT = getAccelerationConstraint(MAX_ACCEL);
@@ -214,6 +215,8 @@ public class hwMecanum extends MecanumDrive {
     public static double VY_WEIGHT=1;
     public static double OMEGA_WEIGHT=1;
     public boolean intakeMode;
+    public boolean toggle;
+
     public static int POSE_HISTORY_LIMIT = 100;
 
     //servo and arm constants
@@ -221,7 +224,7 @@ public class hwMecanum extends MecanumDrive {
     public static final double halfopen=.112;
     public static final double CLOSED_CLAW=.15;
     //change all of these lol
-    public static final double bucketDown=.8; //change
+    public static final double bucketDown=.85; //change
     public static final double bucketRaised=.5;
     public static final double bucketOut=.15;
     public static final double depositClosed=.995;
@@ -272,7 +275,7 @@ public class hwMecanum extends MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        mode=Mode.IDLE;
+        //mode=Mode.IDLE;
         intakeMode=true;
         //imu init
         // TODO: adjust the names of the following hardware devices to match your configuration
@@ -310,6 +313,7 @@ public class hwMecanum extends MecanumDrive {
         intakeServo=hwMap.get(Servo.class,"intakeServo");
 
 
+
         bucket=hwMap.get(Servo.class,"bucket");
         depositServo=hwMap.get(Servo.class,"deposit");
 
@@ -337,6 +341,7 @@ public class hwMecanum extends MecanumDrive {
         q2.setDirection(DcMotor.Direction.REVERSE);
         q3.setDirection(DcMotor.Direction.REVERSE);
         q4.setDirection(DcMotor.Direction.FORWARD);
+
         lift2.setDirection(DcMotorSimple.Direction.REVERSE);
         lift1.setDirection(DcMotorSimple.Direction.FORWARD);
         q1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
