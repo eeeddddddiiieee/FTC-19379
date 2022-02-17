@@ -44,8 +44,8 @@ public class Teleop extends LinearOpMode {
 
         depositStateMachine deposit1=new depositStateMachine();
         deposit1.initDeposit(hardwareMap);
-        //implementController ic1=new implementController();
-        //ic1.initialize(robot);
+        implementController ic1=new implementController();
+        ic1.initialize(robot);
 
         driveControls dC=new driveControls();
 
@@ -74,14 +74,14 @@ public class Teleop extends LinearOpMode {
             //Pose2d poseVelocity = localizer1.getPoseVelocity();
             deposit1.deposit(robot,gamepad1);
             deposit1.updatePID(robot);
-            //ic1.runImplementController(robot,gamepad1,gamepad2);
+            ic1.runImplementController(robot,gamepad1,gamepad2);
             dC.driveController(robot,gamepad1);
 
             if (robot.intakeMode==false) {
                 robot.intake.setPower(deposit1.intakePower);
             }
             else if ( robot.intakeMode&&!gamepad1.dpad_down&&!gamepad1.dpad_up&&!robot.toggle) {
-                robot.intake.setPower((gamepad1.left_trigger - gamepad1.right_trigger)*.75);
+                robot.intake.setPower((gamepad1.left_trigger - gamepad1.right_trigger)*.5);
             }
             /*
             switch (currentMode){

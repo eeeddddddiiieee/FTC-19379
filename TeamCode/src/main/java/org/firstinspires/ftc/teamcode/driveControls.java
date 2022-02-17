@@ -11,6 +11,8 @@ public class driveControls {
     double y1;
     double yaw;
     double shift;
+    double shift2;
+    double shift1;
     double reverse;
     public driveControls(){
         shift=1;
@@ -19,12 +21,21 @@ public class driveControls {
 
     }
     public void driveController(hwMecanum robot, Gamepad gamepad1){
-        if (gamepad1.left_bumper) {
+        if (gamepad1.right_bumper) {
             shift = 0.35;
+            shift2=.7;
         }
         else {
             shift = 1;
+            shift2=1;
         }
+        if (gamepad1.left_bumper) {
+            shift1 = 0.35;
+        }
+        else {
+            shift1 = 1;
+        }
+
 
         /*
         y1 = -gamepad1.left_stick_y;
@@ -56,8 +67,8 @@ public class driveControls {
 
         robot.setWeightedDrivePower(
                 new Pose2d(
-                        -gamepad1.left_stick_y,
-                        -gamepad1.left_stick_x,
+                        -gamepad1.left_stick_y*shift1*shift2,
+                        -gamepad1.left_stick_x*shift1*shift2,
                         -gamepad1.right_stick_x*shift
                 )
         );

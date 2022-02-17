@@ -1,203 +1,240 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.te.vision.barcodePosition.CENTER;
+import static org.firstinspires.ftc.teamcode.te.vision.barcodePosition.LEFT;
+import static org.firstinspires.ftc.teamcode.te.vision.barcodePosition.RIGHT;
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-//@Disabled
-//@Autonomous(name="blueMain",group = "drive")
-/*
+@Config
+@Autonomous(name="BLUEMAINAUTO",group = "drive")
 public class BlueMain extends LinearOpMode {
-    public hwMecanum robot;
-    public vision vision1;
+    //public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;
-    public depositStateMachine deposit1;
-    public boolean signal;
+    //public depositStateMachine deposit1;
+    public int signal;
     public double iPower;
-
+    public vision.barcodePosition b1;
     public enum trajState{
         MOVE1,
-        FORWARDBACK,
-        SHIPPING,
+        CYCLE1,
+        CYCLE2,
         IDLE
     }
+    public trajState tState1;
+
     public double xPo;
     public double yPo;
-    public vision.barcodePosition b1;
-    public trajState tState1;
-    public Pose2d startPose=new Pose2d(-6,-65,Math.toRadians(-270));
 
-    public void initialize(){
-        robot = new hwMecanum(hardwareMap);
-        robot.init(hardwareMap);
-        deposit1=new depositStateMachine();
-        deposit1.initDeposit(hardwareMap);
-        deposit1.dstate1= depositStateMachine.depositState.PRIME;
-        vision1=new vision();
-        vision1.initVision(hardwareMap);
-        tState1=trajState.MOVE1;
-        xPo=44;
-        yPo=65;
-        iPower=0;
-    }
+    public Pose2d startPose=new Pose2d(12,65,Math.toRadians(-270));
 
     public void runOpMode() throws InterruptedException{
+        hwMecanum robot = new hwMecanum(hardwareMap);
+        robot.init(hardwareMap);
+        depositStateMachine deposit1=new depositStateMachine();
+        deposit1.initDeposit(hardwareMap);
+        deposit1.dstate1= depositStateMachine.depositState.PRIME;
+        vision vision1=new vision();
+        vision1.initVision(hardwareMap);
+        tState1=trajState.MOVE1;
+        robot.setPoseEstimate((new Pose2d(12, 65,Math.toRadians(-270))));
 
-        initialize();
+        signal=1;
 
 
-
-        TrajectorySequence move1 = robot.trajectorySequenceBuilder(new Pose2d(6, 65,Math.toRadians(-270)))
+        TrajectorySequence move1 = robot.trajectorySequenceBuilder(new Pose2d(12, 65,Math.toRadians(-270)))
 
                 .setReversed(true)
-                .splineTo(new Vector2d(-12,48),Math.toRadians(-90))
+                .splineTo(new Vector2d(-10,46.5),Math.toRadians(-90),
+                        hwMecanum.getVelocityConstraint(60, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
                 .addTemporalMarker(.5, () -> {
-                    switch (b1){
-                        case RIGHT:
-                            deposit1.dstate1 = depositStateMachine.depositState.HIGH;
-                        case LEFT:
-                            deposit1.dstate1 = depositStateMachine.depositState.PRIME;
-                        case CENTER:
-                            deposit1.dstate1 = depositStateMachine.depositState.MID;
+                    if (b1==LEFT){
+                        signal=4;
+                    }
+                    if (b1==RIGHT){
+                        signal=2;
+                    }
+                    if (b1==CENTER){
+                        signal=3;
                     }
 
                 })
-                .addSpatialMarker(new Vector2d(-12,36),()->{
-                    signal=true;
+                .addTemporalMarker(2.5,()->{
+                    signal=5;
                 })
-
-
+                .waitSeconds(.25)
                 .build();
 
-        TrajectorySequence fwBw=robot.trajectorySequenceBuilder(new Pose2d(-12, 48,Math.toRadians(-90)))
+        TrajectorySequence cycle1=robot.trajectorySequenceBuilder(move1.end())
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20))
+                .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20),
+                        hwMecanum.getVelocityConstraint(45,4.3,12),
+                        hwMecanum.getAccelerationConstraint(40))
 
-                .forward(10)
                 .addTemporalMarker(.5, () -> {
-                    iPower=1;
+                    iPower=-1;
                 })
                 .addTemporalMarker(.5, () -> {
-                    signal=false;
+                    signal=1;
                 })
-                .lineTo(new Vector2d(xPo,yPo),
+                .lineTo(new Vector2d(44,64.5),
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(20)
                 )
-
-                .build();
-
-        TrajectorySequence shippingHub=robot.trajectorySequenceBuilder(new Pose2d(14,65,Math.toRadians(0)))
                 .setReversed(true)
-                .splineTo(new Vector2d(24,65),Math.toRadians(0),
-                        hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(20)
+                .lineTo(new Vector2d(14,65),
+                        hwMecanum.getVelocityConstraint(25, 60, 12),
+                        hwMecanum.getAccelerationConstraint(25)
                 )
-                .back(10)
-
-                .splineTo(new Vector2d(-12,48),Math.toRadians(-90))
+                .splineTo(new Vector2d(-10,50),Math.toRadians(-90),hwMecanum.getVelocityConstraint(40,60,12),
+                        hwMecanum.getAccelerationConstraint(30)
+                )
                 .addTemporalMarker(5, () -> {
                     deposit1.dstate1 = depositStateMachine.depositState.HIGH;
 
                 })
-                .addSpatialMarker(new Vector2d(-12,36),()->{
-                    signal=true;
+                .addTemporalMarker(8, () -> {
+                    signal=5;
+
                 })
+                .waitSeconds(2)
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20))
+
+
                 .build();
 
-        tState1=trajState.MOVE1;
+        TrajectorySequence cycle2=robot.trajectorySequenceBuilder(cycle1.end())
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20),
+                        hwMecanum.getVelocityConstraint(45,4.3,12),
+                        hwMecanum.getAccelerationConstraint(40))
+
+                .addTemporalMarker(.5, () -> {
+                    iPower=-1;
+                })
+                .addTemporalMarker(.5, () -> {
+                    signal=1;
+                })
+                .lineTo(new Vector2d(46,65),
+                        hwMecanum.getVelocityConstraint(25, 60, 12),
+                        hwMecanum.getAccelerationConstraint(20)
+                )
+                .setReversed(true)
+                .lineTo(new Vector2d(14,65),
+                        hwMecanum.getVelocityConstraint(25, 60, 12),
+                        hwMecanum.getAccelerationConstraint(40)
+                )
+                .splineTo(new Vector2d(-10,50),Math.toRadians(-90),hwMecanum.getVelocityConstraint(40,60,12),
+                        hwMecanum.getAccelerationConstraint(35)
+                )
+                .addTemporalMarker(5, () -> {
+                    deposit1.dstate1 = depositStateMachine.depositState.HIGH;
+
+                })
+                .addTemporalMarker(7, () -> {
+                    signal=5;
+
+                })
+                .waitSeconds(2)
+                .setReversed(false)
+                .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20))
+                .addTemporalMarker(7, () -> {
+                    iPower=0;
+
+                })
+                .forward (24,hwMecanum.getVelocityConstraint(40,60,12),
+                        hwMecanum.getAccelerationConstraint(25))
+
+
+                .build();
+
+
+
+
+
 
         while (!opModeIsActive()&&!isStopRequested()) {
             vision1.checkTE();
             b1=vision1.getPosition();
-            telemetry.addData("Position",b1);
+            telemetry.addData("position",b1);
+            telemetry.addData("ready?","yes");
+            telemetry.update();
 
         }
-
-
         waitForStart();
 
 
-        while (opModeIsActive()){
+
+
+        robot.followTrajectorySequenceAsync(move1);
+        while (opModeIsActive()&&!isStopRequested()){
+
             switch (tState1){
-                case MOVE1:
-                    robot.followTrajectorySequenceAsync(move1);
-                    if (!robot.isBusy()) {
-                        tState1 = trajState.FORWARDBACK;
-                    }
-                case FORWARDBACK:
-                    robot.followTrajectorySequenceAsync(robot.trajectorySequenceBuilder(new Pose2d(-12, 48,Math.toRadians(-90)))
-                            .setReversed(false)
-                            .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20))
+                case MOVE1:{
 
-                            .forward(10)
-                            .addTemporalMarker(.5, () -> {
-                                iPower=1;
-                            })
-                            .addTemporalMarker(.5, () -> {
-                                signal=false;
-                            })
-                            .lineTo(new Vector2d(xPo,yPo),
-                                    hwMecanum.getVelocityConstraint(25, 60, 12),
-                                    hwMecanum.getAccelerationConstraint(20)
-                            )
 
-                            .build());
-                    if (!robot.isBusy()&&xPo<51){
-                        xPo+=2;
-                        yPo-=2;
-                        tState1=trajState.SHIPPING;
+                    if (!robot.isBusy()){
+                        tState1=trajState.CYCLE1;
+                        robot.followTrajectorySequenceAsync(cycle1);
+
+
                     }
-                    else {
-                        robot.breakFollowing();
+                }
+                case CYCLE1:{
+                    if (!robot.isBusy()){
+                        tState1=trajState.CYCLE2;
+                        robot.followTrajectorySequenceAsync(cycle2);
+                    }
+
+                }
+                case CYCLE2:{
+                    if (!robot.isBusy()){
                         tState1=trajState.IDLE;
                     }
-                case SHIPPING:
-                    robot.followTrajectorySequenceAsync(robot.trajectorySequenceBuilder(new Pose2d(14,65,Math.toRadians(0)))
-                            .setReversed(true)
-                            .splineTo(new Vector2d(24,65),Math.toRadians(0),
-                                    hwMecanum.getVelocityConstraint(40,60,12),
-                                    hwMecanum.getAccelerationConstraint(20)
-                            )
-                            .back(10)
 
-                            .splineTo(new Vector2d(-12,48),Math.toRadians(-90))
-                            .addTemporalMarker(5, () -> {
-                                deposit1.dstate1 = depositStateMachine.depositState.HIGH;
 
-                            })
-                            .addSpatialMarker(new Vector2d(-12,36),()->{
-                                signal=true;
-                            })
-                            .setReversed(false)
-                            .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20))
-                            .build());
-                    if (!robot.isBusy()){
-                        tState1=trajState.FORWARDBACK;
-                    }
-                case IDLE:
+                }
+                case IDLE:{
                     break;
+                }
+
+            }
+            if (true&&tState1!=trajState.IDLE){
+
             }
 
+            robot.update();
+            telemetry.update();
             deposit1.deposit(robot,signal);
             deposit1.updatePID(robot);
 
-            if (deposit1.intakeMode) {
-                robot.intake.setPower((iPower)*.75);
+            if (robot.bucketSensor.getDistance(DistanceUnit.MM)<50){
+                robot.isCargo=TRUE;
             }
             else {
-                robot.intake.setPower(deposit1.intakePower);
+                robot.isCargo=FALSE;
             }
+            if (robot.intakeMode==false) {
+                robot.intake.setPower(-deposit1.intakePower);
+            }
+            else if ( robot.intakeMode) {
+                robot.intake.setPower(iPower*.55);
+            }
+
 
 
             Pose2d poseEstimate = robot.getPoseEstimate();
@@ -208,6 +245,7 @@ public class BlueMain extends LinearOpMode {
             telemetry.addData("x", poseEstimate.getX());
             telemetry.addData("y", poseEstimate.getY());
             telemetry.addData("heading", poseEstimate.getHeading());
+            telemetry.addData("liftstate",deposit1.robotlift.getHeight());
             telemetry.update();
         }
 
@@ -217,5 +255,5 @@ public class BlueMain extends LinearOpMode {
 
 
 
-}*/
+}
 

@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
-@Autonomous(name="REDMAINAUTO",group = "drive")
-public class testAuto extends LinearOpMode {
+@Autonomous(name="REDSECONDARY",group = "drive")
+public class red2 extends LinearOpMode {
     //public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;
     //public depositStateMachine deposit1;
@@ -29,7 +29,7 @@ public class testAuto extends LinearOpMode {
     public vision.barcodePosition b1;
     public enum trajState{
         MOVE1,
-        CYCLE1,
+        DUCKS,
         CYCLE2,
         IDLE
     }
@@ -38,7 +38,7 @@ public class testAuto extends LinearOpMode {
     public double xPo;
     public double yPo;
 
-    public Pose2d startPose=new Pose2d(12,-65,Math.toRadians(270));
+    public Pose2d startPose=new Pose2d(-36,-65,Math.toRadians(270));
 
     public void runOpMode() throws InterruptedException{
         hwMecanum robot = new hwMecanum(hardwareMap);
@@ -49,17 +49,16 @@ public class testAuto extends LinearOpMode {
         vision vision1=new vision();
         vision1.initVision(hardwareMap);
         tState1=trajState.MOVE1;
-        robot.setPoseEstimate((new Pose2d(12, -65,Math.toRadians(270))));
+        robot.setPoseEstimate((new Pose2d(-36, -65,Math.toRadians(270))));
 
         signal=1;
 
 
-        TrajectorySequence move1 = robot.trajectorySequenceBuilder(new Pose2d(12, -65,Math.toRadians(270)))
+        TrajectorySequence move1 = robot.trajectorySequenceBuilder(new Pose2d(-36, -65,Math.toRadians(270)))
 
-                .setReversed(true)
-                .splineTo(new Vector2d(-10,-46.5),Math.toRadians(90),
-                        hwMecanum.getVelocityConstraint(60, 60, 12),
-                        hwMecanum.getAccelerationConstraint(60)
+                .setReversed(TRUE)
+                .splineTo(new Vector2d(-12,-46),Math.toRadians(90),hwMecanum.getVelocityConstraint(35, 60, 12),
+                        hwMecanum.getAccelerationConstraint(40)
                 )
                 .addTemporalMarker(.5, () -> {
                     if (b1==LEFT){
@@ -79,83 +78,30 @@ public class testAuto extends LinearOpMode {
                 .waitSeconds(.25)
                 .build();
 
-        TrajectorySequence cycle1=robot.trajectorySequenceBuilder(move1.end())
+        TrajectorySequence ducks=robot.trajectorySequenceBuilder(move1.end())
+                .setReversed(FALSE)
+                .splineTo(new Vector2d(-60,-61),Math.toRadians(225),hwMecanum.getVelocityConstraint(45, 60, 12),
+                        hwMecanum.getAccelerationConstraint(50)
+                )
+                .waitSeconds(1)
+                .addTemporalMarker(4, () -> {
+                    robot.carousel.setPower(.6);
+                })
+                .addTemporalMarker(10, () -> {
+                    robot.carousel.setPower(0);
+
+                })
+                .waitSeconds(10)
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-
-                .addTemporalMarker(.5, () -> {
-                    iPower=-1;
-                })
-                .addTemporalMarker(.5, () -> {
-                    signal=1;
-                })
-                .lineTo(new Vector2d(44,-65),
-                        hwMecanum.getVelocityConstraint(25, 60, 12),
-                        hwMecanum.getAccelerationConstraint(20)
-                )
-                .setReversed(true)
-                .lineTo(new Vector2d(14,-65),
-                        hwMecanum.getVelocityConstraint(25, 60, 12),
-                        hwMecanum.getAccelerationConstraint(25)
-                )
-                .splineTo(new Vector2d(-10,-50),Math.toRadians(90),hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(40)
-                )
-                .addTemporalMarker(5, () -> {
-                    deposit1.dstate1 = depositStateMachine.depositState.HIGH;
-
-                })
-                .addTemporalMarker(7, () -> {
-                    signal=5;
-
-                })
-                .waitSeconds(.25)
-                .setReversed(false)
-
-
                 .build();
 
-        TrajectorySequence cycle2=robot.trajectorySequenceBuilder(new Pose2d(-12, -48,Math.toRadians(270)))
-                .setReversed(false)
-                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-
-                .addTemporalMarker(.5, () -> {
-                    iPower=-1;
+        TrajectorySequence cycle2=robot.trajectorySequenceBuilder((ducks.end()))
+                .setReversed(TRUE)
+                .splineTo(new Vector2d(-59,-35.5),3.14/2)
+                .addTemporalMarker(4, () -> {
+                    deposit1.setState(depositStateMachine.depositState.PRIME);
+                    robot.intake.setPower(0);
                 })
-                .addTemporalMarker(.5, () -> {
-                    signal=1;
-                })
-                .lineTo(new Vector2d(46,-65),
-                        hwMecanum.getVelocityConstraint(25, 60, 12),
-                        hwMecanum.getAccelerationConstraint(20)
-                )
-                .setReversed(true)
-                .lineTo(new Vector2d(14,-65),
-                        hwMecanum.getVelocityConstraint(25, 60, 12),
-                        hwMecanum.getAccelerationConstraint(40)
-                )
-                .splineTo(new Vector2d(-10,-50),Math.toRadians(90),hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(35)
-                )
-                .addTemporalMarker(5, () -> {
-                    deposit1.dstate1 = depositStateMachine.depositState.HIGH;
-
-                })
-                .addTemporalMarker(7, () -> {
-                    signal=5;
-
-                })
-                .waitSeconds(.25)
-                .setReversed(false)
-                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                .addTemporalMarker(7, () -> {
-                    iPower=0;
-
-                })
-                .forward (24,hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(25))
-
-
                 .build();
 
 
@@ -173,6 +119,7 @@ public class testAuto extends LinearOpMode {
         }
         waitForStart();
 
+        robot.setPoseEstimate((new Pose2d(-36, -65,Math.toRadians(270))));
 
 
 
@@ -184,16 +131,16 @@ public class testAuto extends LinearOpMode {
 
 
                     if (!robot.isBusy()){
-                        tState1=trajState.CYCLE1;
-                        robot.followTrajectorySequenceAsync(cycle1);
+                        tState1=trajState.DUCKS;
+                        robot.followTrajectorySequenceAsync(ducks);
 
 
                     }
                 }
-                case CYCLE1:{
+                case DUCKS:{
                     if (!robot.isBusy()){
                         tState1=trajState.CYCLE2;
-                       robot.followTrajectorySequenceAsync(cycle2);
+                        robot.followTrajectorySequenceAsync(cycle2);
                     }
 
                 }
@@ -201,8 +148,6 @@ public class testAuto extends LinearOpMode {
                     if (!robot.isBusy()){
                         tState1=trajState.IDLE;
                     }
-
-
                 }
                 case IDLE:{
                     break;
@@ -224,12 +169,7 @@ public class testAuto extends LinearOpMode {
             else {
                 robot.isCargo=FALSE;
             }
-            if (robot.intakeMode==false) {
-                robot.intake.setPower(-deposit1.intakePower);
-            }
-            else if ( robot.intakeMode) {
-                robot.intake.setPower(iPower*.55);
-            }
+
 
 
 
