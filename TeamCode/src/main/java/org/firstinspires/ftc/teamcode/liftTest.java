@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@TeleOp (name = "liftTest")
+//@TeleOp (name = "liftTest")
 public class liftTest extends LinearOpMode {
 
     public HardwareMap hwMap;

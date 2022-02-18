@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.drive.TwoWheelTrackingLocalizer;
 import org.firstinspires.ftc.teamcode.lift;
 
 import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
-@TeleOp(name="Teleop", group="hwMecanum")
+@TeleOp(name="TELEOP", group="hwMecanum")
 
 public class Teleop extends LinearOpMode {
 

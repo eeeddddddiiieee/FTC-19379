@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name="servoTest", group="intaketest")
+@TeleOp(name="SERVOTEST", group="intaketest")
 
 public class servoTest extends OpMode {
     public Servo servo1;

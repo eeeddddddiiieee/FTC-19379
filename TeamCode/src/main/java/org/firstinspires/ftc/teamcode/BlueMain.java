@@ -91,6 +91,7 @@ public class BlueMain extends LinearOpMode {
                 .addTemporalMarker(.5, () -> {
                     signal=1;
                 })
+                .strafeLeft(1)
                 .lineTo(new Vector2d(44,64.5),
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(20)
@@ -122,6 +123,7 @@ public class BlueMain extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20),
                         hwMecanum.getVelocityConstraint(45,4.3,12),
                         hwMecanum.getAccelerationConstraint(40))
+                .strafeLeft(1)
 
                 .addTemporalMarker(.5, () -> {
                     iPower=-1;

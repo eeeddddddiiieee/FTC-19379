@@ -42,7 +42,7 @@ import org.firstinspires.ftc.teamcode.hwMecanum;
 
 
 //teleop class
-@TeleOp(name="servotest", group="hwMecanum")
+//@TeleOp(name="servotest", group="hwMecanum")
 
 public class servotest extends LinearOpMode {
 

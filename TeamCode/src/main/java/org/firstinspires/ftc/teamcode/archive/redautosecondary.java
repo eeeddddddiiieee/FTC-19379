@@ -20,7 +20,7 @@ park, carousel, idk
 //TODO: This auto does not use roadrunner or PID. This is a backup auto.
  */
 @Config
-@Autonomous(name="redautosecondary",group = "drive")
+//@Autonomous(name="redautosecondary",group = "drive")
 
 public abstract class redautosecondary extends LinearOpMode {
     /*

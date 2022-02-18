@@ -18,7 +18,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
 @Config
-@Autonomous(name="visionopmode", group="Tutorials")
+@Autonomous(name="VISIONTEST", group="Tutorials")
 
 public class visionOpMode extends LinearOpMode{
 

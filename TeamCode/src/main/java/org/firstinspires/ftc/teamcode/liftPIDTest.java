@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @Config
-@TeleOp (name = "liftPid")
+@TeleOp (name = "LIFTPIDTEST")
 public class liftPIDTest extends LinearOpMode {
 
     public HardwareMap hwMap;

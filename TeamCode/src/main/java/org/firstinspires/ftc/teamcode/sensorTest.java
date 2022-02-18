@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-@TeleOp(name="sensorTest", group="intaketest")
+@TeleOp(name="SENSORTEST", group="intaketest")
 
 public class sensorTest extends LinearOpMode {
     public RevColorSensorV3 sensor1;

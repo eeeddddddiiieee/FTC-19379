@@ -65,13 +65,13 @@ public class depositStateMachine {
                 robot.intakeServo.setPosition(hwMecanum.intakeUp);
                 robot.red1.setState(true);
                 robot.red2.setState(true);
-                intakePower=-.5;
+                intakePower=.5;
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
 
-                if (gamepad1.a){
+                if (gamepad1.right_stick_button){
                     dstate1= depositState.HIGH;
                 }
-                if (gamepad1.y){
+                if (gamepad1.x){
                     dstate1= depositState.MID;
                 }
                 if (gamepad1.b){
@@ -104,7 +104,7 @@ public class depositStateMachine {
             case DUMP:
                 intakePower=0;
                 robot.bucket.setPosition(hwMecanum.bucketOut);
-                if (gamepad1.x){
+                if (gamepad1.right_stick_button){
                     robot.depositServo.setPosition(hwMecanum.depositOpen+.2);
                     sleep(400);
                     robot.bucket.setPosition(hwMecanum.bucketRaised);
@@ -130,7 +130,7 @@ public class depositStateMachine {
             default: dstate1= depositState.START;
         }
         
-        if (gamepad1.right_stick_button && dstate1 != depositState.RETRACT) {
+        if (gamepad1.y && dstate1 != depositState.RETRACT) {
             dstate1 = depositState.RETRACT;
         }
 
