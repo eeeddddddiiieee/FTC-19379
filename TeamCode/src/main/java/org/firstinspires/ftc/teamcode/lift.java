@@ -51,7 +51,6 @@ public class lift extends hwMecanum{
         error1=0;
         integralSum=0;
         lastError=0;
-
     }
 
     public void setPosition(liftHeight height){
@@ -62,15 +61,13 @@ public class lift extends hwMecanum{
             case High: ticks=400;
         }
         setHeight(ticks,resetMode.NO);
-
     }
 
     public void setHeight(double tick,resetMode b){
         targetPosition=tick;
         mode1=b;
-
-
     }
+
     public boolean isAtTarget(){
         return Math.abs(targetPosition - lift1.getCurrentPosition()) < 10;
     }
@@ -99,8 +96,7 @@ public class lift extends hwMecanum{
                 // reset the timer for next time
                 period.reset();
                 error1 = lastError;
-
-                 */
+                */
                 if (lift1.getCurrentPosition()>80){
                 lift1.setPower(-1);
                 lift2.setPower(-1);
@@ -118,7 +114,6 @@ public class lift extends hwMecanum{
                 targetPosition = 0;
                 error1 = 0;
             }
-
         }
 
         if (!isAtTarget()&&mode1==resetMode.NO) {
@@ -139,23 +134,19 @@ public class lift extends hwMecanum{
             period.reset();
             error1 = lastError;
         }
-
-
     }
-
 
     public void resetLift(){
         lift1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-
     }
 
     public double getHeight(){
         return lift1.getCurrentPosition();
     }
+    
     public double getError(){
         return error1;
     }

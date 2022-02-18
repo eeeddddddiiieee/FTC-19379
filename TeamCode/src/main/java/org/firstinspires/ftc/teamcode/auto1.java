@@ -14,13 +14,11 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.teamcode.hwMecanum;
 import org.firstinspires.ftc.teamcode.te.vision;
-//import deez nuts
-
 
 
 /*
 This is the test AUTO. At all expense, please do not use this for the final robot. Time based
-park, carousel, idk
+park, carousel, etc.
 TODO: This auto does not use roadrunner or PID. This is a backup auto.
  */
 public class auto1 extends LinearOpMode {
@@ -43,7 +41,6 @@ public class auto1 extends LinearOpMode {
 
 
         }
-
 
     }
 

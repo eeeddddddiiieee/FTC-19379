@@ -164,11 +164,6 @@ public class BlueMain extends LinearOpMode {
 
                 .build();
 
-
-
-
-
-
         while (!opModeIsActive()&&!isStopRequested()) {
             vision1.checkTE();
             b1=vision1.getPosition();
@@ -179,21 +174,14 @@ public class BlueMain extends LinearOpMode {
         }
         waitForStart();
 
-
-
-
-        robot.followTrajectorySequenceAsync(move1);
+      robot.followTrajectorySequenceAsync(move1);
         while (opModeIsActive()&&!isStopRequested()){
 
             switch (tState1){
                 case MOVE1:{
-
-
                     if (!robot.isBusy()){
                         tState1=trajState.CYCLE1;
                         robot.followTrajectorySequenceAsync(cycle1);
-
-
                     }
                 }
                 case CYCLE1:{
@@ -207,13 +195,10 @@ public class BlueMain extends LinearOpMode {
                     if (!robot.isBusy()){
                         tState1=trajState.IDLE;
                     }
-
-
                 }
                 case IDLE:{
                     break;
                 }
-
             }
             if (true&&tState1!=trajState.IDLE){
 
@@ -237,8 +222,6 @@ public class BlueMain extends LinearOpMode {
                 robot.intake.setPower(iPower*.55);
             }
 
-
-
             Pose2d poseEstimate = robot.getPoseEstimate();
 
             // Continually write pose to `PoseStorage`
@@ -250,12 +233,5 @@ public class BlueMain extends LinearOpMode {
             telemetry.addData("liftstate",deposit1.robotlift.getHeight());
             telemetry.update();
         }
-
-
     }
-
-
-
-
 }
-

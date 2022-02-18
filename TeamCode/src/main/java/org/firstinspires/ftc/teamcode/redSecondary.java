@@ -160,12 +160,5 @@ public class redSecondary extends LinearOpMode {
             telemetry.update();
         }
 
-
     }
-
-
-
-
 }*/
-
-

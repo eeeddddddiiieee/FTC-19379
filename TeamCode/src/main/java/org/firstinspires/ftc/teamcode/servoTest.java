@@ -21,13 +21,8 @@ public class servoTest extends OpMode {
     }
 
     public void loop(){
-
-
-
             servo1.setPosition(Range.clip((gamepad1.left_trigger),.2,.995));
             telemetry.addData("position",servo1.getPosition());
             telemetry.update();
-
-
     }
 }

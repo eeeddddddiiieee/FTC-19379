@@ -50,7 +50,7 @@ public class vision extends LinearOpMode{
     public barcodePosition position;
 
     public void initVision(HardwareMap h){
-        // OpenCV webcam
+        //OpenCV webcam
         int cameraMonitorViewId = h.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", h.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(h.get(WebcamName.class, "camera"), cameraMonitorViewId);
         //OpenCV Pipeline
@@ -73,9 +73,6 @@ public class vision extends LinearOpMode{
 
             }
         });
-        //FtcDashboard dashboard = FtcDashboard.getInstance();
-        //telemetry = dashboard.getTelemetry();
-        //FtcDashboard.getInstance().startCameraStream(webcam, 10);
     }
 
     @Override
@@ -87,10 +84,6 @@ public class vision extends LinearOpMode{
         if(pipeline.error){
             //telemetry.addData("Exception: ", pipeline.debug.getStackTrace());
         }
-        // Only use this line of the code when you want to find the lower and upper values, using Ftc Dashboard (https://acmerobotics.github.io/ftc-dashboard/gettingstarted)
-        // testing(pipeline);
-
-        // Watch our YouTube Tutorial for the better explanation
 
         double rectangleArea = pipeline.getRectArea();
 
@@ -114,7 +107,6 @@ public class vision extends LinearOpMode{
             //telemetry.addData("Barcode Position", "Left");
             position=barcodePosition.LEFT;
         }
-
         //telemetry.update();
     }
 

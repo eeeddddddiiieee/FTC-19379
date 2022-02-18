@@ -105,10 +105,6 @@ public class red2 extends LinearOpMode {
                 .build();
 
 
-
-
-
-
         while (!opModeIsActive()&&!isStopRequested()) {
             vision1.checkTE();
             b1=vision1.getPosition();
@@ -128,13 +124,9 @@ public class red2 extends LinearOpMode {
 
             switch (tState1){
                 case MOVE1:{
-
-
                     if (!robot.isBusy()){
                         tState1=trajState.DUCKS;
                         robot.followTrajectorySequenceAsync(ducks);
-
-
                     }
                 }
                 case DUCKS:{
@@ -142,7 +134,6 @@ public class red2 extends LinearOpMode {
                         tState1=trajState.CYCLE2;
                         robot.followTrajectorySequenceAsync(cycle2);
                     }
-
                 }
                 case CYCLE2:{
                     if (!robot.isBusy()){
@@ -152,7 +143,6 @@ public class red2 extends LinearOpMode {
                 case IDLE:{
                     break;
                 }
-
             }
             if (true&&tState1!=trajState.IDLE){
 
@@ -170,9 +160,6 @@ public class red2 extends LinearOpMode {
                 robot.isCargo=FALSE;
             }
 
-
-
-
             Pose2d poseEstimate = robot.getPoseEstimate();
 
             // Continually write pose to `PoseStorage`
@@ -184,12 +171,5 @@ public class red2 extends LinearOpMode {
             telemetry.addData("liftstate",deposit1.robotlift.getHeight());
             telemetry.update();
         }
-
-
     }
-
-
-
-
 }
-

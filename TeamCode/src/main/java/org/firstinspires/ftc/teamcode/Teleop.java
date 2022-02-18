@@ -62,13 +62,9 @@ public class Teleop extends LinearOpMode {
                 })
                 .build();
 
-
-
         waitForStart();
 
         while (opModeIsActive()) {
-
-
             //localizer1.update();
             //Pose2d currentPose = localizer1.getPoseEstimate();
             //Pose2d poseVelocity = localizer1.getPoseVelocity();
@@ -116,12 +112,9 @@ public class Teleop extends LinearOpMode {
                         currentMode=ControlState.DRIVER;
                     }
                     break;
-
-
             }
             */
 
-            
             //telemetry.addData("POSITION:",currentPose.getX()+","+currentPose.getY());
             //telemetry.addData("HEADING:",currentPose.getHeading());
             //telemetry.addData("DEPOSIT:",deposit1.getDepositState());

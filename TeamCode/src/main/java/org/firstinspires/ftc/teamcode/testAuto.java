@@ -160,10 +160,6 @@ public class testAuto extends LinearOpMode {
                 .build();
 
 
-
-
-
-
         while (!opModeIsActive()&&!isStopRequested()) {
             vision1.checkTE();
             b1=vision1.getPosition();
@@ -175,20 +171,14 @@ public class testAuto extends LinearOpMode {
         waitForStart();
 
 
-
-
         robot.followTrajectorySequenceAsync(move1);
         while (opModeIsActive()&&!isStopRequested()){
 
             switch (tState1){
                 case MOVE1:{
-
-
                     if (!robot.isBusy()){
                         tState1=trajState.CYCLE1;
                         robot.followTrajectorySequenceAsync(cycle1);
-
-
                     }
                 }
                 case CYCLE1:{
@@ -196,14 +186,11 @@ public class testAuto extends LinearOpMode {
                         tState1=trajState.CYCLE2;
                        robot.followTrajectorySequenceAsync(cycle2);
                     }
-
                 }
                 case CYCLE2:{
                     if (!robot.isBusy()){
                         tState1=trajState.IDLE;
                     }
-
-
                 }
                 case IDLE:{
                     break;
@@ -231,8 +218,6 @@ public class testAuto extends LinearOpMode {
             else if ( robot.intakeMode) {
                 robot.intake.setPower(iPower*.55);
             }
-
-
 
             Pose2d poseEstimate = robot.getPoseEstimate();
 
