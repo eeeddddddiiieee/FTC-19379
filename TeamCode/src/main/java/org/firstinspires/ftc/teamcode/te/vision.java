@@ -18,19 +18,19 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 
 @Config
-@Autonomous(name="visionTesting", group="Tutorials")
+//@Autonomous(name="visionTesting", group="Tutorials")
 
 public class vision extends LinearOpMode{
 
     public OpenCvCamera webcam;
     private contourCentroidDetector pipeline;
 
-    private double crThreshHigh = 220;
-    private double crThreshLow = 120;
-    private double cbThreshHigh = 74;
+    private double crThreshHigh = 200;
+    private double crThreshLow = 110;
+    private double cbThreshHigh = 95;
     private double cbThreshLow = 0;
 
-    private int minRectangleArea = 600;
+    private int minRectangleArea = 800;
     private double middleBarcodeRangeBoundary = 0.5; //i.e 30% of the way across the frame from the left
     private double rightBarcodeRangeBoundary = 0.6; //i.e 60% of the way across the frame from the left
 
@@ -38,8 +38,8 @@ public class vision extends LinearOpMode{
     private double upperRuntime = 0;
 
     // Pink Range                                      Y      Cr     Cb
-    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 120.0, 0);
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 220,74);
+    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 110.0, 0);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 200, 95.0);
 
     public int cameraMonitorViewId;
     public enum barcodePosition{

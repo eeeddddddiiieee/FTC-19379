@@ -55,7 +55,7 @@ public class BlueMain extends LinearOpMode {
 
 
         TrajectorySequence move1 = robot.trajectorySequenceBuilder(new Pose2d(12, 65,Math.toRadians(-270)))
-                .waitSeconds(5)
+
                 .setReversed(true)
                 .splineTo(new Vector2d(-10,46.5),Math.toRadians(-90),
                         hwMecanum.getVelocityConstraint(60, 60, 12),
@@ -73,7 +73,7 @@ public class BlueMain extends LinearOpMode {
                     }
 
                 })
-                .addTemporalMarker(7.5,()->{
+                .addTemporalMarker(2.5,()->{
                     signal=5;
                 })
                 .waitSeconds(.25)
@@ -91,29 +91,29 @@ public class BlueMain extends LinearOpMode {
                 .addTemporalMarker(.5, () -> {
                     signal=1;
                 })
-                .strafeLeft(2)
+                .strafeLeft(1)
                 .lineTo(new Vector2d(44,64.5),
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(20)
                 )
                 .setReversed(true)
-
                 .lineTo(new Vector2d(14,65),
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(25)
                 )
                 .splineTo(new Vector2d(-10,50),Math.toRadians(-90),hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(30)
+                        hwMecanum.getAccelerationConstraint(40)
                 )
+                //try 40 40 5 and 8
                 .addTemporalMarker(5, () -> {
                     deposit1.dstate1 = depositStateMachine.depositState.HIGH;
 
                 })
-                .addTemporalMarker(8, () -> {
+                .addTemporalMarker(7, () -> {
                     signal=5;
 
                 })
-                .waitSeconds(.5)
+                .waitSeconds(2)
                 .setReversed(false)
 
 
@@ -124,10 +124,10 @@ public class BlueMain extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20),
                         hwMecanum.getVelocityConstraint(45,4.3,12),
                         hwMecanum.getAccelerationConstraint(40))
-                .strafeLeft(2.5)
+                .strafeLeft(1)
 
-                .addTemporalMarker(5, () -> {
-                    iPower=1;
+                .addTemporalMarker(.5, () -> {
+                    iPower=-1;
                 })
                 .addTemporalMarker(.5, () -> {
                     signal=1;
@@ -137,33 +137,29 @@ public class BlueMain extends LinearOpMode {
                         hwMecanum.getAccelerationConstraint(20)
                 )
                 .setReversed(true)
-                .lineTo(new Vector2d(14,66),
+                .lineTo(new Vector2d(14,65),
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(40)
                 )
-                .addTemporalMarker(3.7, () -> {
-                    ;
-                })
-                .splineTo(new Vector2d(-10,50),Math.toRadians(-90),hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(30)
+                .splineTo(new Vector2d(-10,50),Math.toRadians(-90),hwMecanum.getVelocityConstraint(30,60,12),
+                        hwMecanum.getAccelerationConstraint(35)
                 )
                 .addTemporalMarker(5, () -> {
                     deposit1.dstate1 = depositStateMachine.depositState.HIGH;
 
                 })
-                .addTemporalMarker(8, () -> {
+                .addTemporalMarker(7, () -> {
                     signal=5;
 
                 })
-                .waitSeconds(1)
+                .waitSeconds(2)
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(10,65,Math.toRadians(0)),Math.toRadians(20))
-                .strafeLeft(1)
-                .addTemporalMarker(5, () -> {
+                .splineToSplineHeading(new Pose2d(14,65,Math.toRadians(0)),Math.toRadians(20))
+                .addTemporalMarker(7, () -> {
                     iPower=0;
 
                 })
-                .forward (40,hwMecanum.getVelocityConstraint(40,60,12),
+                .forward (36,hwMecanum.getVelocityConstraint(40,60,12),
                         hwMecanum.getAccelerationConstraint(25))
 
 

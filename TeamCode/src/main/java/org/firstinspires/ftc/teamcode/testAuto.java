@@ -82,7 +82,7 @@ public class testAuto extends LinearOpMode {
         TrajectorySequence cycle1=robot.trajectorySequenceBuilder(move1.end())
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                .strafeRight(1)
+                .strafeLeft(.5)
                 .addTemporalMarker(.5, () -> {
                     iPower=-1;
                 })
@@ -94,7 +94,7 @@ public class testAuto extends LinearOpMode {
                         hwMecanum.getAccelerationConstraint(20)
                 )
                 .setReversed(true)
-                .lineTo(new Vector2d(14,-66),
+                .lineTo(new Vector2d(14,-65),
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(25)
                 )
@@ -105,11 +105,11 @@ public class testAuto extends LinearOpMode {
                     deposit1.dstate1 = depositStateMachine.depositState.HIGH;
 
                 })
-                .addTemporalMarker(8, () -> {
+                .addTemporalMarker(7, () -> {
                     signal=5;
 
                 })
-                .waitSeconds(1.5)
+                .waitSeconds(.25)
                 .setReversed(false)
 
 
@@ -118,7 +118,7 @@ public class testAuto extends LinearOpMode {
         TrajectorySequence cycle2=robot.trajectorySequenceBuilder(new Pose2d(-12, -48,Math.toRadians(270)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                .strafeRight(1)
+                .strafeLeft(.5)
 
                 .addTemporalMarker(.5, () -> {
                     iPower=-1;
@@ -131,24 +131,24 @@ public class testAuto extends LinearOpMode {
                         hwMecanum.getAccelerationConstraint(20)
                 )
                 .setReversed(true)
-                .lineTo(new Vector2d(14,-66),
+                .lineTo(new Vector2d(14,-65),
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(40)
                 )
                 .splineTo(new Vector2d(-10,-50),Math.toRadians(90),hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(35)
+                        hwMecanum.getAccelerationConstraint(40)
                 )
                 .addTemporalMarker(5, () -> {
                     deposit1.dstate1 = depositStateMachine.depositState.HIGH;
 
                 })
-                .addTemporalMarker(7.25, () -> {
+                .addTemporalMarker(7, () -> {
                     signal=5;
 
                 })
-                .waitSeconds(1)
+                .waitSeconds(.25)
                 .setReversed(false)
-                .splineToSplineHeading(new Pose2d(14,-66,Math.toRadians(0)),Math.toRadians(-20))
+                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
                 .addTemporalMarker(7, () -> {
                     iPower=0;
 
