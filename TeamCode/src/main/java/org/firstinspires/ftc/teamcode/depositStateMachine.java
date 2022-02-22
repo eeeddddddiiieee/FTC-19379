@@ -181,7 +181,7 @@ public class depositStateMachine {
                 }
                 break;
             case DUMP:
-                intakePower=0;
+                intakePower=-.5;
                 robot.bucket.setPosition(hwMecanum.bucketOut);
                 if (signal==5){
                     robot.depositServo.setPosition(hwMecanum.depositOpen+.2);

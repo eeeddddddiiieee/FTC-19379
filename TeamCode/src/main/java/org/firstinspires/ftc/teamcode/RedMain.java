@@ -15,7 +15,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-/*@Config
+/*2@Config
 @Autonomous(name="Redautoprimary",group = "drive")
 public class RedMain extends LinearOpMode {
     //public vision vision1;

@@ -77,7 +77,7 @@ public class Teleop extends LinearOpMode {
                 robot.intake.setPower(deposit1.intakePower);
             }
             else if ( robot.intakeMode&&!gamepad1.dpad_down&&!gamepad1.dpad_up&&!robot.toggle) {
-                robot.intake.setPower((gamepad1.left_trigger - gamepad1.right_trigger)*.5);
+                robot.intake.setPower((gamepad1.left_trigger - gamepad1.right_trigger)*.65);
             }
             /*
             switch (currentMode){

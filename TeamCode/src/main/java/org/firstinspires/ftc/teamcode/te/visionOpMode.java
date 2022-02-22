@@ -25,21 +25,21 @@ public class visionOpMode extends LinearOpMode{
     public OpenCvCamera webcam;
     private contourCentroidDetector pipeline;
 
-    private double crThreshHigh = 200;
+    private double crThreshHigh = 220;
     private double crThreshLow = 120;
-    private double cbThreshHigh = 90;
+    private double cbThreshHigh = 80;
     private double cbThreshLow = 0;
 
     private int minRectangleArea = 2000;
     private double middleBarcodeRangeBoundary = 0.5; //i.e 30% of the way across the frame from the left
-    private double rightBarcodeRangeBoundary = 0.6; //i.e 60% of the way across the frame from the left
+    private double rightBarcodeRangeBoundary = 0.6; //i.e 60% of the way achhross the frame from the left
 
     private double lowerRuntime = 0;
     private double upperRuntime = 0;
 
     // Pink Range                                      Y      Cr     Cb
-    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 130.0, 0);
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 180, 90.0);
+    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 120.0, 0);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 220,74);
 
     public int cameraMonitorViewId;
     public enum barcodePosition{

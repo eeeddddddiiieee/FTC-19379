@@ -13,13 +13,13 @@ import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-/*@Autonomous(name="blueSecondary",group = "drive")
+@Autonomous(name="blueSecondary",group = "drive")
 public class blueSecondary extends LinearOpMode {
     public hwMecanum robot;
     public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;
     public depositStateMachine deposit1;
-    public boolean signal;
+    public int signal;
     public double iPower;
 
     public enum trajState{
@@ -59,16 +59,16 @@ public class blueSecondary extends LinearOpMode {
                 .addTemporalMarker(.5, () -> {
                     switch (b1){
                         case RIGHT:
-                            deposit1.dstate1 = depositStateMachine.depositState.HIGH;
+                            signal=2;
                         case LEFT:
-                            deposit1.dstate1 = depositStateMachine.depositState.PRIME;
+                            signal=4;
                         case CENTER:
-                            deposit1.dstate1 = depositStateMachine.depositState.MID;
+                            signal=3;
                     }
 
                 })
                 .addSpatialMarker(new Vector2d(-12,36),()->{
-                    signal=true;
+                    signal=5;
                 })
                 .build();
 
@@ -76,7 +76,7 @@ public class blueSecondary extends LinearOpMode {
                 .setReversed(FALSE)
                 .splineTo(new Vector2d(-60,60),Math.toRadians(225))
                 .addSpatialMarker(new Vector2d(-72,72),()->{
-                    signal=false;
+                    signal=1;
                     robot.carousel.setPower(1);
                 })
                 .waitSeconds(7)
@@ -94,7 +94,7 @@ public class blueSecondary extends LinearOpMode {
                     deposit1.dstate1 = depositStateMachine.depositState.HIGH;
                 })
                 .addSpatialMarker(new Vector2d(-12,36),()->{
-                    signal=true;
+                    signal=5;
                     iPower=0;
                 })
                 .setReversed(FALSE)
@@ -166,5 +166,5 @@ public class blueSecondary extends LinearOpMode {
 
 
 
-}*/
+}
 
