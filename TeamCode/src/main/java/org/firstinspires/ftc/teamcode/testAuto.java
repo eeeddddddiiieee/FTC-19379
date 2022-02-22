@@ -82,7 +82,7 @@ public class testAuto extends LinearOpMode {
         TrajectorySequence cycle1=robot.trajectorySequenceBuilder(move1.end())
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                .strafeLeft(.5)
+                .strafeRight(.5)
                 .addTemporalMarker(.5, () -> {
                     iPower=-1;
                 })
@@ -118,7 +118,7 @@ public class testAuto extends LinearOpMode {
         TrajectorySequence cycle2=robot.trajectorySequenceBuilder(new Pose2d(-12, -48,Math.toRadians(270)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                .strafeLeft(.5)
+                .strafeRight(.5)
 
                 .addTemporalMarker(.5, () -> {
                     iPower=-1;
