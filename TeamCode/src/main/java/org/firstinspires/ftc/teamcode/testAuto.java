@@ -82,7 +82,7 @@ public class testAuto extends LinearOpMode {
         TrajectorySequence cycle1=robot.trajectorySequenceBuilder(move1.end())
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                .strafeLeft(1)
+                .strafeLeft(.5)
                 .addTemporalMarker(.5, () -> {
                     iPower=-1;
                 })
@@ -118,7 +118,7 @@ public class testAuto extends LinearOpMode {
         TrajectorySequence cycle2=robot.trajectorySequenceBuilder(new Pose2d(-12, -48,Math.toRadians(270)))
                 .setReversed(false)
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                .strafeLeft(1)
+                .strafeLeft(.5)
 
                 .addTemporalMarker(.5, () -> {
                     iPower=-1;
@@ -136,7 +136,7 @@ public class testAuto extends LinearOpMode {
                         hwMecanum.getAccelerationConstraint(40)
                 )
                 .splineTo(new Vector2d(-10,-50),Math.toRadians(90),hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(35)
+                        hwMecanum.getAccelerationConstraint(40)
                 )
                 .addTemporalMarker(5, () -> {
                     deposit1.dstate1 = depositStateMachine.depositState.HIGH;
@@ -153,7 +153,7 @@ public class testAuto extends LinearOpMode {
                     iPower=0;
 
                 })
-                .forward (24,hwMecanum.getVelocityConstraint(40,60,12),
+                .forward (36,hwMecanum.getVelocityConstraint(40,60,12),
                         hwMecanum.getAccelerationConstraint(25))
 
 

@@ -102,13 +102,14 @@ public class BlueMain extends LinearOpMode {
                         hwMecanum.getAccelerationConstraint(25)
                 )
                 .splineTo(new Vector2d(-10,50),Math.toRadians(-90),hwMecanum.getVelocityConstraint(40,60,12),
-                        hwMecanum.getAccelerationConstraint(30)
+                        hwMecanum.getAccelerationConstraint(40)
                 )
+                //try 40 40 5 and 8
                 .addTemporalMarker(5, () -> {
                     deposit1.dstate1 = depositStateMachine.depositState.HIGH;
 
                 })
-                .addTemporalMarker(8, () -> {
+                .addTemporalMarker(7, () -> {
                     signal=5;
 
                 })
@@ -140,7 +141,7 @@ public class BlueMain extends LinearOpMode {
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(40)
                 )
-                .splineTo(new Vector2d(-10,50),Math.toRadians(-90),hwMecanum.getVelocityConstraint(40,60,12),
+                .splineTo(new Vector2d(-10,50),Math.toRadians(-90),hwMecanum.getVelocityConstraint(30,60,12),
                         hwMecanum.getAccelerationConstraint(35)
                 )
                 .addTemporalMarker(5, () -> {
@@ -158,7 +159,7 @@ public class BlueMain extends LinearOpMode {
                     iPower=0;
 
                 })
-                .forward (24,hwMecanum.getVelocityConstraint(40,60,12),
+                .forward (36,hwMecanum.getVelocityConstraint(40,60,12),
                         hwMecanum.getAccelerationConstraint(25))
 
 

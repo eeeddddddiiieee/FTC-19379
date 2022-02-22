@@ -26,8 +26,8 @@ public class vision extends LinearOpMode{
     private contourCentroidDetector pipeline;
 
     private double crThreshHigh = 200;
-    private double crThreshLow = 120;
-    private double cbThreshHigh = 100;
+    private double crThreshLow = 110;
+    private double cbThreshHigh = 95;
     private double cbThreshLow = 0;
 
     private int minRectangleArea = 800;
@@ -38,8 +38,8 @@ public class vision extends LinearOpMode{
     private double upperRuntime = 0;
 
     // Pink Range                                      Y      Cr     Cb
-    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 130.0, 0);
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 200, 100.0);
+    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 110.0, 0);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 200, 95.0);
 
     public int cameraMonitorViewId;
     public enum barcodePosition{
