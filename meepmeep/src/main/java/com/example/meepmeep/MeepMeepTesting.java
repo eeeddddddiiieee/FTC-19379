@@ -27,33 +27,45 @@ public class MeepMeepTesting {
                 .setDimensions(12,14)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(6, -65, Math.toRadians(270)))
-                                .setReversed(TRUE)
-                                .splineTo(new Vector2d(-12,-48),Math.toRadians(90))
-                                .setReversed(FALSE)
-                                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                                .forward(10)
-                                .lineTo(new Vector2d(44+2,-65+2),
-                                        SampleMecanumDrive.getVelocityConstraint(25, 60, 12),
-                                        SampleMecanumDrive.getAccelerationConstraint(20)
-                                )
-                                .setReversed(TRUE)
-                                .splineTo(new Vector2d(24,-65),Math.toRadians(180),
-                                        SampleMecanumDrive.getVelocityConstraint(40,60,12),
-                                        SampleMecanumDrive.getAccelerationConstraint(20)
-                                )
-
-                                .splineTo(new Vector2d(-12,-48),Math.toRadians(90))
                                 .waitSeconds(1)
-                                .setReversed(FALSE)
-                                .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
-                                .forward(10)
-                                .lineTo(new Vector2d(44,-65),
-                                        SampleMecanumDrive.getVelocityConstraint(25, 60, 12),
-                                        SampleMecanumDrive.getAccelerationConstraint(20)
-                                )
-                                .back(24)
                                 .setReversed(TRUE)
-                                .splineTo(new Vector2d(-12,-48),Math.toRadians(90))
+                                .splineTo(new Vector2d(6,-60),Math.toRadians(120))
+                                .waitSeconds(2)
+
+                                .setReversed(FALSE)
+                                .splineTo(new Vector2d(14,-65),Math.toRadians(0))
+                                .forward(10)
+                                .splineTo(new Vector2d(44,-65),Math.toRadians(0))
+                                .setReversed(TRUE)
+                                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                                .splineTo(new Vector2d(6,-60),Math.toRadians(120))
+                                .waitSeconds(2)
+                                .setReversed(FALSE)
+
+
+                                .splineTo(new Vector2d(14,-65),Math.toRadians(0))
+                                .forward(10)
+                                .splineTo(new Vector2d(48,-65),Math.toRadians(0))
+                                .setReversed(TRUE)
+                                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                                .splineTo(new Vector2d(6,-60),Math.toRadians(120))
+                                .waitSeconds(2)
+
+                                .splineTo(new Vector2d(14,-65),Math.toRadians(0))
+                                .forward(10)
+                                .splineTo(new Vector2d(46,-60),Math.toRadians(30))
+                                .setReversed(TRUE)
+                                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                                .splineTo(new Vector2d(6,-60),Math.toRadians(120))
+                                .waitSeconds(2)
+
+                                .splineTo(new Vector2d(14,-65),Math.toRadians(0))
+                                .forward(10)
+                                .splineTo(new Vector2d(54,-65),Math.toRadians(0))
+                                .setReversed(TRUE)
+                                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                                .splineTo(new Vector2d(6,-60),Math.toRadians(120))
+                                .waitSeconds(2)
 
 
 
@@ -166,7 +178,7 @@ public class MeepMeepTesting {
                 .setBackgroundAlpha(0.95f)
 
 
-                .addEntity(red2)
+                .addEntity(redMain)
 
 
                 .start();
