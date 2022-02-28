@@ -171,6 +171,11 @@ public class hwMecanum extends MecanumDrive {
     public Servo intakeServo;
     public Servo bucket;
     public Servo depositServo;
+
+    public Servo depositExtension;
+    public Servo TSEYaw;
+    public Servo TSEPitch;
+    public Servo TSEExt;
     public DcMotorEx teamElementArm;
     public DcMotorEx intake;
     public CRServo carousel;
@@ -185,6 +190,7 @@ public class hwMecanum extends MecanumDrive {
     public DigitalChannel red1;
     public DigitalChannel red2;
     public RevColorSensorV3 bucketSensor;
+
     public enum Mode{
         IDLE,
         TURN,
@@ -238,6 +244,16 @@ public class hwMecanum extends MecanumDrive {
     public static final double mid=0.25; //change
     public static final double low=0.15; //change
     public static final double high1=.69;
+    public static final double TSEPitchMid=.5;
+    public static final double TSEYawMid=.5;
+    public static final double depositExtended=1;
+    public static final double depositRetracted=0;
+    public static final double depositMid=.5;
+
+
+
+
+
     public static final double ARM_UP_POWER=0.45;
     public static final double ARM_DOWN_POWER=-0.45;
     public static final double servoClosed=.69;
