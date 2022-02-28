@@ -228,9 +228,8 @@ public class depositStateMachine {
                 }
                 break;
             case EXTENDED_DUMP:
-                robot.intakeMode=false;
 
-                intakePower=0;
+                intakePower=-.5;
                 robot.bucket.setPosition(hwMecanum.bucketOut);
                 robot.depositExtension.setPosition(robot.depositExtended);
                 if (signal==5){
