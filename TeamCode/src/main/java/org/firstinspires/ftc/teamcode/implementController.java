@@ -64,7 +64,7 @@ public class implementController {
 
 
         //robot.claw.setPosition(Range.clip(clawPosition+clawOffset,0,1));
-        double armPositionRadians=((robot.teamElementArm.getCurrentPosition()/1992.6)*2*Math.PI)-(Math.PI/2);
+        //double armPositionRadians=((robot.teamElementArm.getCurrentPosition()/1992.6)*2*Math.PI)-(Math.PI/2);
 
         /*
         if (gamepad2.y){

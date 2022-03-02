@@ -176,7 +176,6 @@ public class hwMecanum extends MecanumDrive {
     public Servo TSEYaw;
     public Servo TSEPitch;
     public CRServo TSEExt;
-    public DcMotorEx teamElementArm;
     public DcMotorEx intake;
     public CRServo carousel;
     HardwareMap hwMap = null; //hardware map
@@ -386,7 +385,6 @@ public class hwMecanum extends MecanumDrive {
         intake.setPower(0);
         lift1.setPower(0);
         carousel.setPower(0);
-        teamElementArm.setPower(0);
         TSEYaw.setPosition(TSEYAWDEFAULT);
         intakeServo.setPosition(intakeUp);
         //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
