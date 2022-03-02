@@ -175,7 +175,7 @@ public class hwMecanum extends MecanumDrive {
     public Servo depositExtension;
     public Servo TSEYaw;
     public Servo TSEPitch;
-    public Servo TSEExt;
+    public CRServo TSEExt;
     public DcMotorEx teamElementArm;
     public DcMotorEx intake;
     public CRServo carousel;
@@ -236,18 +236,23 @@ public class hwMecanum extends MecanumDrive {
     public static final double depositClosed=.995;
     public static final double depositOpen=.3;
     public static final double depositMidOpen=.7;
-    public static final double intakeDown=.29;
-    public static final double intakeUp=.8;
+    public static final double intakeDown=.64;
+    public static final double intakeUp=.48;
+
+    public static final double TSEYAWDEFAULT=.975;
     //change above
     public static final double inside=0.99;//change
     public static final double high=0.4; //change
     public static final double mid=0.25; //change
     public static final double low=0.15; //change
     public static final double high1=.69;
+
+
+
     public static final double TSEPitchMid=.5;
     public static final double TSEYawMid=.5;
-    public static final double depositExtended=1;
-    public static final double depositRetracted=0;
+    public static final double depositExtended=.74;
+    public static final double depositRetracted=.34;
     public static final double depositMid=.5;
 
 
@@ -291,6 +296,7 @@ public class hwMecanum extends MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
+
         //mode=Mode.IDLE;
         intakeMode=true;
         //imu init
@@ -316,22 +322,26 @@ public class hwMecanum extends MecanumDrive {
         liftLimitSwitch=hwMap.get(TouchSensor.class,"limit");
         bucketSensor=hwMap.get(RevColorSensorV3.class,"color1");
         green1=hwMap.get(DigitalChannel.class,"green1");
-        green2=hwMap.get(DigitalChannel.class,"green2");
         red1=hwMap.get(DigitalChannel.class,"red1");
-        red2=hwMap.get(DigitalChannel.class,"red2");
 
-        carousel=hwMap.get(CRServo.class, "carousel");
 
         //team element servos
         //TE=hwMap.get(Servo.class,"TE");
         //claw=hwMap.get(Servo.class,"claw"); // claw init
 
         intakeServo=hwMap.get(Servo.class,"intakeServo");
-
-
-
         bucket=hwMap.get(Servo.class,"bucket");
         depositServo=hwMap.get(Servo.class,"deposit");
+        depositExtension=hwMap.get(Servo.class,"depositExtension");
+
+        TSEExt=hwMap.get(CRServo.class,"tseext");
+        TSEPitch=hwMap.get(Servo.class,"tsepitch");
+        TSEYaw=hwMap.get(Servo.class,"tseyaw");
+        carousel=hwMap.get(CRServo.class, "carousel");
+
+
+
+
 
         setLocalizer(new TwoWheelTrackingLocalizer(hwMap,this));
 
@@ -377,6 +387,8 @@ public class hwMecanum extends MecanumDrive {
         lift1.setPower(0);
         carousel.setPower(0);
         teamElementArm.setPower(0);
+        TSEYaw.setPosition(TSEYAWDEFAULT);
+        intakeServo.setPosition(intakeUp);
         //claw.setPosition(.69); //servo is coded off of position, not power. (NOT CONTINUOUS)
 
         //init encoders (for auto)
