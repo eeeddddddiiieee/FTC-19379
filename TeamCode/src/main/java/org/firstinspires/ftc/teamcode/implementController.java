@@ -35,7 +35,6 @@ public class implementController {
             robot.toggle=false;
         }
         if (robot.toggle){
-            robot.teamElementArm.setPower((gamepad1.left_trigger-gamepad1.right_trigger)*.5);
 
         }
         else{
