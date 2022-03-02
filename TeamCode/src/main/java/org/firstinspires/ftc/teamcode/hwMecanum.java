@@ -251,7 +251,7 @@ public class hwMecanum extends MecanumDrive {
     public static final double TSEPitchMid=.5;
     public static final double TSEYawMid=.5;
     public static final double depositExtended=.74;
-    public static final double depositRetracted=.34;
+    public static final double depositRetracted=.37;
     public static final double depositMid=.5;
 
 

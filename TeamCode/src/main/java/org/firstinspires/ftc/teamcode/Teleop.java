@@ -118,13 +118,13 @@ public class Teleop extends LinearOpMode {
             //telemetry.addData("POSITION:",currentPose.getX()+","+currentPose.getY());
             //telemetry.addData("HEADING:",currentPose.getHeading());
             //telemetry.addData("DEPOSIT:",deposit1.getDepositState());
-            if (getRuntime()==80000){
+            if (getRuntime()==80){
                 gamepad1.rumble(.5,.5,1500);
                 gamepad2.rumble(.5,.5,1500);
 
             }
 
-            if (getRuntime()==90000){
+            if (getRuntime()==90){
                 gamepad1.rumble(1,1,200);
                 gamepad2.rumble(1,1,200);
             }

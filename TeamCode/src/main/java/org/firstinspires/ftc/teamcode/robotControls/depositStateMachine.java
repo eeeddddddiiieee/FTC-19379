@@ -173,7 +173,7 @@ public class depositStateMachine {
                 robot.depositServo.setPosition(hwMecanum.depositClosed);
                 robot.intakeServo.setPosition(hwMecanum.intakeUp);
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
-                if (robot.bucket.getPosition()<.75){
+                if (robot.bucket.getPosition()<.65){
                     robot.intakeMode=false;
                     intakePower=-.5;
                 }
