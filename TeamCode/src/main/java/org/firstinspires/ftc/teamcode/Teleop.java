@@ -8,17 +8,14 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.drive.TwoWheelTrackingLocalizer;
-import org.firstinspires.ftc.teamcode.lift;
 
-import org.firstinspires.ftc.teamcode.drive.StandardTrackingWheelLocalizer;
+import org.firstinspires.ftc.teamcode.robotControls.depositStateMachine;
+import org.firstinspires.ftc.teamcode.robotControls.driveControls;
+import org.firstinspires.ftc.teamcode.robotControls.implementController;
+
 @TeleOp(name="TELEOP", group="hwMecanum")
 
 public class Teleop extends LinearOpMode {

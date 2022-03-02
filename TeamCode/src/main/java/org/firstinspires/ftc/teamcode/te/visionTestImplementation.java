@@ -5,10 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.hwMecanum;
-import org.firstinspires.ftc.teamcode.lift;
-import org.firstinspires.ftc.teamcode.te.vision;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.teamcode.te.vision.barcodePosition;
+
 @Config
 @Autonomous (name="visiontestimplementation")
 public class visionTestImplementation extends LinearOpMode {

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.tests;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
