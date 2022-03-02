@@ -50,6 +50,8 @@ public class MeepMeepTesting {
                                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
                                 .splineTo(new Vector2d(6,-60),Math.toRadians(120))
                                 .waitSeconds(2)
+                                .setReversed(FALSE)
+
 
                                 .splineTo(new Vector2d(14,-65),Math.toRadians(0))
                                 .forward(10)
@@ -58,6 +60,8 @@ public class MeepMeepTesting {
                                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
                                 .splineTo(new Vector2d(6,-60),Math.toRadians(120))
                                 .waitSeconds(2)
+                                .setReversed(FALSE)
+
 
                                 .splineTo(new Vector2d(14,-65),Math.toRadians(0))
                                 .forward(10)
@@ -66,6 +70,8 @@ public class MeepMeepTesting {
                                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
                                 .splineTo(new Vector2d(6,-60),Math.toRadians(120))
                                 .waitSeconds(2)
+                                .setReversed(FALSE)
+
 
 
 
