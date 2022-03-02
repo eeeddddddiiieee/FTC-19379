@@ -38,7 +38,7 @@ public class implementController {
 
         }
         else{
-            robot.teamElementArm.setPower(gamepad2.left_stick_y*.2);
+            //robot.teamElementArm.setPower(gamepad2.left_stick_y*.2);
         }
 
         if (gamepad1.dpad_up){

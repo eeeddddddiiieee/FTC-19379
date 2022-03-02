@@ -316,7 +316,7 @@ public class hwMecanum extends MecanumDrive {
         intake=hwMap.get(DcMotorEx.class, "intake");
         lift2=hwMap.get(DcMotorEx.class, "lift2"); //arm init
         lift1=hwMap.get(DcMotorEx.class, "lift1"); //lift init
-        teamElementArm=hwMap.get(DcMotorEx.class,"tearm");
+        //teamElementArm=hwMap.get(DcMotorEx.class,"tearm");
 
         //sensor initialization
         liftLimitSwitch=hwMap.get(TouchSensor.class,"limit");
