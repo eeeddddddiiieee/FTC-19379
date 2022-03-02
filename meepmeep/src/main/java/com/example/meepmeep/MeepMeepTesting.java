@@ -26,7 +26,7 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 12)
                 .setDimensions(12,14)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(6, -65, Math.toRadians(270)))
+                        drive.trajectorySequenceBuilder(new Pose2d(12, -65, Math.toRadians(270)))
                                 .waitSeconds(1)
                                 .setReversed(TRUE)
                                 .splineTo(new Vector2d(6,-60),Math.toRadians(120))
