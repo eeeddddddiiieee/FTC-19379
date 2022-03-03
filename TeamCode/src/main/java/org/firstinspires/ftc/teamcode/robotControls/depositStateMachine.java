@@ -59,8 +59,10 @@ public class depositStateMachine {
                 }
                 break;
             case PRIME:
-                robot.intakeMode=false;
-                intakePower=.5;
+                if (robot.bucket.getPosition()<.55){
+                    robot.intakeMode=false;
+                    intakePower=.5;
+                }
                 robot.depositServo.setPosition(hwMecanum.depositClosed);
                 robot.intakeServo.setPosition(hwMecanum.intakeUp);
                 robot.red1.setState(true);

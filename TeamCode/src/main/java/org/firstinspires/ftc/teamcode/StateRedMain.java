@@ -39,6 +39,7 @@ public class StateRedMain extends LinearOpMode {
     public double yPo;
 
     public Pose2d startPose=new Pose2d(12,-65,Math.toRadians(270));
+    public Vector2d dumpPose=new Vector2d(4.5,-52);
 
     public void runOpMode() throws InterruptedException{
         hwMecanum robot = new hwMecanum(hardwareMap);
@@ -49,6 +50,7 @@ public class StateRedMain extends LinearOpMode {
         vision vision1=new vision();
         vision1.initVision(hardwareMap);
         tState1=trajState.MOVE1;
+        robot.intakeServo.setPosition(robot.intakeUp);
         robot.setPoseEstimate((new Pose2d(12, -65,Math.toRadians(270))));
 
         signal=1;
@@ -57,10 +59,89 @@ public class StateRedMain extends LinearOpMode {
         TrajectorySequence move1 = robot.trajectorySequenceBuilder(new Pose2d(12, -65,Math.toRadians(270)))
 
                 .setReversed(true)
-                .splineTo(new Vector2d(-10,-46.5),Math.toRadians(90),
+                .splineTo(new Vector2d(4.5,-52),Math.toRadians(120))
+
+                //cycle 1
+                .setReversed(false)
+                .splineTo(new Vector2d(14,-65),Math.toRadians(0),
                         hwMecanum.getVelocityConstraint(60, 60, 12),
                         hwMecanum.getAccelerationConstraint(60)
                 )
+                .forward((10),
+                        hwMecanum.getVelocityConstraint(30, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )                .splineTo(new Vector2d(44,-65),Math.toRadians(0))
+                .setReversed(TRUE)
+                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                .splineTo(dumpPose,Math.toRadians(120),
+                        hwMecanum.getVelocityConstraint(40, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .waitSeconds(1)
+
+                //cycle 2
+                .setReversed(FALSE)
+
+                .splineTo(new Vector2d(14,-65),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(60, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .forward((10),
+                        hwMecanum.getVelocityConstraint(30, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )                .splineTo(new Vector2d(48,-65),Math.toRadians(0))
+                .setReversed(TRUE)
+                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                .splineTo(dumpPose,Math.toRadians(120),
+                        hwMecanum.getVelocityConstraint(40, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .waitSeconds(1)
+                .setReversed(FALSE)
+
+                //cycle 3
+                .splineTo(new Vector2d(14,-65),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(60, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .forward((10),
+                        hwMecanum.getVelocityConstraint(30, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .splineTo(new Vector2d(46,-60),Math.toRadians(30))
+                .setReversed(TRUE)
+                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                .splineTo(dumpPose,Math.toRadians(120),
+                        hwMecanum.getVelocityConstraint(40, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .waitSeconds(1)
+                .setReversed(FALSE)
+
+                //cycle 4
+                .splineTo(new Vector2d(14,-66),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(60, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60))
+                .forward((10),
+                        hwMecanum.getVelocityConstraint(30, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )                .splineTo(new Vector2d(54,-65),Math.toRadians(0))
+                .setReversed(TRUE)
+                .splineTo(new Vector2d(24,-66),Math.toRadians(180))
+                .splineTo(dumpPose,Math.toRadians(120),
+                        hwMecanum.getVelocityConstraint(40, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .waitSeconds(13)
+                .setReversed(false)
+
+
+                //cycle 5
+                .splineTo(new Vector2d(14,-66),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(60, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60))
+                .forward(10)
+
                 /*.addTemporalMarker(.5, () -> {
                     if (b1==LEFT){
                         signal=4;
@@ -92,14 +173,7 @@ public class StateRedMain extends LinearOpMode {
                 .splineTo(new Vector2d(-10,-50),Math.toRadians(90),hwMecanum.getVelocityConstraint(40,60,12),
                         hwMecanum.getAccelerationConstraint(40)
                 )
-                .addTemporalMarker(5, () -> {
-                    deposit1.dstate1 = depositStateMachine.depositState.HIGH;
 
-                })
-                .addTemporalMarker(7, () -> {
-                    signal=5;
-
-                })
                 .waitSeconds(.25)
                 .setReversed(false)
 
@@ -111,12 +185,7 @@ public class StateRedMain extends LinearOpMode {
                 .splineToSplineHeading(new Pose2d(14,-65,Math.toRadians(0)),Math.toRadians(-20))
                 .strafeRight(.5)
 
-                .addTemporalMarker(.5, () -> {
-                    iPower=-1;
-                })
-                .addTemporalMarker(.5, () -> {
-                    signal=1;
-                })
+
                 .lineTo(new Vector2d(46,-65),
                         hwMecanum.getVelocityConstraint(25, 60, 12),
                         hwMecanum.getAccelerationConstraint(20)
@@ -168,8 +237,8 @@ public class StateRedMain extends LinearOpMode {
             switch (tState1){
                 case MOVE1:{
                     if (!robot.isBusy()){
-                        tState1=trajState.CYCLE1;
-                        robot.followTrajectorySequenceAsync(cycle1);
+                        tState1=trajState.IDLE;
+                        //robot.followTrajectorySequenceAsync(cycle1);
                     }
                 }
                 case CYCLE1:{
@@ -204,10 +273,10 @@ public class StateRedMain extends LinearOpMode {
                 robot.isCargo=FALSE;
             }
             if (robot.intakeMode==false) {
-                robot.intake.setPower(-deposit1.intakePower);
+                //robot.intake.setPower(-deposit1.intakePower);
             }
             else if ( robot.intakeMode) {
-                robot.intake.setPower(iPower*.55);
+                //robot.intake.setPower(iPower*.55);
             }
 
             Pose2d poseEstimate = robot.getPoseEstimate();
