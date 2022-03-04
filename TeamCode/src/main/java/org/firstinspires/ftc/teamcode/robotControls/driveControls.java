@@ -22,8 +22,8 @@ public class driveControls {
     }
     public void driveController(hwMecanum robot, Gamepad gamepad1){
         if (gamepad1.right_bumper) {
-            shift = 0.35;
-            shift2=.7;
+            shift = 0.45;
+            shift2=.8;
         }
         else {
             shift = 1;

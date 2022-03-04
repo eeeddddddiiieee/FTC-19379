@@ -66,7 +66,7 @@ public class depositStateMachine {
                 robot.red1.setState(true);
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
 
-                if (gamepad1.right_stick_button){
+                if (gamepad1.right_stick_button||gamepad1.left_bumper){
                     dstate1= depositState.HIGH;
                 }
                 if (gamepad1.x){
