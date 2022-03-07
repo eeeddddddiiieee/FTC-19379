@@ -136,9 +136,9 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 12)
                 .setDimensions(12,14)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-42, -65, Math.toRadians(270)))
+                        drive.trajectorySequenceBuilder(new Pose2d(-36, -65, Math.toRadians(270)))
                                 .setReversed(TRUE)
-                                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
+                                .splineTo(new Vector2d(-35,-47),Math.toRadians(45))
                                 .setReversed(FALSE)
                                 .splineTo(new Vector2d(-60,-60),Math.toRadians(225))
                                 .waitSeconds(1)
@@ -184,7 +184,7 @@ public class MeepMeepTesting {
                 .setBackgroundAlpha(0.95f)
 
 
-                .addEntity(redMain)
+                .addEntity(red2)
 
 
                 .start();

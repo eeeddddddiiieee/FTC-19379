@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
-@Autonomous(name="STATEREDMAIN",group = "drive")
-public class StateRedMain extends LinearOpMode {
+@Autonomous(name="STATERED2",group = "drive")
+public class StateRed2 extends LinearOpMode {
     //public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;
     //public depositStateMachine deposit1;
@@ -41,8 +41,8 @@ public class StateRedMain extends LinearOpMode {
     public double xPo;
     public double yPo;
 
-    public Pose2d startPose=new Pose2d(12,-65,Math.toRadians(270));
-    public Vector2d dumpPose=new Vector2d(4.5,-52);
+    public Pose2d startPose=new Pose2d(-42,-65,Math.toRadians(270));
+    public Vector2d dumpPose=new Vector2d(-4.5,-52);
     public double wait=0;
 
 
@@ -76,7 +76,7 @@ public class StateRedMain extends LinearOpMode {
                 .addTemporalMarker(.75+wait,()->{
                     signal=5;
                 })
-                .splineTo(dumpPose,Math.toRadians(120))
+                .splineTo(new Vector2d(4.5,-52),Math.toRadians(120))
                 .waitSeconds(.25)
 
                 .build();
