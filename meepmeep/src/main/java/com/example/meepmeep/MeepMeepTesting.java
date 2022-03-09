@@ -140,13 +140,10 @@ public class MeepMeepTesting {
                                 .setReversed(TRUE)
                                 .splineTo(new Vector2d(-35,-47),Math.toRadians(45))
                                 .setReversed(FALSE)
-                                .splineTo(new Vector2d(-60,-60),Math.toRadians(225))
+                                .splineToSplineHeading(new Pose2d(-52,-55,Math.toRadians(90)),Math.toRadians(30))
                                 .waitSeconds(1)
-                                .setReversed(TRUE)
-                                .splineToLinearHeading(new Pose2d(-50,-60,Math.toRadians(270)),.5)
-                                .waitSeconds(1)
-                                .splineTo(new Vector2d(-12,-40),Math.toRadians(90))
-                                .setReversed(FALSE)
+                                .splineToSplineHe]ading(new Pose2d(-52,-54,Math.toRadians(270)),Math.toRadians(0))
+
                                 .splineTo(new Vector2d(-60,-36),3.14/2)
 
 
@@ -170,8 +167,6 @@ public class MeepMeepTesting {
                                 .splineTo(new Vector2d(-12,40),Math.toRadians(-90))
                                 .setReversed(FALSE)
                                 .splineTo(new Vector2d(-60,36),-3.14/2)
-
-
                                 .build()
                 );
 
