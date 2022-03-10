@@ -126,7 +126,7 @@ public class Teleop extends LinearOpMode {
                 gamepad2.rumble(1,1,200);
             }
 
-            if (robot.bucketSensor.getDistance(DistanceUnit.MM)<50){
+            if (robot.bucketSensor.getDistance(DistanceUnit.MM)<20){
                 robot.isCargo=TRUE;
             }
             else {

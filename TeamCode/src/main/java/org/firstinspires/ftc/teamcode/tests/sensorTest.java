@@ -10,6 +10,9 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 @TeleOp(name="SENSORTEST", group="intaketest")
 
 public class sensorTest extends LinearOpMode {
@@ -54,6 +57,7 @@ public class sensorTest extends LinearOpMode {
             telemetry.addData("Red", sensor1.red());
             telemetry.addData("Green", sensor1.green());
             telemetry.addData("Blue", sensor1.blue());
+            telemetry.addData("distance",sensor1.getDistance(DistanceUnit.MM));
             telemetry.update();
             if (isStopRequested()){return;}
         }

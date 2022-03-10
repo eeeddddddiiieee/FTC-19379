@@ -27,7 +27,7 @@ public class StateRedMain extends LinearOpMode {
     public int signal;
     public double iPower=-1;
     public vision.barcodePosition b1;
-    public boolean readyPark=false;
+    public boolean readyPark;
     public double trackWidth=10.44;
     public enum trajState{
         MOVE1,
@@ -42,7 +42,7 @@ public class StateRedMain extends LinearOpMode {
     public double yPo;
 
     public Pose2d startPose=new Pose2d(12,-65,Math.toRadians(270));
-    public Vector2d dumpPose=new Vector2d(4.5,-52);
+    public Vector2d dumpPose=new Vector2d(6.5,-56);
     public double wait=0;
 
 
@@ -59,6 +59,7 @@ public class StateRedMain extends LinearOpMode {
         robot.setPoseEstimate((new Pose2d(12, -65,Math.toRadians(270))));
 
         signal=1;
+        readyPark=false;
         TrajectorySequence move1 = robot.trajectorySequenceBuilder(new Pose2d(12, -65,Math.toRadians(270)))
 
                 .setReversed(true)
@@ -73,10 +74,12 @@ public class StateRedMain extends LinearOpMode {
                         signal=3;
                     }
                 })
-                .addTemporalMarker(.75+wait,()->{
+                .addTemporalMarker(1+wait,()->{
                     signal=5;
                 })
-                .splineTo(dumpPose,Math.toRadians(120))
+                .splineTo(new Vector2d(6,-55),Math.toRadians(115),
+                        hwMecanum.getVelocityConstraint(30, 30, trackWidth),
+                        hwMecanum.getAccelerationConstraint(60))
                 .waitSeconds(.25)
 
                 .build();
@@ -95,18 +98,27 @@ public class StateRedMain extends LinearOpMode {
                 .forward((10),
                         hwMecanum.getVelocityConstraint(30, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
-                )                .splineTo(new Vector2d(44,-65),Math.toRadians(0))
+                )
+                .splineTo(new Vector2d(44,-65),Math.toRadians(0))
                 .setReversed(TRUE)
+
+                .UNSTABLE_addDisplacementMarkerOffset(8,() -> {
+                    iPower=1;
+                })
                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
                     signal=2;
                 })
-                .splineTo(dumpPose,Math.toRadians(120),
+                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                    signal=5;
+                })
+                .splineTo(new Vector2d(6.5,-56),Math.toRadians(115),
                         hwMecanum.getVelocityConstraint(40, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
                 )
+
                 .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
-                    signal=5;
+                    signal=1;
                 })
                 .waitSeconds(1)
 
@@ -123,27 +135,37 @@ public class StateRedMain extends LinearOpMode {
                 .forward((10),
                         hwMecanum.getVelocityConstraint(30, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
-                )                .splineTo(new Vector2d(48,-65),Math.toRadians(0))
+                )
+
+                .splineTo(new Vector2d(48,-65),Math.toRadians(0))
                 .setReversed(TRUE)
+                .UNSTABLE_addDisplacementMarkerOffset(8,() -> {
+                    iPower=1;
+                })
                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
                     signal=2;
+                })
+                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                    signal=5;
                 })
                 .splineTo(dumpPose,Math.toRadians(120),
                         hwMecanum.getVelocityConstraint(40, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
                 )
+
                 .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
-                    signal=5;
+                    signal=1;
                 })
                 .waitSeconds(1)
-                .setReversed(FALSE)
 
-                .build();
-
-        TrajectorySequence cycle2=robot.trajectorySequenceBuilder(cycle1.end())
 
                 //cycle 3
+                .setReversed(false)
+                .addDisplacementMarker(() -> {
+                    signal=1;
+                    iPower=-1;
+                })
                 .splineTo(new Vector2d(14,-65),Math.toRadians(0),
                         hwMecanum.getVelocityConstraint(60, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
@@ -154,46 +176,166 @@ public class StateRedMain extends LinearOpMode {
                 )
                 .splineTo(new Vector2d(46,-60),Math.toRadians(30))
                 .setReversed(TRUE)
+                .UNSTABLE_addTemporalMarkerOffset(2,() -> {
+                    iPower=1;
+                })
                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
                     signal=2;
                 })
-                .splineTo(dumpPose,Math.toRadians(120),
+                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                    signal=5;
+                })
+                .splineTo(dumpPose,Math.toRadians(121),
                         hwMecanum.getVelocityConstraint(40, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
                 )
+
                 .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
-                    signal=5;
+                    signal=1;
                 })
                 .waitSeconds(1)
-                .setReversed(FALSE)
 
                 //cycle 4
+                .setReversed(false)
+                .addDisplacementMarker(() -> {
+                    signal=1;
+                    iPower=-1;
+                })
                 .splineTo(new Vector2d(14,-66),Math.toRadians(0),
                         hwMecanum.getVelocityConstraint(60, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60))
                 .forward((10),
                         hwMecanum.getVelocityConstraint(30, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
-                )                .splineTo(new Vector2d(54,-65),Math.toRadians(0))
+                )
+                .splineTo(new Vector2d(54,-65),Math.toRadians(0))
+
                 .setReversed(TRUE)
+                .UNSTABLE_addTemporalMarkerOffset(2,() -> {
+                    iPower=1;
+                })
                 .splineTo(new Vector2d(24,-66),Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
                     signal=2;
+                })
+                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                    signal=5;
                 })
                 .splineTo(dumpPose,Math.toRadians(120),
                         hwMecanum.getVelocityConstraint(40, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
                 )
-                .waitSeconds(.5)
-                .setReversed(false)
+                .waitSeconds(1)
+
+
+                .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                    signal=1;
+                })
+
                 .addDisplacementMarker(()->{
+                    signal=5;
+                    iPower=0;
+                })
+                .UNSTABLE_addTemporalMarkerOffset(.5,()->{
+                    signal=1;
+                    iPower=0;
+                })
+                .setReversed(false)
+
+                .splineTo(new Vector2d(14,-66),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(60, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .forward((20),
+                        hwMecanum.getVelocityConstraint(65, 60, 12),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .build();
+
+
+
+
+        TrajectorySequence cycle2=robot.trajectorySequenceBuilder(cycle1.end())
+                .setReversed(false)
+                .addDisplacementMarker(() -> {
+                    signal=1;
+                    iPower=-1;
+                })
+                .splineTo(new Vector2d(14,-65),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(60, 60, trackWidth),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .forward((10),
+                        hwMecanum.getVelocityConstraint(30, 60, trackWidth),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .splineTo(new Vector2d(46,-60),Math.toRadians(30))
+                .setReversed(TRUE)
+                .UNSTABLE_addDisplacementMarkerOffset(8,() -> {
+                    iPower=1;
+                })
+                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
+                    signal=2;
+                })
+                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                    signal=5;
+                })
+                .splineTo(dumpPose,Math.toRadians(120),
+                        hwMecanum.getVelocityConstraint(40, 60, trackWidth),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+
+                .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                    signal=1;
+                })
+                .waitSeconds(1.25)
+
+                //cycle 4
+                .setReversed(false)
+                .addDisplacementMarker(() -> {
+                    signal=1;
+                    iPower=-1;
+                })
+                .splineTo(new Vector2d(14,-66),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(60, 60, trackWidth),
+                        hwMecanum.getAccelerationConstraint(60))
+                .forward((10),
+                        hwMecanum.getVelocityConstraint(30, 60, trackWidth),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+                .splineTo(new Vector2d(54,-65),Math.toRadians(0))
+                .UNSTABLE_addDisplacementMarkerOffset(8,() -> {
+                    iPower=1;
+                })
+                .setReversed(TRUE)
+                .splineTo(new Vector2d(24,-66),Math.toRadians(180))
+                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
+                    signal=2;
+                })
+                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                    signal=5;
+                })
+                .splineTo(dumpPose,Math.toRadians(120),
+                        hwMecanum.getVelocityConstraint(40, 60, trackWidth),
+                        hwMecanum.getAccelerationConstraint(60)
+                )
+
+                .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                    signal=1;
+                })
+                .waitSeconds(1.25)
+                .setReversed(false)
+
+                .UNSTABLE_addDisplacementMarkerOffset(0,()->{
                     readyPark=true;
                 })
 
                 .build();
 
         TrajectorySequence park=robot.trajectorySequenceBuilder(robot.getPoseEstimate())
+                .setReversed(false)
                 .addDisplacementMarker(()->{
                     signal=5;
                     iPower=0;
@@ -239,16 +381,23 @@ public class StateRedMain extends LinearOpMode {
                 }
                 case CYCLE1:{
                     if (!robot.isBusy()){
-                        tState1=trajState.CYCLE2;
-                        robot.followTrajectorySequenceAsync(cycle2);
-                    }
-                }
-                case CYCLE2:{
-                    if ((getRuntime()>28||readyPark)&&robot.getPoseEstimate().getX()<14){
-                        robot.breakFollowing();
                         tState1=trajState.PARK;
                         robot.followTrajectorySequenceAsync(park);
                     }
+                }
+                case CYCLE2:{
+                    /*if ((getRuntime()>28||readyPark)&&robot.getPoseEstimate().getX()>14){
+                        robot.breakFollowing();
+                        tState1=trajState.PARK;
+                        robot.followTrajectorySequenceAsync(park);
+                    }*/
+                    if (!robot.isBusy()){
+                        tState1=trajState.PARK;
+                        robot.followTrajectorySequenceAsync(park);
+
+                    }
+                }
+                case PARK:{
                     if (!robot.isBusy()){
                         tState1=trajState.IDLE;
                     }
@@ -256,11 +405,7 @@ public class StateRedMain extends LinearOpMode {
                 case IDLE:{
                     break;
                 }
-                case PARK:{
-                    if (!robot.isBusy()){
-                        tState1=trajState.IDLE;
-                    }
-                }
+
 
             }
             if (true&&tState1!=trajState.IDLE){
@@ -272,7 +417,7 @@ public class StateRedMain extends LinearOpMode {
             deposit1.deposit(robot,signal);
             deposit1.updatePID(robot);
 
-            if (robot.bucketSensor.getDistance(DistanceUnit.MM)<50){
+            if (robot.bucketSensor.getDistance(DistanceUnit.MM)<15){
                 robot.isCargo=TRUE;
             }
             else {

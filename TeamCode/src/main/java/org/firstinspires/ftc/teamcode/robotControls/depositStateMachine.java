@@ -83,7 +83,7 @@ public class depositStateMachine {
                 break;
             case MID:
                 robot.intakeMode=true;
-                robotlift.setHeight(320,lift.resetMode.NO);
+                robotlift.setHeight(420,lift.resetMode.NO);
                 robot.depositExtension.setPosition(robot.depositExtended);
 
                 robot.red1.setState(false);
@@ -109,7 +109,7 @@ public class depositStateMachine {
                 robot.bucket.setPosition(hwMecanum.bucketOut);
                 robot.depositExtension.setPosition(robot.depositExtended);
                 if (gamepad1.right_stick_button){
-                    robot.depositServo.setPosition(hwMecanum.depositOpen+.2);
+                    robot.depositServo.setPosition(hwMecanum.depositOpen);
                     sleep(400);
                     robot.bucket.setPosition(hwMecanum.bucketRaised);
                     if (robot.bucket.getPosition()>.4){
@@ -192,7 +192,7 @@ public class depositStateMachine {
                 break;
             case MID:
                 robot.intakeMode=false;
-                robotlift.setHeight(370,lift.resetMode.NO);
+                robotlift.setHeight(420,lift.resetMode.NO);
                 robot.depositExtension.setPosition(robot.depositExtended);
 
                 //setLiftPosition(350);
@@ -202,7 +202,7 @@ public class depositStateMachine {
                 break;
             case HIGH:
                 robot.intakeMode=false;
-                robotlift.setHeight(1050,lift.resetMode.NO);
+                robotlift.setHeight(1000,lift.resetMode.NO);
                 robot.depositExtension.setPosition(robot.depositExtended);
 
                 if (robotlift.getHeight()>750) {
@@ -222,10 +222,9 @@ public class depositStateMachine {
                 }
                 break;
             case EXTENDED_DUMP:
-
                 intakePower=-.5;
                 robot.bucket.setPosition(hwMecanum.bucketOut);
-                robot.depositExtension.setPosition(robot.depositExtended);
+                robot.depositExtension.setPosition(robot.depositExtended-.08);
                 if (signal==5){
                     robot.depositServo.setPosition(hwMecanum.depositOpen+.2);
                     sleep(400);
@@ -242,7 +241,7 @@ public class depositStateMachine {
                 robot.depositExtension.setPosition(robot.depositRetracted);
                 robotlift.setHeight(0, lift.resetMode.YES);
 
-                if (robotlift.getHeight()<50&&robot.depositExtension.getPosition()==robot.depositRetracted)
+                if (robotlift.getHeight()<0&&robot.depositExtension.getPosition()==robot.depositRetracted)
                 {
                     robot.bucket.setPosition(hwMecanum.bucketDown);
 
