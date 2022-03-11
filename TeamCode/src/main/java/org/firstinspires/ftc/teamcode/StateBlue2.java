@@ -19,8 +19,8 @@ import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
-@Autonomous(name="STATERED2",group = "drive")
-public class StateRed2 extends LinearOpMode {
+@Autonomous(name="STATEBLUE2",group = "drive")
+public class StateBlue2 extends LinearOpMode {
     //public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;
     //public depositStateMachine deposit1;
@@ -41,7 +41,7 @@ public class StateRed2 extends LinearOpMode {
     public double xPo;
     public double yPo;
 
-    public Pose2d startPose=new Pose2d(-36,-65,Math.toRadians(270));
+    public Pose2d startPose=new Pose2d(-36,65,Math.toRadians(-270));
     public Vector2d dumpPose=new Vector2d(-35,-47);
     public double wait=0;
 
@@ -56,7 +56,7 @@ public class StateRed2 extends LinearOpMode {
         vision1.initVision(hardwareMap);
         tState1=trajState.MOVE1;
         robot.intakeServo.setPosition(robot.intakeUp);
-        robot.setPoseEstimate((new Pose2d(-36, -65,Math.toRadians(270))));
+        robot.setPoseEstimate((new Pose2d(-36, 65,Math.toRadians(-270))));
 
         signal=1;
         TrajectorySequence move1 = robot.trajectorySequenceBuilder(startPose)
@@ -76,13 +76,15 @@ public class StateRed2 extends LinearOpMode {
                 .addTemporalMarker(1.25+wait,()->{
                     signal=5;
                 })
-                .splineTo(new Vector2d(-35,47),Math.toRadians(45))
+                .splineTo(new Vector2d(-35,47),Math.toRadians(-45))
                 .waitSeconds(2)
                 .setReversed(FALSE)
-                .splineToSplineHeading(new Pose2d(-54,-54,Math.toRadians(90)),Math.toRadians(15),
+                . splineToLinearHeading(new Pose2d(-54,54,Math.toRadians(0)),Math.toRadians(0),
                         hwMecanum.getVelocityConstraint(40, 60, 12),
                         hwMecanum.getAccelerationConstraint(20)
                 )
+                .waitSeconds(1)
+                .splineTo(new Vector2d(-60,36),-3.14/2)
                 .addDisplacementMarker(()->{
                     robot.carousel.setPower(-.5);
                 })
@@ -91,7 +93,6 @@ public class StateRed2 extends LinearOpMode {
                     robot.carousel.setPower(0);
                 })
                 .waitSeconds(.25)
-                .splineTo(new Vector2d(-60,-36),3.14/2)
 
                 .build();
 

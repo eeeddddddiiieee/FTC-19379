@@ -140,10 +140,11 @@ public class MeepMeepTesting {
                                 .setReversed(TRUE)
                                 .splineTo(new Vector2d(-35,-47),Math.toRadians(45))
                                 .setReversed(FALSE)
-                                .splineToSplineHeading(new Pose2d(-52,-55,Math.toRadians(90)),Math.toRadians(30))
+                                . splineToSplineHeading(new Pose2d(-54,-54,Math.toRadians(90)),Math.toRadians(15),
+                                        SampleMecanumDrive.getVelocityConstraint(40, 60, 12),
+                                        SampleMecanumDrive.getAccelerationConstraint(20)
+                                )
                                 .waitSeconds(1)
-                                .splineToSplineHeading(new Pose2d(-52,-54,Math.toRadians(270)),Math.toRadians(0))
-
                                 .splineTo(new Vector2d(-60,-36),3.14/2)
 
 
@@ -155,18 +156,18 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 12)
                 .setDimensions(12,14)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-42, 65, Math.toRadians(-270)))
+                        drive.trajectorySequenceBuilder(new Pose2d(-36, 65, Math.toRadians(-270)))
                                 .setReversed(TRUE)
-                                .splineTo(new Vector2d(-12,40),Math.toRadians(-90))
+                                .splineTo(new Vector2d(-35,47),Math.toRadians(-45))
                                 .setReversed(FALSE)
-                                .splineTo(new Vector2d(-60,60),Math.toRadians(-225))
+                                . splineToLinearHeading(new Pose2d(-54,54,Math.toRadians(0)),Math.toRadians(0),
+                                        SampleMecanumDrive.getVelocityConstraint(40, 60, 12),
+                                        SampleMecanumDrive.getAccelerationConstraint(20)
+                                )
                                 .waitSeconds(1)
-                                .setReversed(TRUE)
-                                .splineToLinearHeading(new Pose2d(-50,60,Math.toRadians(-270)),-.5)
-                                .waitSeconds(1)
-                                .splineTo(new Vector2d(-12,40),Math.toRadians(-90))
-                                .setReversed(FALSE)
                                 .splineTo(new Vector2d(-60,36),-3.14/2)
+
+
                                 .build()
                 );
 
@@ -179,7 +180,7 @@ public class MeepMeepTesting {
                 .setBackgroundAlpha(0.95f)
 
 
-                .addEntity(red2)
+                .addEntity(blue2)
 
 
                 .start();
