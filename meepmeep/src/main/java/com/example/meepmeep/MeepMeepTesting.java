@@ -140,7 +140,7 @@ public class MeepMeepTesting {
                                 .setReversed(TRUE)
                                 .splineTo(new Vector2d(-35,-47),Math.toRadians(45))
                                 .setReversed(FALSE)
-                                . splineToSplineHeading(new Pose2d(-54,-54,Math.toRadians(90)),Math.toRadians(15),
+                                . splineToSplineHeading(new Pose2d(-54,-54,Math.toRadians(90)),Math.toRadians(100),
                                         SampleMecanumDrive.getVelocityConstraint(40, 60, 12),
                                         SampleMecanumDrive.getAccelerationConstraint(20)
                                 )

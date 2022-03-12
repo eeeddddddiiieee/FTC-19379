@@ -76,15 +76,13 @@ public class StateBlue2 extends LinearOpMode {
                 .addTemporalMarker(1.25+wait,()->{
                     signal=5;
                 })
-                .splineTo(new Vector2d(-35,47),Math.toRadians(-45))
+                .splineTo(new Vector2d(-35,48),Math.toRadians(-45))
                 .waitSeconds(2)
                 .setReversed(FALSE)
-                . splineToLinearHeading(new Pose2d(-54,54,Math.toRadians(0)),Math.toRadians(0),
+                . splineToLinearHeading(new Pose2d(-57,57,Math.toRadians(0)),Math.toRadians(15),
                         hwMecanum.getVelocityConstraint(40, 60, 12),
                         hwMecanum.getAccelerationConstraint(20)
                 )
-                .waitSeconds(1)
-                .splineTo(new Vector2d(-60,36),-3.14/2)
                 .addDisplacementMarker(()->{
                     robot.carousel.setPower(-.5);
                 })
@@ -92,6 +90,9 @@ public class StateBlue2 extends LinearOpMode {
                 .addDisplacementMarker(()->{
                     robot.carousel.setPower(0);
                 })
+                .waitSeconds(1)
+                .splineTo(new Vector2d(-60,36),-3.14/2)
+
                 .waitSeconds(.25)
 
                 .build();

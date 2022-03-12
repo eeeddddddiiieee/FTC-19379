@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-@Autonomous(name="blueSecondary",group = "drive")
 public class blueSecondary extends LinearOpMode {
     public hwMecanum robot;
     public vision vision1;

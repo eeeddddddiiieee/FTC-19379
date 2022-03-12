@@ -78,6 +78,13 @@ public class lift extends hwMecanum{
         double position;
 
         if (mode1==resetMode.YES) {
+            if (liftLimitSwitch.isPressed()){
+                resetLift();
+                lift1.setPower(0);
+                lift2.setPower(0);
+                targetPosition = 0;
+                error1 = 0;
+            }
             if (!liftLimitSwitch.isPressed()) {
                 /*
                 double error;

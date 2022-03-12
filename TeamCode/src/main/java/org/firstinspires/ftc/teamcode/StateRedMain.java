@@ -42,7 +42,7 @@ public class StateRedMain extends LinearOpMode {
     public double yPo;
 
     public Pose2d startPose=new Pose2d(12,-65,Math.toRadians(270));
-    public Vector2d dumpPose=new Vector2d(6.5,-56);
+    public Vector2d dumpPose=new Vector2d(5.5,-54);
     public double wait=0;
 
 
@@ -74,13 +74,13 @@ public class StateRedMain extends LinearOpMode {
                         signal=3;
                     }
                 })
-                .addTemporalMarker(1+wait,()->{
+                .addTemporalMarker(1.25+wait,()->{
                     signal=5;
                 })
                 .splineTo(new Vector2d(6,-55),Math.toRadians(115),
                         hwMecanum.getVelocityConstraint(30, 30, trackWidth),
                         hwMecanum.getAccelerationConstraint(60))
-                .waitSeconds(.25)
+                .waitSeconds(.75)
 
                 .build();
 
@@ -106,18 +106,20 @@ public class StateRedMain extends LinearOpMode {
                     iPower=1;
                 })
                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.1, () -> {
                     signal=2;
                 })
-                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.9, () -> {
                     signal=5;
                 })
-                .splineTo(new Vector2d(6.5,-56),Math.toRadians(115),
+
+                .splineTo(dumpPose,Math.toRadians(115),
                         hwMecanum.getVelocityConstraint(40, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
                 )
 
                 .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                    signal=10;
                     signal=1;
                 })
                 .waitSeconds(1)
@@ -143,10 +145,10 @@ public class StateRedMain extends LinearOpMode {
                     iPower=1;
                 })
                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.1, () -> {
                     signal=2;
                 })
-                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.85, () -> {
                     signal=5;
                 })
                 .splineTo(dumpPose,Math.toRadians(120),
@@ -155,6 +157,7 @@ public class StateRedMain extends LinearOpMode {
                 )
 
                 .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                    signal=10;
                     signal=1;
                 })
                 .waitSeconds(1)
@@ -176,14 +179,14 @@ public class StateRedMain extends LinearOpMode {
                 )
                 .splineTo(new Vector2d(46,-60),Math.toRadians(30))
                 .setReversed(TRUE)
-                .UNSTABLE_addTemporalMarkerOffset(2,() -> {
+                .UNSTABLE_addDisplacementMarkerOffset(8,() -> {
                     iPower=1;
                 })
                 .splineTo(new Vector2d(24,-65),Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.1, () -> {
                     signal=2;
                 })
-                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.9, () -> {
                     signal=5;
                 })
                 .splineTo(dumpPose,Math.toRadians(121),
@@ -192,6 +195,7 @@ public class StateRedMain extends LinearOpMode {
                 )
 
                 .UNSTABLE_addTemporalMarkerOffset(.5, () -> {
+                    signal=10;
                     signal=1;
                 })
                 .waitSeconds(1)
@@ -209,17 +213,17 @@ public class StateRedMain extends LinearOpMode {
                         hwMecanum.getVelocityConstraint(30, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
                 )
-                .splineTo(new Vector2d(54,-65),Math.toRadians(0))
+                .splineTo(new Vector2d(50,-65),Math.toRadians(0))
 
                 .setReversed(TRUE)
-                .UNSTABLE_addTemporalMarkerOffset(2,() -> {
+                .UNSTABLE_addDisplacementMarkerOffset(8,() -> {
                     iPower=1;
                 })
                 .splineTo(new Vector2d(24,-66),Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(.25, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(.1, () -> {
                     signal=2;
                 })
-                .UNSTABLE_addTemporalMarkerOffset(.75, () -> {
+                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                     signal=5;
                 })
                 .splineTo(dumpPose,Math.toRadians(120),

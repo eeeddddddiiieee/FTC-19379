@@ -76,10 +76,10 @@ public class StateRed2 extends LinearOpMode {
                 .addTemporalMarker(1.25+wait,()->{
                     signal=5;
                 })
-                .splineTo(new Vector2d(-35,47),Math.toRadians(45))
+                .splineTo(new Vector2d(-35,48),Math.toRadians(45))
                 .waitSeconds(2)
                 .setReversed(FALSE)
-                .splineToSplineHeading(new Pose2d(-54,-54,Math.toRadians(90)),Math.toRadians(15),
+                .splineToSplineHeading(new Pose2d(-57,-57,Math.toRadians(90)),Math.toRadians(15),
                         hwMecanum.getVelocityConstraint(40, 60, 12),
                         hwMecanum.getAccelerationConstraint(20)
                 )

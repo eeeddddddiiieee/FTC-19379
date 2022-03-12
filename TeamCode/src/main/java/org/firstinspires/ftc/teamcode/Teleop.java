@@ -65,7 +65,7 @@ public class Teleop extends LinearOpMode {
             //localizer1.update();
             //Pose2d currentPose = localizer1.getPoseEstimate();
             //Pose2d poseVelocity = localizer1.getPoseVelocity();
-            deposit1.deposit(robot,gamepad1);
+            deposit1.deposit(robot,gamepad1,gamepad2);
             deposit1.updatePID(robot);
             ic1.runImplementController(robot,gamepad1,gamepad2);
             dC.driveController(robot,gamepad1);

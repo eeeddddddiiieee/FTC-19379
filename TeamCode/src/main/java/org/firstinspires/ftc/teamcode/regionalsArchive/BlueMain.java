@@ -19,7 +19,6 @@ import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
-@Autonomous(name="BLUEMAINAUTO",group = "drive")
 public class BlueMain extends LinearOpMode {
     //public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;

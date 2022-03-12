@@ -46,7 +46,7 @@ public class depositStateMachine {
     public void setState(depositState d1){
         dstate1=d1;
     }
-    public void deposit(hwMecanum robot, Gamepad gamepad1)throws InterruptedException{
+    public void deposit(hwMecanum robot, Gamepad gamepad1,Gamepad gamepad2)throws InterruptedException{
         switch (dstate1) {
             case START:
                 robot.intakeMode=true;
@@ -68,13 +68,13 @@ public class depositStateMachine {
                 robot.red1.setState(true);
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
 
-                if (gamepad1.right_stick_button||gamepad1.left_bumper){
+                if (gamepad1.right_stick_button||gamepad1.left_bumper||gamepad2.a){
                     dstate1= depositState.HIGH;
                 }
                 if (gamepad1.x){
                     dstate1= depositState.MID;
                 }
-                if (gamepad1.b){
+                if (gamepad1.b||gamepad1.left_stick_button||gamepad2.b){
                     dstate1= depositState.DUMP;
                 }
                 if (gamepad1.back){
@@ -192,7 +192,7 @@ public class depositStateMachine {
                 break;
             case MID:
                 robot.intakeMode=false;
-                robotlift.setHeight(420,lift.resetMode.NO);
+                robotlift.setHeight(520,lift.resetMode.NO);
                 robot.depositExtension.setPosition(robot.depositExtended);
 
                 //setLiftPosition(350);
@@ -202,7 +202,7 @@ public class depositStateMachine {
                 break;
             case HIGH:
                 robot.intakeMode=false;
-                robotlift.setHeight(1000,lift.resetMode.NO);
+                robotlift.setHeight(1100,lift.resetMode.NO);
                 robot.depositExtension.setPosition(robot.depositExtended);
 
                 if (robotlift.getHeight()>750) {
@@ -239,7 +239,7 @@ public class depositStateMachine {
                 robot.bucket.setPosition(hwMecanum.bucketRaised);
 
                 robot.depositExtension.setPosition(robot.depositRetracted);
-                robotlift.setHeight(0, lift.resetMode.YES);
+                robotlift.setHeight(-20, lift.resetMode.YES);
 
                 if (robotlift.getHeight()<0&&robot.depositExtension.getPosition()==robot.depositRetracted)
                 {
@@ -250,6 +250,10 @@ public class depositStateMachine {
                 break;
 
             default: dstate1= depositState.START;
+
+        }
+        if (signal==10 && dstate1 != depositState.RETRACT) {
+            dstate1 = depositState.RETRACT;
         }
     }
 

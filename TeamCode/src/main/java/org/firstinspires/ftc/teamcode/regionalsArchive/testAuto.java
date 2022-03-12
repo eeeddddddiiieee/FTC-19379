@@ -19,7 +19,6 @@ import org.firstinspires.ftc.teamcode.te.vision;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Config
-@Autonomous(name="REDMAINAUTO",group = "drive")
 public class testAuto extends LinearOpMode {
     //public vision vision1;
     public static final double ticksPerInch=537.7/11.87373601358268;
