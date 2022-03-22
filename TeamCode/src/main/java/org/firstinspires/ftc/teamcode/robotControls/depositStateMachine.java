@@ -97,7 +97,7 @@ public class depositStateMachine {
                 robot.intakeMode=true;
                 robot.red1.setState(false);
                 robot.green1.setState(true);
-                robotlift.setHeight(1100,lift.resetMode.NO);
+                robotlift.setHeight(1150,lift.resetMode.NO);
                 robot.depositExtension.setPosition(robot.depositExtended);
 
                 if (robotlift.getHeight()>750) {

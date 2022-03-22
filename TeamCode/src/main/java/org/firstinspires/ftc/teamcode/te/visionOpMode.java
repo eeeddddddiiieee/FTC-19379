@@ -25,21 +25,28 @@ public class visionOpMode extends LinearOpMode{
     public OpenCvCamera webcam;
     private contourCentroidDetector pipeline;
 
-    private double crThreshHigh = 220;
-    private double crThreshLow = 120;
-    private double cbThreshHigh = 80;
+  private double crThreshHigh = 200;
+    private double crThreshLow = 110;
+    private double cbThreshHigh = 95;
     private double cbThreshLow = 0;
 
-    private int minRectangleArea = 2000;
+    /*private double crThreshHigh = 120;
+    private double crThreshLow = 0;
+    private double cbThreshHigh = 128;
+    private double cbThreshLow = 0; */
+
+    private int minRectangleArea = 200;
     private double middleBarcodeRangeBoundary = 0.5; //i.e 30% of the way across the frame from the left
     private double rightBarcodeRangeBoundary = 0.6; //i.e 60% of the way achhross the frame from the left
 
     private double lowerRuntime = 0;
     private double upperRuntime = 0;
 
-    // Pink Range                                      Y      Cr     Cb
     public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 120.0, 0);
-    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 220,74);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 200, 75.0);
+
+   /*public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 0, 0);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 128, 128);*/
 
     public int cameraMonitorViewId;
     public enum barcodePosition{
@@ -97,11 +104,11 @@ public class visionOpMode extends LinearOpMode{
         //Check to see if the rectangle has a large enough area to be a marker.
         if(rectangleArea > minRectangleArea){
             //Then check the location of the rectangle to see which barcode it is in.
-            if(pipeline.getRectMidpointX() >200){
+            if(pipeline.getRectMidpointX() >300){
                 telemetry.addData("Barcode Position", "Right");
                 position=barcodePosition.RIGHT;
             }
-            else if(pipeline.getRectMidpointX() < 200){
+            else if(pipeline.getRectMidpointX() < 300){
                 telemetry.addData("Barcode Position", "Center");
                 position=barcodePosition.CENTER;
             }

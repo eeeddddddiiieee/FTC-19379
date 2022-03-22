@@ -29,8 +29,13 @@ public class vision extends LinearOpMode{
     private double crThreshLow = 110;
     private double cbThreshHigh = 95;
     private double cbThreshLow = 0;
+/*
+    private double crThreshHigh = 120;
+    private double crThreshLow = 0;
+    private double cbThreshHigh = 128;
+    private double cbThreshLow = 0;*/
 
-    private int minRectangleArea = 800;
+    private int minRectangleArea = 150;
     private double middleBarcodeRangeBoundary = 0.5; //i.e 30% of the way across the frame from the left
     private double rightBarcodeRangeBoundary = 0.6; //i.e 60% of the way across the frame from the left
 
@@ -38,8 +43,11 @@ public class vision extends LinearOpMode{
     private double upperRuntime = 0;
 
     // Pink Range                                      Y      Cr     Cb
-    public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 110.0, 0);
+   public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 110.0, 0);
     public static Scalar scalarUpperYCrCb = new Scalar(255.0, 200, 95.0);
+
+    /*public static Scalar scalarLowerYCrCb = new Scalar(  0.0, 0, 0);
+    public static Scalar scalarUpperYCrCb = new Scalar(255.0, 128, 128);*/
 
     public int cameraMonitorViewId;
     public enum barcodePosition{

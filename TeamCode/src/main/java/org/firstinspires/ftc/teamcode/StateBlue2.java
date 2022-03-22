@@ -136,6 +136,7 @@ public class StateBlue2 extends LinearOpMode {
         robot.followTrajectorySequenceAsync(move1);
 
         while (opModeIsActive()&&!isStopRequested()){
+            robot.carousel.setPower(.75);
 
             switch (tState1){
                 case MOVE1:{

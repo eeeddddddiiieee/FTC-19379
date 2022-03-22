@@ -91,13 +91,13 @@ public class StateRedMain extends LinearOpMode {
                     signal=1;
                     iPower=-1;
                 })
-                .splineTo(new Vector2d(14,-65),Math.toRadians(0),
-                        hwMecanum.getVelocityConstraint(60, 60, trackWidth),
-                        hwMecanum.getAccelerationConstraint(60)
+                .splineTo(new Vector2d(14,-66),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(30, 60, trackWidth),
+                        hwMecanum.getAccelerationConstraint(30.0)
                 )
                 .forward((10),
                         hwMecanum.getVelocityConstraint(30, 60, trackWidth),
-                        hwMecanum.getAccelerationConstraint(60)
+                        hwMecanum.getAccelerationConstraint(30)
                 )
                 .splineTo(new Vector2d(44,-65),Math.toRadians(0))
                 .setReversed(TRUE)
@@ -105,7 +105,7 @@ public class StateRedMain extends LinearOpMode {
                 .UNSTABLE_addDisplacementMarkerOffset(8,() -> {
                     iPower=1;
                 })
-                .splineTo(new Vector2d(24,-65),Math.toRadians(180))
+                .splineTo(new Vector2d(24,-66),Math.toRadians(180))
                 .UNSTABLE_addTemporalMarkerOffset(.1, () -> {
                     signal=2;
                 })
@@ -130,9 +130,9 @@ public class StateRedMain extends LinearOpMode {
                     signal=1;
                     iPower=-1;
                 })
-                .splineTo(new Vector2d(14,-65),Math.toRadians(0),
-                        hwMecanum.getVelocityConstraint(60, 60, trackWidth),
-                        hwMecanum.getAccelerationConstraint(60)
+                .splineTo(new Vector2d(14,-66),Math.toRadians(0),
+                        hwMecanum.getVelocityConstraint(40, 60, trackWidth),
+                        hwMecanum.getAccelerationConstraint(40)
                 )
                 .forward((10),
                         hwMecanum.getVelocityConstraint(30, 60, trackWidth),
@@ -209,11 +209,20 @@ public class StateRedMain extends LinearOpMode {
                 .splineTo(new Vector2d(14,-66),Math.toRadians(0),
                         hwMecanum.getVelocityConstraint(60, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60))
-                .forward((10),
+                .forward((20),
                         hwMecanum.getVelocityConstraint(30, 60, trackWidth),
                         hwMecanum.getAccelerationConstraint(60)
                 )
-                .splineTo(new Vector2d(50,-65),Math.toRadians(0))
+
+                .addDisplacementMarker(()->{
+                    signal=5;
+                    iPower=0;
+                })
+                .UNSTABLE_addTemporalMarkerOffset(.5,()->{
+                    signal=1;
+                    iPower=0;
+                }).build();
+                /*.splineTo(new Vector2d(50,-65),Math.toRadians(0))
 
                 .setReversed(TRUE)
                 .UNSTABLE_addDisplacementMarkerOffset(8,() -> {
@@ -255,7 +264,7 @@ public class StateRedMain extends LinearOpMode {
                         hwMecanum.getVelocityConstraint(65, 60, 12),
                         hwMecanum.getAccelerationConstraint(60)
                 )
-                .build();
+                .build();*/
 
 
 

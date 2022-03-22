@@ -84,7 +84,7 @@ public class StateRed2 extends LinearOpMode {
                         hwMecanum.getAccelerationConstraint(20)
                 )
                 .addDisplacementMarker(()->{
-                    robot.carousel.setPower(-.5);
+                    robot.carousel.setPower(-1);
                 })
                 .waitSeconds(7)
                 .addDisplacementMarker(()->{

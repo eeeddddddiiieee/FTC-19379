@@ -133,7 +133,7 @@ public class contourCentroidDetector extends OpenCvPipeline {
                 }
             }
             // Draw Rectangles If Area Is At Least 500
-            if (first && maxRect.area() > 500) {
+            if (first && maxRect.area() > 200) {
                 Imgproc.rectangle(input, maxRect, new Scalar(0, 255, 0), 2);
             }
             // Draw Borders
