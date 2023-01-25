@@ -70,6 +70,7 @@ public class Teleop extends LinearOpMode {
             ic1.runImplementController(robot,gamepad1,gamepad2);
             dC.driveController(robot,gamepad1);
 
+
             if (robot.intakeMode==false) {
                 robot.intake.setPower(deposit1.intakePower);
             }
